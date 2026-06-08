@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundial 2026 · Pronósticos | MX · USA · CAN</title>
+  <meta name="description" content="Pronósticos del Mundial FIFA 2026. 48 equipos, 12 grupos, México USA y Canadá." />
+  <meta name="theme-color" content="#0A0A0F" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="data/partidos.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Mundial 2026</a>
+    <ul class="nav-links">
+      <li><a href="#grupos">Grupos</a></li>
+      <li><a href="#ranking">Ranking</a></li>
+      <li><a href="#pronosticos">Pronósticos</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-globe"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">FIFA World Cup · Pronósticos Oficiales</p>
+      <h1 class="hero-title">MUNDIAL<br>2026</h1>
+      <p class="hero-subtitle">México &nbsp;·&nbsp; USA &nbsp;·&nbsp; Canadá</p>
+      <div class="hero-flags">
+        <div class="flag-pill">🇲🇽 México</div>
+        <div class="flag-pill">🇺🇸 USA</div>
+        <div class="flag-pill">🇨🇦 Canadá</div>
+        <div class="flag-pill">⚽ 48 Selecciones</div>
+        <div class="flag-pill">🏟 12 Grupos</div>
+      </div>
+      <div class="hero-cta">
+        <a href="#pronosticos" class="btn-primary">⚽ Hacer mi Pronóstico</a>
+        <a href="#ranking" class="btn-secondary">🏆 Ver Ranking</a>
+      </div>
+    </div>
+    <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-section fade-up">
+    <div class="countdown-inner">
+      <p class="countdown-label">⏱ Cierre de pronósticos</p>
+      <p class="countdown-fase" id="cd-fase-label"></p>
+      <div class="countdown-grid">
+        <div class="countdown-item"><span class="countdown-num" id="cd-days">00</span><span class="countdown-unit">Días</span></div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-item"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-unit">Horas</span></div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-item"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-unit">Min</span></div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-item"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-unit">Seg</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPOS -->
+  <section id="grupos">
+    <div class="section-header fade-up">
+      <span class="section-label">FIFA World Cup 2026</span>
+      <h2 class="section-title">12 GRUPOS<br>48 EQUIPOS</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="grupos-section fade-up">
+      <div class="grupos-grid" id="grupos-grid"></div>
+    </div>
+  </section>
+
+  <!-- RANKING -->
+  <section id="ranking" style="background:var(--dark2);border-top:1px solid rgba(212,175,55,0.1)">
+    <div class="section-header fade-up">
+      <span class="section-label">Tabla de posiciones</span>
+      <h2 class="section-title">RANKING</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="ranking-section fade-up">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Participante</th>
+            <th>🏆 Campeón</th>
+            <th>Aciertos</th>
+            <th>% Éxito</th>
+            <th>Progreso</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRONÓSTICOS -->
+  <section id="pronosticos" class="pronostico-section">
+    <div class="section-header fade-up">
+      <span class="section-label">Participa ahora</span>
+      <h2 class="section-title">TU<br>PRONÓSTICO</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="pronostico-inner fade-up">
+      <div id="pronostico-content">
+        <div style="text-align:center;padding:4rem;color:var(--gray)">Cargando...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>🏆 Mundial FIFA 2026 &nbsp;·&nbsp; México · USA · Canadá · 11 Jun – 19 Jul 2026</p>
+    <p style="margin-top:0.5rem;font-size:0.7rem;opacity:0.5">Sitio de uso privado. No afiliado con FIFA.</p>
+  </footer>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-box">
+      <div class="modal-icon">🎉</div>
+      <h2 class="modal-title">¡PRONÓSTICO ENVIADO!</h2>
+      <p class="modal-text">
+        ¡Listo, <strong id="modal-nombre"></strong>!<br>
+        Tus predicciones fueron registradas exitosamente.<br><br>
+        <span style="color:var(--gold)">Descarga tu comprobante como respaldo.</span>
+      </p>
+      <div class="modal-actions">
+        <button class="modal-dl" onclick="descargarComprobante()">📥 Descargar Comprobante</button>
+        <button class="modal-close" onclick="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
