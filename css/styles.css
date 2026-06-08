@@ -109,6 +109,11 @@ section { position: relative; z-index: 1; }
 .rank-bar-wrap { width: 80px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
 .rank-bar { height: 100%; background: linear-gradient(to right, var(--gold-dark), var(--gold)); border-radius: 2px; }
 .empty-ranking { text-align: center; padding: 3rem; color: var(--gray); font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 0.1em; }
+#ranking-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
 
 /* ── PRONOSTICO FORM ── */
 .pronostico-section { background: var(--dark2); border-top: 1px solid rgba(212,175,55,0.1); padding-bottom: 5rem; }
@@ -210,8 +215,102 @@ section { position: relative; z-index: 1; }
 .toast.show { transform: translateX(0); }
 
 /* ── FOOTER ── */
-footer { background: var(--dark); border-top: 1px solid rgba(212,175,55,0.1); padding: 2.5rem; text-align: center; }
-footer p { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--gray); }
+/* ───────────────── FOOTER ───────────────── */
+
+footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(212,175,55,0.12);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+footer p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+}
+
+/* ───────────────── CONTACTO ───────────────── */
+
+.footer-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+/* ───────────────── ENLACES ───────────────── */
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  padding: 0.75rem 1.1rem;
+
+  text-decoration: none;
+
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: var(--gold);
+
+  border: 1px solid rgba(212,175,55,0.18);
+  background: rgba(212,175,55,0.04);
+
+  border-radius: 999px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* ───────────────── ICONOS ───────────────── */
+
+.footer-link svg {
+  width: 18px;
+  height: 18px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ───────────────── HOVER ───────────────── */
+
+.footer-link:hover {
+  color: var(--gold-light);
+  border-color: rgba(212,175,55,0.4);
+  background: rgba(212,175,55,0.08);
+  transform: translateY(-2px);
+}
+
+.footer-link:hover svg {
+  color: var(--gold-light);
+}
+
+/* ───────────────── MÓVIL ───────────────── */
+
+@media (max-width: 768px) {
+
+  .footer-contact {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+}
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -223,7 +322,9 @@ footer p { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; lette
   .hero-globe { width: 360px; height: 360px; }
   .user-form { grid-template-columns: 1fr; }
   .form-group.full { grid-column: 1; }
-  nav .nav-links { display: none; }
+  nav { flex-direction: column; align-items: center; justify-content: center; padding: 1rem; gap: 1rem; }
+  .nav-logo { width: 100%; text-align: center; }
+  nav .nav-links { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 1rem; padding: 0; margin: 0; }
   .match-team { font-size: 0.8rem; }
   .pred-btn { font-size: 0.68rem; padding: 0.45rem 0.3rem; }
   .ranking-table th:nth-child(5), .ranking-table td:nth-child(5) { display: none; }

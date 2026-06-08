@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Polla Mundialísta | Mundial 2026 | MX · USA · CAN</title>
+  <title>Polla Mundialista | Mundial 2026 | MX · USA · CAN</title>
   <meta name="description" content="Pronósticos del Mundial FIFA 2026. 48 equipos, 12 grupos, México USA y Canadá." />
   <meta name="theme-color" content="#0A0A0F" />
 
@@ -20,7 +20,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#" class="nav-logo">Mundial 2026</a>
+    <a href="#" class="nav-logo">Polla Mundialista</a>
     <ul class="nav-links">
       <li><a href="#grupos">Grupos</a></li>
       <li><a href="#ranking">Ranking</a></li>
@@ -33,17 +33,22 @@
     <div class="hero-bg"></div>
     <div class="hero-globe"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">FIFA World Cup · Pronósticos Oficiales</p>
+      <p class="hero-eyebrow">Pronósticos Oficiales</p>
       <h1 class="hero-title">MUNDIAL<br>2026</h1>
-      <p class="hero-subtitle">México &nbsp;·&nbsp; USA &nbsp;·&nbsp; Canadá</p>
+      <p class="hero-subtitle">
+        <img src="https://flagcdn.com/24x18/mx.png" alt="México" style="vertical-align:middle">
+        México ·
+        <img src="https://flagcdn.com/24x18/us.png" alt="USA" style="vertical-align:middle">
+        USA ·
+        <img src="https://flagcdn.com/24x18/ca.png" alt="Canadá" style="vertical-align:middle">
+        Canadá
+      </p>
       <div class="hero-flags">
-        <div class="flag-pill">🇲🇽 México</div>
-        <div class="flag-pill">🇺🇸 USA</div>
-        <div class="flag-pill">🇨🇦 Canadá</div>
         <div class="flag-pill">⚽ 48 Selecciones</div>
         <div class="flag-pill">🏟 12 Grupos</div>
       </div>
       <div class="hero-cta">
+        <a href="#grupos" class="btn-secondary">📋 Ver Grupos</a>
         <a href="#pronosticos" class="btn-primary">⚽ Hacer mi Pronóstico</a>
         <a href="#ranking" class="btn-secondary">🏆 Ver Ranking</a>
       </div>
@@ -68,15 +73,17 @@
     </div>
   </div>
 
-  <!-- GRUPOS -->
-  <section id="grupos">
+  <!-- PRONÓSTICOS -->
+  <section id="pronosticos" class="pronostico-section">
     <div class="section-header fade-up">
-      <span class="section-label">FIFA World Cup 2026</span>
-      <h2 class="section-title">12 GRUPOS<br>48 EQUIPOS</h2>
+      <span class="section-label">Participa ahora</span>
+      <h2 class="section-title">TU<br>PRONÓSTICO</h2>
       <div class="section-divider"></div>
     </div>
-    <div class="grupos-section fade-up">
-      <div class="grupos-grid" id="grupos-grid"></div>
+    <div class="pronostico-inner fade-up">
+      <div id="pronostico-content">
+        <div style="text-align:center;padding:4rem;color:var(--gray)">Cargando...</div>
+      </div>
     </div>
   </section>
 
@@ -101,27 +108,55 @@
         </thead>
         <tbody id="ranking-body"></tbody>
       </table>
+      <div id="ranking-toggle-container"></div>
     </div>
   </section>
 
-  <!-- PRONÓSTICOS -->
-  <section id="pronosticos" class="pronostico-section">
+  <!-- GRUPOS -->
+  <section id="grupos">
     <div class="section-header fade-up">
-      <span class="section-label">Participa ahora</span>
-      <h2 class="section-title">TU<br>PRONÓSTICO</h2>
+      <span class="section-label">FIFA World Cup 2026</span>
+      <h2 class="section-title">12 GRUPOS<br>48 EQUIPOS</h2>
       <div class="section-divider"></div>
     </div>
-    <div class="pronostico-inner fade-up">
-      <div id="pronostico-content">
-        <div style="text-align:center;padding:4rem;color:var(--gray)">Cargando...</div>
-      </div>
+    <div class="grupos-section fade-up">
+      <div class="grupos-grid" id="grupos-grid"></div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p>🏆 Mundial FIFA 2026 &nbsp;·&nbsp; México · USA · Canadá · 11 Jun – 19 Jul 2026</p>
-    <p style="margin-top:0.5rem;font-size:0.7rem;opacity:0.5">Sitio de uso privado. No afiliado con FIFA.</p>
+
+    <div class="footer-contact">
+      
+      <a
+        href="https://wa.me/593984389928?text=Hola%20Jeff,%20tengo%20una%20pregunta%20sobre%20la%20*Polla%20Mundialista*%20puedes%20ayudarme?"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
+          <path d="M16.04 3C8.84 3 3 8.74 3 15.83c0 2.27.61 4.49 1.77 6.43L3 29l6.96-1.8a13.2 13.2 0 0 0 6.08 1.54c7.2 0 13.04-5.74 13.04-12.83C29.08 8.74 23.24 3 16.04 3zm7.6 18.3c-.32.88-1.87 1.67-2.58 1.78-.67.1-1.52.14-2.46-.16-.57-.18-1.31-.43-2.26-.84-3.97-1.72-6.56-5.73-6.76-6-.2-.27-1.61-2.12-1.61-4.04 0-1.92 1.01-2.86 1.37-3.25.36-.39.79-.49 1.05-.49.26 0 .52 0 .75.01.24.01.57-.09.89.68.33.79 1.11 2.73 1.21 2.93.1.2.16.43.03.7-.13.27-.2.43-.4.66-.2.23-.42.52-.6.69-.2.2-.41.42-.18.83.23.4 1.01 1.63 2.17 2.64 1.49 1.3 2.74 1.7 3.14 1.9.4.2.63.17.86-.1.23-.27.99-1.15 1.25-1.55.26-.39.53-.33.89-.2.36.13 2.28 1.06 2.67 1.25.39.2.65.29.75.45.1.16.1.92-.22 1.8z"/>
+        </svg>
+        WhatsApp
+      </a>
+
+      <a
+        href="mailto:luxore.ec@gmail.com?subject=Soporte%20Polla%20Mundialista"
+        class="footer-link"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 3.2-8 5.3-8-5.3V6l8 5.3L20 6v1.2z"/>
+        </svg>
+        Soporte Técnico
+      </a>
+
+    </div>
+
+    <p style="margin-top:0.5rem;font-size:0.7rem;opacity:0.5">
+      Sitio de uso privado. No afiliado con FIFA.
+    </p>
   </footer>
 
   <!-- SUCCESS MODAL -->

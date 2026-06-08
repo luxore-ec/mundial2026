@@ -54,54 +54,109 @@ function getCurrentFase() {
 
 // ── GRUPOS INFO ────────────────────────────────
 function renderGrupos() {
-  const container = document.getElementById('grupos-grid');
+  const container = document.getElementById("grupos-grid");
+
   container.innerHTML = MUNDIAL_DATA.grupos
     .map(
       (g) => `
-    <div class="grupo-card">
-      <div class="grupo-letra">Grupo ${g.id}</div>
-      ${g.equipos
-        .map(
-          (
-            e,
-          ) => `<div class="grupo-equipo"><img src="https://flagcdn.com/24x18/${CODIGOS[e]}.png" style="width:24px;height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"> ${e}</div>`,
-        )
-        .join("")}
-    </div>
-  `,
+      <details class="grupo-card">
+        <summary class="grupo-letra">
+          Grupo ${g.id}
+        </summary>
+
+        <div class="grupo-contenido">
+          ${g.equipos
+            .map(
+              (e) => `
+                <div class="grupo-equipo">
+                  <img
+                    src="https://flagcdn.com/24x18/${CODIGOS[e]}.png"
+                    style="width:24px;height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"
+                  >
+                  ${e}
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </details>
+    `,
     )
     .join("");
 }
 
 // ── RANKING ────────────────────────────────────
 function renderRanking() {
-  const container = document.getElementById('ranking-body');
+  const container = document.getElementById("ranking-body");
+  const toggleContainer = document.getElementById("ranking-toggle-container");
   const data = MUNDIAL_DATA.ranking;
 
   if (!data || data.length === 0) {
-    container.innerHTML = `<tr><td colspan="6" class="empty-ranking">🏆 El ranking se actualizará con los primeros resultados</td></tr>`;
+    container.innerHTML = `
+      <tr>
+        <td colspan="6" class="empty-ranking">
+          🏆 El ranking se actualizará con los primeros resultados
+        </td>
+      </tr>`;
+    toggleContainer.innerHTML = "";
     return;
   }
 
   const sorted = [...data].sort((a, b) => b.aciertos - a.aciertos);
   const maxAciertos = sorted[0]?.aciertos || 1;
 
-  container.innerHTML = sorted.map((p, i) => {
-    const pos = i + 1;
-    const posClass = pos <= 3 ? `top${pos}` : '';
-    const medal = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : pos;
-    const pct = Math.round((p.aciertos / (p.total || 1)) * 100);
-    const barWidth = Math.round((p.aciertos / maxAciertos) * 100);
-    return `
-      <tr class="ranking-row">
+  container.innerHTML = sorted
+    .map((p, i) => {
+      const pos = i + 1;
+      const posClass = pos <= 3 ? `top${pos}` : "";
+      const medal =
+        pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+      const pct = Math.round((p.aciertos / (p.total || 1)) * 100);
+      const barWidth = Math.round((p.aciertos / maxAciertos) * 100);
+
+      const hiddenClass = pos > 10 ? "ranking-hidden" : "";
+      const hiddenStyle = pos > 10 ? "display:none" : "";
+
+      return `
+      <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
         <td><span class="rank-pos ${posClass}">${medal}</span></td>
         <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td><span class="rank-campeon">${escapeHtml(p.campeon || '—')}</span></td>
+        <td><span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span></td>
         <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
         <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
         <td><div class="rank-bar-wrap"><div class="rank-bar" style="width:${barWidth}%"></div></div></td>
       </tr>`;
-  }).join('');
+    })
+    .join("");
+
+  const restantes = sorted.length - 10;
+
+  if (restantes > 0) {
+    toggleContainer.innerHTML = `
+      <button id="ranking-toggle" class="btn-secondary">
+        Ver restantes (${restantes})
+      </button>
+    `;
+
+    document
+      .getElementById("ranking-toggle")
+      .addEventListener("click", function () {
+        const hiddenRows = document.querySelectorAll(".ranking-hidden");
+        const expanded = this.dataset.expanded === "true";
+
+        hiddenRows.forEach((row) => {
+          row.style.display = expanded ? "none" : "";
+        });
+
+        this.dataset.expanded = !expanded;
+
+        this.textContent = expanded
+          ? `Ver restantes (${restantes})`
+          : "Ocultar ranking";
+      });
+  } else {
+    toggleContainer.innerHTML = "";
+  }
 }
 
 // ── CHECK SUBMITTED ────────────────────────────
@@ -195,6 +250,17 @@ function renderForm() {
         <label class="form-label">Apellido *</label>
         <input class="form-input" id="f-apellido" type="text" placeholder="Tu apellido" maxlength="50" />
       </div>
+      <div class="form-group">
+        <label class="form-label">Cédula *</label>
+        <input
+          class="form-input"
+          id="f-cedula"
+          type="text"
+          inputmode="numeric"
+          maxlength="10"
+          placeholder="1234567890"
+        />
+      </div>
       <div class="form-group full">
         <label class="form-label">Correo electrónico *</label>
         <input class="form-input" id="f-correo" type="email" placeholder="correo@ejemplo.com" maxlength="100" />
@@ -202,15 +268,86 @@ function renderForm() {
     </div>
 
     <!-- Pronóstico Campeón (solo en primera fase) -->
-    ${faseKey === 'grupos_j1' ? `
+    ${
+      faseKey === "grupos_j1"
+        ? `
+
     <div class="campeon-section">
-      <div class="campeon-title">🏆 ¿Quién será el Campeón del Mundo?</div>
-      <p class="campeon-desc">Elige la selección que crees que levantará la Copa del mundial 2026. Solo puedes hacerlo una vez.</p>
-      <select class="campeon-select" id="f-campeon">
-        <option value="">— Selecciona un campeón —</option>
-        ${MUNDIAL_DATA.equipos.map(e => `<option value="${e}">${e}</option>`).join('')}
-      </select>
-    </div>` : ''}
+
+      <div class="campeon-title">
+        🏆 Pronósticos Especiales
+      </div>
+
+      <p class="campeon-desc">
+        Estos pronósticos otorgan puntos adicionales durante el torneo.
+      </p>
+
+      <div class="user-form">
+
+        <div class="form-group">
+          <label class="form-label">Campeón *</label>
+          <select class="campeon-select" id="f-campeon">
+            <option value="">Selecciona</option>
+            ${MUNDIAL_DATA.equipos
+              .map((e) => `<option value="${e}">${e}</option>`)
+              .join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Subcampeón *</label>
+          <select class="campeon-select" id="f-subcampeon">
+            <option value="">Selecciona</option>
+            ${MUNDIAL_DATA.equipos
+              .map((e) => `<option value="${e}">${e}</option>`)
+              .join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tercer Lugar *</label>
+          <select class="campeon-select" id="f-tercero">
+            <option value="">Selecciona</option>
+            ${MUNDIAL_DATA.equipos
+              .map((e) => `<option value="${e}">${e}</option>`)
+              .join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">País ganador del Balón de Oro *</label>
+          <select class="campeon-select" id="f-balonoro">
+            <option value="">Selecciona</option>
+            ${MUNDIAL_DATA.equipos
+              .map((e) => `<option value="${e}">${e}</option>`)
+              .join("")}
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">
+            BONUS LA TRI: ¿Hasta qué fase llegará Ecuador?
+          </label>
+
+          <select class="campeon-select" id="f-ecuador">
+            <option value="">Selecciona</option>
+            <option value="Fase de grupos">Fase de grupos</option>
+            <option value="Dieciseisavos">Clasificado a Dieciseisavos</option>
+            <option value="Octavos">Clasificado a Octavos</option>
+            <option value="Cuartos">Clasificado a Cuartos</option>
+            <option value="Semifinales">Clasificado a Semifinales</option>
+            <option value="Final">Clasificado a la Final</option>
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+        : ""
+    }
 
     <!-- Progress -->
     <div class="fase-progress">
@@ -292,36 +429,112 @@ function validateForm() {
   let valid = true;
   const faseKey = MUNDIAL_DATA.config.faseActiva;
 
-  const nombre  = document.getElementById('f-nombre')?.value.trim();
-  const apellido = document.getElementById('f-apellido')?.value.trim();
-  const correo  = document.getElementById('f-correo')?.value.trim();
+  const nombre = document
+    .getElementById("f-nombre")
+    ?.value.trim()
+    .replace(/\s+/g, " ");
 
-  [['f-nombre', nombre], ['f-apellido', apellido], ['f-correo', correo]].forEach(([id, val]) => {
+  const apellido = document
+    .getElementById("f-apellido")
+    ?.value.trim()
+    .replace(/\s+/g, " ");
+
+  const cedula = document.getElementById("f-cedula")?.value.trim();
+
+  const correo = document.getElementById("f-correo")?.value.trim();
+
+  // Campos obligatorios
+  [
+    ["f-nombre", nombre],
+    ["f-apellido", apellido],
+    ["f-cedula", cedula],
+    ["f-correo", correo],
+  ].forEach(([id, val]) => {
     const el = document.getElementById(id);
-    if (!val) { el.classList.add('error'); valid = false; }
-    else el.classList.remove('error');
+
+    if (!val) {
+      el.classList.add("error");
+      valid = false;
+    } else {
+      el.classList.remove("error");
+    }
   });
 
-  if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    document.getElementById('f-correo').classList.add('error'); valid = false;
+  const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$/;
+  const cedulaRegex = /^\d{10}$/;
+  const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const nombreEl = document.getElementById("f-nombre");
+  const apellidoEl = document.getElementById("f-apellido");
+  const cedulaEl = document.getElementById("f-cedula");
+  const correoEl = document.getElementById("f-correo");
+
+  // Nombre
+  if (nombre && !nombreRegex.test(nombre)) {
+    nombreEl.classList.add("error");
+    valid = false;
+  } else if (nombre) {
+    nombreEl.classList.remove("error");
   }
 
-  // Validate campeón only on first phase
-  if (faseKey === 'grupos_j1') {
-    const campeonEl = document.getElementById('f-campeon');
-    if (!campeonEl?.value) {
-      campeonEl.classList.add('error'); valid = false;
-      showToast('⚠ Debes elegir un campeón del mundo', 'error');
-    } else {
-      campeonEl.classList.remove('error');
+  // Apellido
+  if (apellido && !nombreRegex.test(apellido)) {
+    apellidoEl.classList.add("error");
+    valid = false;
+  } else if (apellido) {
+    apellidoEl.classList.remove("error");
+  }
+
+  // Cédula
+  if (!cedulaRegex.test(cedula || "")) {
+    cedulaEl.classList.add("error");
+    valid = false;
+  } else {
+    cedulaEl.classList.remove("error");
+  }
+
+  // Correo
+  if (correo && !correoRegex.test(correo)) {
+    correoEl.classList.add("error");
+    valid = false;
+  } else if (correo) {
+    correoEl.classList.remove("error");
+  }
+
+  // Pronósticos especiales
+  if (faseKey === "grupos_j1") {
+    const camposEspeciales = [
+      "f-campeon",
+      "f-subcampeon",
+      "f-tercero",
+      "f-balonoro",
+      "f-ecuador",
+    ];
+
+    camposEspeciales.forEach((id) => {
+      const el = document.getElementById(id);
+
+      if (!el?.value) {
+        el.classList.add("error");
+        valid = false;
+      } else {
+        el.classList.remove("error");
+      }
+    });
+
+    if (!valid) {
+      showToast(
+        "⚠ Completa todos los pronósticos especiales y datos requeridos",
+        "error",
+      );
     }
   }
 
   // Validate all matches
   let missingMatches = false;
-  getCurrentFase()?.partidos.forEach(p => {
+  getCurrentFase()?.partidos.forEach((p) => {
     if (!state.predicciones[p.id]) {
-      document.getElementById(`mc-${p.id}`)?.classList.add('has-error');
+      document.getElementById(`mc-${p.id}`)?.classList.add("has-error");
       missingMatches = true;
       valid = false;
       // Switch to tab with error
@@ -329,8 +542,10 @@ function validateForm() {
     }
   });
 
-  if (missingMatches) showToast('⚠ Selecciona un resultado para cada partido', 'error');
-  else if (!valid && !document.querySelector('.campeon-select.error')) showToast('⚠ Completa todos los campos', 'error');
+  if (missingMatches)
+    showToast("⚠ Selecciona un resultado para cada partido", "error");
+  else if (!valid && !document.querySelector(".campeon-select.error"))
+    showToast("⚠ Completa todos los campos", "error");
 
   return valid;
 }
@@ -345,8 +560,14 @@ async function handleSubmit() {
 
   const nombre   = document.getElementById('f-nombre').value.trim();
   const apellido = document.getElementById('f-apellido').value.trim();
+  const cedula = document.getElementById("f-cedula").value.trim();
   const correo   = document.getElementById('f-correo').value.trim();
+  
   const campeon  = document.getElementById('f-campeon')?.value || '';
+  const subcampeon = document.getElementById("f-subcampeon")?.value || "";
+  const tercero = document.getElementById("f-tercero")?.value || "";
+  const balonoro = document.getElementById("f-balonoro")?.value || "";
+  const ecuador = document.getElementById("f-ecuador")?.value || "";
   const faseKey  = MUNDIAL_DATA.config.faseActiva;
   const fase     = getCurrentFase();
 
@@ -355,13 +576,37 @@ async function handleSubmit() {
     fase: faseKey,
     nombre,
     apellido,
+    cedula,
     correo,
+
     campeon,
+    subcampeon,
+    tercero,
+    balonoro,
+    ecuador,
     ...state.predicciones
   };
 
   // Save locally for comprobante
-  const localData = { fase: faseKey, nombre, apellido, correo, campeon, predicciones: { ...state.predicciones }, timestamp: new Date().toISOString(), faseLabel: fase?.label };
+  const localData = {
+    fase: faseKey,
+
+    nombre,
+    apellido,
+    cedula,
+    correo,
+
+    campeon,
+    subcampeon,
+    tercero,
+    balonoro,
+    ecuador,
+
+    predicciones: { ...state.predicciones },
+
+    timestamp: new Date().toISOString(),
+    faseLabel: fase?.label,
+  };
 
   try {
     await fetch(URL_SCRIPT, { method: "POST", body: JSON.stringify(datos) });
@@ -405,7 +650,7 @@ function descargarComprobante() {
 
   // Build canvas image
   const canvas = document.createElement('canvas');
-  const W = 800, HEADER = 200, ROW = 36, PADDING = 40;
+  const W = 800, HEADER = 320, ROW = 36, PADDING = 40;
   const partidos = fase?.partidos || [];
   canvas.width = W;
   canvas.height = HEADER + partidos.length * ROW + 160;
@@ -428,7 +673,7 @@ function descargarComprobante() {
   ctx.fillStyle = '#D4AF37';
   ctx.font = 'bold 36px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText('MUNDIAL 2026 · COMPROBANTE', W / 2, 55);
+  ctx.fillText('POLLA MUNDIALISTA · COMPROBANTE', W / 2, 55);
 
   ctx.fillStyle = '#888899';
   ctx.font = '16px Arial';
@@ -442,11 +687,33 @@ function descargarComprobante() {
   ctx.font = '14px Arial';
   ctx.fillText(data.correo, W / 2, 138);
   ctx.fillText(ts, W / 2, 160);
+  ctx.fillStyle = '#D4AF37';
+  ctx.font = 'bold 15px Arial';
+
+  let y = 185;
 
   if (data.campeon) {
-    ctx.fillStyle = '#D4AF37';
-    ctx.font = 'bold 15px Arial';
-    ctx.fillText(`🏆 Campeón pronosticado: ${data.campeon}`, W / 2, 185);
+    ctx.fillText(`🏆 Campeón: ${data.campeon}`, W / 2, y);
+    y += 24;
+  }
+
+  if (data.subcampeon) {
+    ctx.fillText(`🥈 Subcampeón: ${data.subcampeon}`, W / 2, y);
+    y += 24;
+  }
+
+  if (data.tercero) {
+    ctx.fillText(`🥉 Tercer Lugar: ${data.tercero}`, W / 2, y);
+    y += 24;
+  }
+
+  if (data.balonoro) {
+    ctx.fillText(`⭐ Balón de Oro: ${data.balonoro}`, W / 2, y);
+    y += 24;
+  }
+
+  if (data.ecuador) {
+    ctx.fillText(`🇪🇨 Ecuador: ${data.ecuador}`, W / 2, y);
   }
 
   // Divider
@@ -454,7 +721,7 @@ function descargarComprobante() {
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(PADDING, HEADER - 10);
-  ctx.lineTo(W - PADDING, HEADER - 10);
+  ctx.lineTo(W - PADDING, (HEADER - 10));
   ctx.stroke();
 
   // Match rows
