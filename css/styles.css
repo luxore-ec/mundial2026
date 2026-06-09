@@ -166,7 +166,7 @@ section { position: relative; z-index: 1; }
 .pred-btn:hover { border-color: var(--gold); color: var(--gold); }
 .pred-btn.selected-local { background: rgba(0,200,83,0.15); border-color: var(--green); color: var(--green); }
 .pred-btn.selected-empate { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
-.pred-btn.selected-visitante { background: rgba(200,16,46,0.15); border-color: var(--red); color: #FF6B6B; }
+.pred-btn.selected-visitante { background: rgba(200,16,46,0.15); border-color: var(--green); color: var(--green); }
 .match-required { grid-column: 1 / -1; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; color: var(--red); letter-spacing: 0.1em; display: none; margin-top: 0.25rem; }
 .match-card.has-error { border-color: rgba(200,16,46,0.3); }
 .match-card.has-error .match-required { display: block; }
