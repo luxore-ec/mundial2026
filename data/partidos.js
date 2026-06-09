@@ -177,21 +177,12 @@ const MUNDIAL_DATA = {
   // ── RANKING — actualizar manualmente
   // campeon: selección que el participante pronosticó campeón
   ranking: [
-    { nombre:"Andrés",    apellido:"Cruz",   aciertos:3, total:72, campeon:"Argentina" },
-    { nombre:"Jefferson", apellido:"Arévalo",      aciertos:0, total:72, campeon:"Brasil" },
-    { nombre:"Diego",     apellido:"Herrera",   aciertos:0, total:72, campeon:"Francia" },
-    { nombre:"Sofía",     apellido:"Paredes",   aciertos:0, total:72, campeon:"España" },
-    { nombre:"Andrés",    apellido:"Mora",      aciertos:0, total:72, campeon:"Argentina" },
-    { nombre:"Lucía",     apellido:"Vega",      aciertos:0, total:72, campeon:"Portugal" },
-    { nombre:"Sebastián", apellido:"Flores",    aciertos:0, total:72, campeon:"Alemania" },
-    { nombre:"Camila",    apellido:"Torres",    aciertos:0, total:72, campeon:"Francia" },
-    { nombre:"Mateo",     apellido:"Guzmán",    aciertos:0, total:72, campeon:"Brasil" },
-    { nombre:"Isabella",  apellido:"Castro",    aciertos:0,  total:72, campeon:"México" },
-    { nombre:"Tomás",     apellido:"Navarro",   aciertos:0,  total:72, campeon:"Inglaterra" },
-    { nombre:"Paula",     apellido:"Jiménez",   aciertos:0,  total:72, campeon:"Argentina" },
-    { nombre:"Ricardo",   apellido:"Salazar",   aciertos:0,  total:72, campeon:"España" },
-    { nombre:"Natalia",   apellido:"Peña",      aciertos:0,  total:72, campeon:"Brasil" },
-    { nombre:"Felipe",    apellido:"Ramos",     aciertos:0,  total:72, campeon:"Estados Unidos" },
+    { nombre:"-",    apellido:"-",   aciertos:0, total:72, campeon:"" },
+    { nombre:"-", apellido:"-",      aciertos:0, total:72, campeon:"" },
+    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon:"" },
+    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon:"" },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon:"" },
+    
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
   resultados: {
     // "a_j1_1": "local" | "empate" | "visitante"
