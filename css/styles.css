@@ -360,3 +360,37 @@ footer p {
   color: var(--gray-light);
   font-style: normal;
 }
+
+@keyframes luz {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.btn-instrucciones {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 3rem;
+  background: linear-gradient(90deg, 
+    var(--gold-dark) 0%, 
+    var(--gold) 25%, 
+    #fff8dc 50%, 
+    var(--gold) 75%, 
+    var(--gold-dark) 100%);
+  background-size: 200% auto;
+  color: var(--dark);
+  border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  animation: luz 2.5s linear infinite;
+}
+
+.btn-instrucciones:hover {
+  animation-duration: 1s;
+  filter: brightness(1.15);
+}
