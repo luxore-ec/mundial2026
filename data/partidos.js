@@ -57,7 +57,7 @@ const MUNDIAL_DATA = {
       partidos: [
         // ── JORNADA 1 ──────────────────────────────────────────────
         { id:"a_j1_1", local:"México",         visitante:"Sudáfrica",    fecha:"11 de junio", hora:"21:00", grupo:"A" },
-        { id:"a_j1_2", local:"Corea del Sur",   visitante:"Chequia",      fecha:"12 de junio", hora:"04:00", grupo:"A" },
+        { id:"a_j1_2", local:"Corea del Sur",   visitante:"República Checa",      fecha:"12 de junio", hora:"04:00", grupo:"A" },
         { id:"b_j1_1", local:"Canadá",          visitante:"Bosnia y Herzegovina", fecha:"12 de junio", hora:"21:00", grupo:"B" },
         { id:"b_j1_2", local:"Qatar",            visitante:"Suiza",        fecha:"13 de junio", hora:"21:00", grupo:"B" },
         { id:"c_j1_1", local:"Brasil",           visitante:"Marruecos",    fecha:"14 de junio", hora:"00:00", grupo:"C" },
@@ -82,7 +82,7 @@ const MUNDIAL_DATA = {
         { id:"l_j1_2", local:"Panamá",           visitante:"Ghana",        fecha:"18 de junio", hora:"01:00", grupo:"L" },
 
         // ── JORNADA 2 ──────────────────────────────────────────────
-        { id:"a_j2_1", local:"Chequia",          visitante:"Sudáfrica",    fecha:"18 de junio", hora:"18:00", grupo:"A" },
+        { id:"a_j2_1", local:"República Checa",          visitante:"Sudáfrica",    fecha:"18 de junio", hora:"18:00", grupo:"A" },
         { id:"a_j2_2", local:"México",           visitante:"Corea del Sur",fecha:"19 de junio", hora:"03:00", grupo:"A" },
         { id:"b_j2_1", local:"Suiza",            visitante:"Bosnia y Herzegovina", fecha:"18 de junio", hora:"21:00", grupo:"B" },
         { id:"b_j2_2", local:"Canadá",           visitante:"Qatar",        fecha:"19 de junio", hora:"00:00", grupo:"B" },
@@ -109,7 +109,7 @@ const MUNDIAL_DATA = {
 
         // ── JORNADA 3 ──────────────────────────────────────────────
         { id:"a_j3_1", local:"Sudáfrica",        visitante:"Corea del Sur",fecha:"25 de junio", hora:"03:00", grupo:"A" },
-        { id:"a_j3_2", local:"Chequia",          visitante:"México",       fecha:"25 de junio", hora:"03:00", grupo:"A" },
+        { id:"a_j3_2", local:"República Checa",          visitante:"México",       fecha:"25 de junio", hora:"03:00", grupo:"A" },
         { id:"b_j3_1", local:"Bosnia y Herzegovina", visitante:"Qatar",    fecha:"24 de junio", hora:"21:00", grupo:"B" },
         { id:"b_j3_2", local:"Suiza",            visitante:"Canadá",       fecha:"24 de junio", hora:"21:00", grupo:"B" },
         { id:"c_j3_1", local:"Escocia",          visitante:"Brasil",       fecha:"25 de junio", hora:"00:00", grupo:"C" },

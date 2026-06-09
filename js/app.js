@@ -388,16 +388,28 @@ function switchGrupoTab(grupo) {
   document.querySelectorAll('.partidos-grupo').forEach(p => p.classList.toggle('active', p.id === `tab-${grupo}`));
 }
 
+function getFlagImg(pais) {
+  const code = CODIGOS[pais];
+  if (!code) return ""; // Retorna vacío si el país no está mapeado
+
+  // Usando el CDN estándar de flagcdn para consistencia
+  return `<img src="https://flagcdn.com/w40/${code}.png" alt="${pais}" class="match-flag" style="width: 24px; height: auto; border-radius: 2px; vertical-align: middle;">`;
+}
+
 // ── RENDER PARTIDO ─────────────────────────────
 function renderPartido(p) {
   return `
     <div class="match-card" id="mc-${p.id}">
-      <div class="match-team">${escapeHtml(p.local)}</div>
+      <div class="match-team">
+        ${getFlagImg(p.local)} <span class="team-name">${escapeHtml(p.local)}</span>
+      </div>
       <div class="match-info">
         <span class="match-vs">VS</span>
         <span class="match-date">${p.fecha} · ${p.hora}</span>
       </div>
-      <div class="match-team right">${escapeHtml(p.visitante)}</div>
+      <div class="match-team right">
+        <span class="team-name">${escapeHtml(p.visitante)}</span> ${getFlagImg(p.visitante)}
+      </div>
       <div class="pred-buttons">
         <button class="pred-btn" onclick="selectPred('${p.id}','local',this)">🏠 ${escapeHtml(p.local)}</button>
         <button class="pred-btn" onclick="selectPred('${p.id}','empate',this)">🤝 Empate</button>
