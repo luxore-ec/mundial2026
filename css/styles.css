@@ -334,3 +334,29 @@ footer p {
   .pred-btn { font-size: 0.68rem; padding: 0.45rem 0.3rem; }
   .ranking-table th:nth-child(5), .ranking-table td:nth-child(5) { display: none; }
 }
+
+
+/* ── DESPLEGABLE DE PRONÓSTICOS ESPECIALES EN RANKING ── */
+.ranking-select-especiales {
+  background: var(--dark3);
+  color: var(--white);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: 100%;
+  max-width: 140px;
+  outline: none;
+}
+
+.ranking-select-especiales option {
+  background: var(--dark2);
+  color: var(--white);
+}
+
+.ranking-select-especiales option[disabled] {
+  color: var(--gray-light);
+  font-style: normal;
+}

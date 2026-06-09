@@ -118,12 +118,29 @@ function renderRanking() {
       const hiddenStyle = pos > 10 ? "display:none" : "";
 
       const puntosReales = p.aciertos * 3;
+      const especiales = p.campeon ? p.campeon.split("|") : [];
+
+      let selectHTML = "";
+      if (especiales.length >= 5) {
+        selectHTML = `
+          <select class="ranking-select-especiales">
+            <option value="">Ver</option>
+            <option disabled>🥇 Campeón: ${especiales[0].trim()}</option>
+            <option disabled>🥈 Subcampeón: ${especiales[1].trim()}</option>
+            <option disabled>🥉 3er Lugar: ${especiales[2].trim()}</option>
+            <option disabled>⚽ Balón Oro: ${especiales[3].trim()}</option>
+            <option disabled>La Tri: ${especiales[4].trim()}</option>
+          </select>
+        `;
+      } else {
+        selectHTML = `<span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span>`;
+      }
 
       return `
       <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
         <td><span class="rank-pos ${posClass}">${medal}</span></td>
         <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td><span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span></td>
+        <td>${selectHTML}</td>
         <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
         <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
         <td style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white); text-align:center;">
@@ -411,9 +428,9 @@ function renderPartido(p) {
         <span class="team-name">${escapeHtml(p.visitante)}</span> ${getFlagImg(p.visitante)}
       </div>
       <div class="pred-buttons">
-        <button class="pred-btn" onclick="selectPred('${p.id}','local',this)">🏠 ${escapeHtml(p.local)}</button>
+        <button class="pred-btn" onclick="selectPred('${p.id}','local',this)"> ${escapeHtml(p.local)}</button>
         <button class="pred-btn" onclick="selectPred('${p.id}','empate',this)">🤝 Empate</button>
-        <button class="pred-btn" onclick="selectPred('${p.id}','visitante',this)">✈️ ${escapeHtml(p.visitante)}</button>
+        <button class="pred-btn" onclick="selectPred('${p.id}','visitante',this)"> ${escapeHtml(p.visitante)}</button>
       </div>
       <span class="match-required">⚠ Selecciona un resultado</span>
     </div>`;

@@ -177,11 +177,11 @@ const MUNDIAL_DATA = {
   // ── RANKING — actualizar manualmente
   // campeon: selección que el participante pronosticó campeón
   ranking: [
-    { nombre:"-",    apellido:"-",   aciertos:0, total:72, campeon:"" },
-    { nombre:"-", apellido:"-",      aciertos:0, total:72, campeon:"" },
-    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon:"" },
-    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon:"" },
-    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon:"" },
+    { nombre:"-",    apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-", apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
   resultados: {
