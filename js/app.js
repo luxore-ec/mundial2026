@@ -117,6 +117,8 @@ function renderRanking() {
       const hiddenClass = pos > 10 ? "ranking-hidden" : "";
       const hiddenStyle = pos > 10 ? "display:none" : "";
 
+      const puntosReales = p.aciertos * 3;
+
       return `
       <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
         <td><span class="rank-pos ${posClass}">${medal}</span></td>
@@ -124,7 +126,9 @@ function renderRanking() {
         <td><span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span></td>
         <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
         <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
-        <td><div class="rank-bar-wrap"><div class="rank-bar" style="width:${barWidth}%"></div></div></td>
+        <td style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white); text-align:center;">
+          ${puntosReales} <span style="font-size:0.8rem; color:var(--gold); font-weight:400;">PTS</span>
+        </td>
       </tr>`;
     })
     .join("");
@@ -161,7 +165,6 @@ function renderRanking() {
 
 // ── CHECK SUBMITTED ────────────────────────────
 function checkAlreadySubmitted() {
-  const stored = localStorage.getItem('mundial2026_done');
   const container = document.getElementById('pronostico-content');
   const now = new Date();
   const deadline = new Date(MUNDIAL_DATA.config.fechaLimiteFase);
@@ -178,17 +181,18 @@ function checkAlreadySubmitted() {
   }
 
   // Check if already submitted THIS phase
+  const stored = localStorage.getItem(`mundial2026_done_${faseKey}`);
   let doneData = null;
   try { doneData = stored ? JSON.parse(stored) : null; } catch(e) {}
 
-  if (doneData && doneData.fase === faseKey) {
+  if (doneData) {
     container.innerHTML = `
       <div class="already-done">
         <div class="check-icon">✅</div>
         <h3>¡Ya enviaste tu pronóstico!</h3>
         <p>Fase: <strong style="color:var(--gold)">${getCurrentFase()?.label}</strong><br>
-           Registrado el ${new Date(doneData.timestamp).toLocaleString('es-EC')}</p>
-        <button class="btn-download" onclick="descargarComprobante()">📥 Descargar comprobante</button>
+           Registrado el ${new Date(doneData.timestamp).toLocaleString("es-EC")}</p>
+        <button class="btn-download" onclick="descargarComprobante('${faseKey}')">📥 Descargar comprobante</button>
       </div>`;
     return;
   }
@@ -264,6 +268,10 @@ function renderForm() {
       <div class="form-group full">
         <label class="form-label">Correo electrónico *</label>
         <input class="form-input" id="f-correo" type="email" placeholder="correo@ejemplo.com" maxlength="100" />
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Teléfono / WhatsApp *</label>
+        <input class="form-input" id="f-telefono" type="tel" placeholder="+593 99 999 9999" maxlength="20" />
       </div>
     </div>
 
@@ -350,9 +358,10 @@ function renderForm() {
     }
 
     <!-- Progress -->
-    <div class="fase-progress">
-      <div class="fase-progress-label" id="prog-label">0 / ${totalPartidos} partidos seleccionados</div>
-      <div class="fase-progress-bar"><div class="fase-progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="fase-progress" style="padding: 12px; text-align: center; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 15px;">
+      <div class="fase-progress-label" id="prog-label" style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; letter-spacing:0.5px;">
+        Puntos en juego: <strong style="color:var(--gold)">0</strong> pts (0 de ${totalPartidos} partidos)
+      </div>
     </div>
 
     <!-- Tabs de grupos + partidos -->
@@ -414,14 +423,14 @@ function selectPred(matchId, val, btn) {
 function updateProgress() {
   const fase = getCurrentFase();
   if (!fase) return;
-  const total = fase.partidos.length;
-  const selected = Object.keys(state.predicciones).length;
-  const pct = total > 0 ? Math.round((selected / total) * 100) : 0;
 
-  const lbl = document.getElementById('prog-label');
-  const fill = document.getElementById('prog-fill');
-  if (lbl) lbl.textContent = `${selected} / ${total} partidos seleccionados`;
-  if (fill) fill.style.width = `${pct}%`;
+  const selected = Object.keys(state.predicciones).length;
+  const puntosPotenciales = selected * 3;
+
+  const lbl = document.getElementById("prog-label");
+  if (lbl) {
+    lbl.innerHTML = `Puntos en juego: <strong style="color:var(--gold)">${puntosPotenciales}</strong> pts (${selected} de ${fase.partidos.length} partidos)`;
+  }
 }
 
 // ── VALIDATE ───────────────────────────────────
@@ -440,8 +449,8 @@ function validateForm() {
     .replace(/\s+/g, " ");
 
   const cedula = document.getElementById("f-cedula")?.value.trim();
-
   const correo = document.getElementById("f-correo")?.value.trim();
+  const telefono = document.getElementById('f-telefono')?.value.trim();
 
   // Campos obligatorios
   [
@@ -449,6 +458,7 @@ function validateForm() {
     ["f-apellido", apellido],
     ["f-cedula", cedula],
     ["f-correo", correo],
+    ["f-telefono", telefono],
   ].forEach(([id, val]) => {
     const el = document.getElementById(id);
 
@@ -463,7 +473,7 @@ function validateForm() {
   const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$/;
   const cedulaRegex = /^\d{10}$/;
   const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  const telefonoRegex = /^\+?[0-9]{10,20}$/;
   const nombreEl = document.getElementById("f-nombre");
   const apellidoEl = document.getElementById("f-apellido");
   const cedulaEl = document.getElementById("f-cedula");
@@ -550,6 +560,25 @@ function validateForm() {
   return valid;
 }
 
+async function getUserIP() {
+  const servicios = [
+    "https://api.ipify.org?format=json",
+    "https://api.ip.sb/jsonip",
+    "https://ipapi.co/json/",
+  ];
+
+  for (const url of servicios) {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.ip || data.IP || "";
+    } catch {
+      continue;
+    }
+  }
+  return "no-disponible";
+}
+
 // ── HANDLE SUBMIT ──────────────────────────────
 async function handleSubmit() {
   if (!validateForm()) return;
@@ -562,6 +591,7 @@ async function handleSubmit() {
   const apellido = document.getElementById('f-apellido').value.trim();
   const cedula = document.getElementById("f-cedula").value.trim();
   const correo   = document.getElementById('f-correo').value.trim();
+  const telefono = document.getElementById('f-telefono').value.trim();
   
   const campeon  = document.getElementById('f-campeon')?.value || '';
   const subcampeon = document.getElementById("f-subcampeon")?.value || "";
@@ -573,18 +603,21 @@ async function handleSubmit() {
 
   const datos = {
     timestamp: new Date().toISOString(),
-    fase: faseKey,
     nombre,
     apellido,
     cedula,
     correo,
+    telefono,
 
     campeon,
     subcampeon,
     tercero,
     balonoro,
     ecuador,
-    ...state.predicciones
+    fase: faseKey,
+    ip: await getUserIP(),
+    dispositivo: navigator.userAgent,
+    ...state.predicciones,
   };
 
   // Save locally for comprobante
@@ -610,9 +643,10 @@ async function handleSubmit() {
 
   try {
     await fetch(URL_SCRIPT, { method: "POST", body: JSON.stringify(datos) });
+    const faseActual = MUNDIAL_DATA.config.faseActiva;
 
-    localStorage.setItem('mundial2026_done', JSON.stringify(localData));
-    localStorage.setItem('mundial2026_comprobante', JSON.stringify(localData));
+    localStorage.setItem( `mundial2026_done_${faseActual}`, JSON.stringify(localData), );
+    localStorage.setItem( `mundial2026_comprobante_${faseActual}`, JSON.stringify(localData), );
 
     showSuccessModal(nombre, localData);
 

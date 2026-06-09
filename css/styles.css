@@ -172,10 +172,15 @@ section { position: relative; z-index: 1; }
 .match-card.has-error .match-required { display: block; }
 
 /* Progress bar */
-.fase-progress { margin-bottom: 1.5rem; }
-.fase-progress-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: var(--gray); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.fase-progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; }
-.fase-progress-fill { height: 100%; background: linear-gradient(to right, var(--gold-dark), var(--gold)); border-radius: 2px; transition: width 0.4s ease; }
+/* ── SISTEMA DE PUNTOS (OPTIMIZADO PARA MÓVILES) ── */
+.fase-progress { margin-bottom: 1.5rem; width: 100%; }
+.fase-progress-label { font-size: 1rem; color: var(--white); text-align: center; font-weight: 500; }
+.fase-progress-bar { 
+  display: none !important; 
+}
+.fase-progress-fill { 
+  display: none !important; 
+}
 
 /* Submit zone */
 .submit-zone { margin-top: 2.5rem; text-align: center; padding: 2rem; border: 1px solid rgba(212,175,55,0.12); background: rgba(212,175,55,0.03); }
