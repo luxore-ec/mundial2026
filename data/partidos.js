@@ -177,8 +177,8 @@ const MUNDIAL_DATA = {
   // ── RANKING — actualizar manualmente
   // campeon: selección que el participante pronosticó campeón
   ranking: [
-    { nombre:"-",    apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
-    { nombre:"-", apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"Bruno",    apellido:"Arevalo",   aciertos:0, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
+    { nombre:"Toga", apellido:"Kevin",      aciertos:0, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
     { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
