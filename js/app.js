@@ -333,7 +333,7 @@ function renderForm() {
       <div class="user-form">
 
         <div class="form-group">
-          <label class="form-label">Campeón *</label>
+          <label class="form-label">Campeón * <span style="color:#ffffff; font-weight:bold;">(+30 pts)</span></label>
           <select class="campeon-select" id="f-campeon">
             <option value="">Selecciona</option>
             ${MUNDIAL_DATA.equipos
@@ -343,7 +343,7 @@ function renderForm() {
         </div>
 
         <div class="form-group">
-          <label class="form-label">Subcampeón *</label>
+          <label class="form-label">Subcampeón * <span style="color:#ffffff; font-weight:bold;">(+20 pts)</span></label>
           <select class="campeon-select" id="f-subcampeon">
             <option value="">Selecciona</option>
             ${MUNDIAL_DATA.equipos
@@ -353,7 +353,7 @@ function renderForm() {
         </div>
 
         <div class="form-group">
-          <label class="form-label">Tercer Lugar *</label>
+          <label class="form-label">Tercer Lugar * <span style="color:#ffffff; font-weight:bold;">(+15 pts)</span></label>
           <select class="campeon-select" id="f-tercero">
             <option value="">Selecciona</option>
             ${MUNDIAL_DATA.equipos
@@ -363,7 +363,7 @@ function renderForm() {
         </div>
 
         <div class="form-group">
-          <label class="form-label">País ganador del Balón de Oro *</label>
+          <label class="form-label">País ganador del Balón de Oro * <span style="color:#ffffff; font-weight:bold;">(+20 pts)</span></label>
           <select class="campeon-select" id="f-balonoro">
             <option value="">Selecciona</option>
             ${MUNDIAL_DATA.equipos
@@ -374,7 +374,7 @@ function renderForm() {
 
         <div class="form-group full">
           <label class="form-label">
-            BONUS LA TRI: ¿Hasta qué fase llegará Ecuador?
+            BONUS LA TRI: ¿Hasta qué fase llegará Ecuador? <span style="color:#ffffff; font-weight:bold;">(+20 pts)</span>
           </label>
 
           <select class="campeon-select" id="f-ecuador">
