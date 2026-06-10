@@ -179,7 +179,7 @@ const MUNDIAL_DATA = {
   ranking: [
     { nombre:"Bruno",    apellido:"Arevalo",   aciertos:0, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
     { nombre:"Toga", apellido:"Kevin",      aciertos:0, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
-    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"JOSE",     apellido:"XAVIER",   aciertos:0, total:72, campeon: " España | Francia | Argentina | Francia | Octavos " },
     { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
