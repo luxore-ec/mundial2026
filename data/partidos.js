@@ -180,7 +180,12 @@ const MUNDIAL_DATA = {
     { nombre:"Bruno",    apellido:"Arevalo",   aciertos:0, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
     { nombre:"Toga", apellido:"Kevin",      aciertos:0, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
     { nombre:"JOSE",     apellido:"XAVIER",   aciertos:0, total:72, campeon: " España | Francia | Argentina | Francia | Octavos " },
-    { nombre:"-",     apellido:"-",   aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"David",     apellido:"Sellan",   aciertos:0, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
+    { nombre:"Elizabeth",    apellido:"Cabeza",    aciertos:0, total:72, campeon: " Francia | España | Portugal | Francia | Fase de grupos " },
+    { nombre:"Victor",    apellido:"Gonzalez",      aciertos:0, total:72, campeon: " España | Portugal | Francia | España | Octavos " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
