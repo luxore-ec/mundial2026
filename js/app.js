@@ -945,7 +945,7 @@ function escapeHtml(str) {
 
 // ── ANIMACIÓN CONTROLADA DEL POZO ACUMULADO ────────────────────
 function iniciarAnimacionPozo() {
-  const target = 200.1;
+  const target = 220.1;
   const duration = 3000; // Milisegundos de la subida inicial
   const start = 0;
   const startTime = performance.now();
