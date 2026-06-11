@@ -196,6 +196,8 @@ const MUNDIAL_DATA = {
     { nombre:"Kelvin",    apellido:"Cornejo",      aciertos:0, total:72, campeon: " España | Francia | Francia | España | Octavos " },
     { nombre:"Julio",    apellido:"Sanchez",      aciertos:0, total:72, campeon: " Portugal | Alemania | Brasil | Portugal | Octavos " },
     { nombre:"Oscar",    apellido:"Ortega",      aciertos:0, total:72, campeon: " Argentina | Francia | España | Francia | Octavos " },
+    { nombre:"Andrés",    apellido:"Soto",      aciertos:0, total:72, campeon: " España | Argentina | Portugal | Francia | Octavos " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
