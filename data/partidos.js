@@ -197,8 +197,12 @@ const MUNDIAL_DATA = {
     { nombre:"Julio",    apellido:"Sanchez",      aciertos:0, total:72, campeon: " Portugal | Alemania | Brasil | Portugal | Octavos " },
     { nombre:"Oscar",    apellido:"Ortega",      aciertos:0, total:72, campeon: " Argentina | Francia | España | Francia | Octavos " },
     { nombre:"Andrés",    apellido:"Soto",      aciertos:0, total:72, campeon: " España | Argentina | Portugal | Francia | Octavos " },
+    { nombre:"Jonathan",    apellido:"Di Luca",      aciertos:0, total:72, campeon: " Países Bajos | Portugal | España | Francia | Octavos " },
     { nombre:"JEAN",    apellido:"Arévalo",      aciertos:0, total:72, campeon: "Portugal | Francia | Ecuador | Marruecos | Cuartos " },
     { nombre:"Andrea",    apellido:"Soto",      aciertos:0, total:72, campeon: " España | Francia | Argentina | España | Octavos " },
+    { nombre:"Jose",    apellido:"Garcia",      aciertos:0, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
