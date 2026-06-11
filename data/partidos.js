@@ -216,7 +216,7 @@ const MUNDIAL_DATA = {
     { nombre:"Freddy",    apellido:"Pincay",      aciertos:0, total:72, campeon: " España | Argentina | Países Bajos | España | Octavos " },
     { nombre:"CARLOS",    apellido:"LOPEZ",      aciertos:0, total:72, campeon: " Francia | Portugal | Ecuador | España | Semifinales " },
     { nombre:"Lissette",    apellido:"Banchon",      aciertos:0, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
-    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"Carlos",    apellido:"Ochoa",      aciertos:0, total:72, campeon: " Francia | Brasil | Ecuador | Francia | Semifinales " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
