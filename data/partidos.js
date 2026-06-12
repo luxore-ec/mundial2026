@@ -11,7 +11,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "grupos_j1",
-    fechaLimiteFase: "2026-06-12T15:00:00-05:00",
+    fechaLimiteFase: "2026-06-12T14:00:00-05:00",
   },
 
   // ── EQUIPOS CAMPEÓN (todos los 48 para el pronóstico inicial)
@@ -227,7 +227,7 @@ const MUNDIAL_DATA = {
     { nombre:"Gabriel",     apellido:"Parraga",      aciertos:0, total:72, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
     { nombre:"Bryan",  apellido:"Parrales",      aciertos:0, total:72, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
     { nombre:"Livia",       apellido:"Arévalo",      aciertos:0, total:72, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
-    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
+    { nombre:"Pablo",    apellido:"Zambrano",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
     { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
     
