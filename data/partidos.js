@@ -11,7 +11,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "grupos_j1",
-    fechaLimiteFase: "2026-06-12T15:00:00",
+    fechaLimiteFase: "2026-06-12T15:00:00-05:00",
   },
 
   // ── EQUIPOS CAMPEÓN (todos los 48 para el pronóstico inicial)
