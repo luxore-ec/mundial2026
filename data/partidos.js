@@ -222,14 +222,14 @@ const MUNDIAL_DATA = {
     { nombre:"Rufo",        apellido:"Castro",       aciertos:1, total:72, campeon: " Portugal | Ecuador | Francia | España | Final " },
     { nombre:"Jorge",       apellido:"Rodriguez",    aciertos:1, total:72, campeon: " España | Portugal | Francia | España | Octavos " },
     
-    { nombre:"JUAN",        apellido:"PARRAGA",      aciertos:0, total:72, campeon: " Portugal | España | Ecuador | Portugal | Semifinales " },
-    { nombre:"Fernando",    apellido:"Parraga",      aciertos:0, total:72, campeon: " Francia | Portugal | España | Francia | Octavos " },
-    { nombre:"Gabriel",     apellido:"Parraga",      aciertos:0, total:72, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
-    { nombre:"Bryan",  apellido:"Parrales",      aciertos:0, total:72, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
-    { nombre:"Livia",       apellido:"Arévalo",      aciertos:0, total:72, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
-    { nombre:"Pablo",    apellido:"Zambrano",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
-    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " },
-    { nombre:"-",    apellido:"-",      aciertos:0, total:72, campeon: " - | - | - | - | - " }
+    { nombre:"JUAN",        apellido:"PARRAGA",      aciertos:0, total:70, campeon: " Portugal | España | Ecuador | Portugal | Semifinales " },
+    { nombre:"Fernando",    apellido:"Parraga",      aciertos:0, total:70, campeon: " Francia | Portugal | España | Francia | Octavos " },
+    { nombre:"Gabriel",     apellido:"Parraga",      aciertos:0, total:70, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
+    { nombre:"Bryan",       apellido:"Parrales",     aciertos:0, total:70, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
+    { nombre:"Livia",       apellido:"Arévalo",      aciertos:0, total:70, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
+    { nombre:"Pablo",       apellido:"Zambrano",     aciertos:0, total:70, campeon: " España | Francia | Portugal | España | Octavos " },
+    { nombre:"Josue",       apellido:"Villacis",     aciertos:0, total:70, campeon: " Brasil | Francia | Ecuador | Brasil | Cuartos " },
+    { nombre:"Junior",      apellido:"Castro",       aciertos:0, total:70, campeon: " Francia | Alemania | Argentina | Francia | Octavos " }
     
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
   resultados: {
