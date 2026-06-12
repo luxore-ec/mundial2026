@@ -394,3 +394,36 @@ footer p {
   animation-duration: 1s;
   filter: brightness(1.15);
 }
+
+
+.notif-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.08));
+  border-bottom: 2px solid var(--gold);
+  padding: 0.85rem 3rem 0.85rem 1.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.5;
+  backdrop-filter: blur(8px);
+}
+
+body.has-notif { padding-top: 60px; }
+
+.notif-banner strong { color: var(--gold); }
+
+.notif-close {
+  position: absolute;
+  top: 50%; right: 1rem;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--gray);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+.notif-close:hover { color: var(--gold); }

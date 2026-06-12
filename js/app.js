@@ -28,6 +28,10 @@ function initNav() {
   window.addEventListener("scroll", () =>
     nav.classList.toggle("scrolled", window.scrollY > 60),
   );
+  if (sessionStorage.getItem("notif_cerrada")) {
+    const b = document.getElementById("notif-banner");
+    if (b) b.style.display = "none";
+  }
 }
 
 // ── COUNTDOWN ──────────────────────────────────
@@ -941,6 +945,12 @@ function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
+}
+
+function cerrarNotif() {
+  document.getElementById("notif-banner").style.display = "none";
+  document.body.classList.remove("has-notif");
+  sessionStorage.setItem("notif_cerrada", "1");
 }
 
 // ── ANIMACIÓN CONTROLADA DEL POZO ACUMULADO ────────────────────
