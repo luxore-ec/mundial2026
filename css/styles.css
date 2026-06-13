@@ -427,3 +427,12 @@ body.has-notif { padding-top: 60px; }
   padding: 0.25rem 0.5rem;
 }
 .notif-close:hover { color: var(--gold); }
+
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
