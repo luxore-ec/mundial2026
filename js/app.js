@@ -1034,7 +1034,6 @@ function showRankingPopup() {
       <tr class="ranking-row">
         <td><span class="rank-pos ${posClass}">${medal}</span></td>
         <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td><span class="rank-campeon">${escapeHtml(p.campeon?.split("|")[0]?.trim() || "—")}</span></td>
         <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
           ${puntosReales} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
