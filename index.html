@@ -293,6 +293,32 @@
   <script src="js/app.js"></script>
 </body>
 
+<!-- MODAL RANKING POPUP -->
+<div class="modal-overlay" id="ranking-popup" style="z-index:1500">
+  <div class="modal-box" style="max-width:600px">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <span class="section-label">Tabla de posiciones</span>
+      <h2 class="modal-title">TOP 5</h2>
+    </div>
+    <table class="ranking-table" id="ranking-popup-body-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Participante</th>
+          <th>🏆 Specials</th>
+          <th>Aciertos</th>
+          <th>PTS</th>
+        </tr>
+      </thead>
+      <tbody id="ranking-popup-body"></tbody>
+    </table>
+    <div class="modal-actions" style="margin-top:1.5rem">
+      <a href="#ranking" class="modal-dl" onclick="closeRankingPopup()">Ver ranking completo</a>
+      <button class="modal-close" onclick="closeRankingPopup()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL INSTRUCCIONES -->
 <div id="instructions-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:2000; align-items:center; justify-content:center; padding:1rem;">
   <div style="position:relative; max-width:90vw; max-height:90vh;">

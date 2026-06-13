@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRanking();
   checkAlreadySubmitted();
   initScrollAnimations();
+  showRankingPopup();
 });
 
 // ── NAV ────────────────────────────────────────
@@ -1013,4 +1014,118 @@ function closeInstructionsModal() {
     modal.style.setProperty("display", "none", "important");
     document.body.style.overflow = "";
   }
+}
+
+// ── RANKING POPUP ──────────────────────────────
+function showRankingPopup() {
+  const data = MUNDIAL_DATA.ranking;
+  if (!data || data.length === 0) return;
+
+  const sorted = [...data].sort((a, b) => b.aciertos - a.aciertos).slice(0, 5);
+
+  document.getElementById("ranking-popup-body").innerHTML = sorted
+    .map((p, i) => {
+      const pos = i + 1;
+      const medal =
+        pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+      const posClass = pos <= 3 ? `top${pos}` : "";
+      const puntosReales = p.aciertos * 3;
+      return `
+      <tr class="ranking-row">
+        <td><span class="rank-pos ${posClass}">${medal}</span></td>
+        <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
+        <td><span class="rank-campeon">${escapeHtml(p.campeon?.split("|")[0]?.trim() || "—")}</span></td>
+        <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
+        <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
+          ${puntosReales} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
+        </td>
+      </tr>`;
+    })
+    .join("");
+
+  document.getElementById("ranking-popup").classList.add("show");
+  lanzarAnimacion();
+}
+
+function closeRankingPopup() {
+  document.getElementById("ranking-popup").classList.remove("show");
+  detenerAnimacion();
+}
+
+// ── ANIMACIONES POPUP ──────────────────────────
+let animacionActiva = null;
+let animFrames = [];
+
+function lanzarAnimacion() {
+  // Cambia aquí: "confetti" | "fuegos" | "estrellas" | "epico"
+  const tipo = "confetti";
+
+  if (tipo === "confetti") animConfetti();
+  else if (tipo === "fuegos") animFuegos();
+  else if (tipo === "estrellas") animEstrellas();
+  else if (tipo === "epico") animEpico();
+}
+
+function detenerAnimacion() {
+  animFrames.forEach((id) => cancelAnimationFrame(id));
+  animFrames = [];
+  document.querySelectorAll(".anim-canvas").forEach((c) => c.remove());
+  document.querySelectorAll(".anim-particle").forEach((p) => p.remove());
+}
+
+function crearCanvas() {
+  const c = document.createElement("canvas");
+  c.className = "anim-canvas";
+  c.style.cssText =
+    "position:fixed;inset:0;pointer-events:none;z-index:1600;width:100%;height:100%";
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+  document.body.appendChild(c);
+  return c;
+}
+
+// 1. CONFETTI
+function animConfetti() {
+  const canvas = crearCanvas();
+  const ctx = canvas.getContext("2d");
+  const piezas = Array.from({ length: 60 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    w: Math.random() * 12 + 6,
+    h: Math.random() * 6 + 4,
+    color: [
+      "#D4AF37",
+      "#F0D060",
+      "#FF6B6B",
+      "#00C853",
+      "#4FC3F7",
+      "#CE93D8",
+      "#FF8A65",
+    ][Math.floor(Math.random() * 7)],
+    rot: Math.random() * 360,
+    vel: Math.random() * 3 + 2,
+    swing: Math.random() * 3 - 1.5,
+    rotVel: Math.random() * 6 - 3,
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    piezas.forEach((p) => {
+      p.y += p.vel;
+      p.x += p.swing;
+      p.rot += p.rotVel;
+      if (p.y > canvas.height) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rot * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    animFrames.push(requestAnimationFrame(draw));
+  }
+  draw();
 }
