@@ -56,13 +56,13 @@ const MUNDIAL_DATA = {
       descripcion: "Todos los partidos de la fase de grupos (72 encuentros)",
       partidos: [
         // ── JORNADA 1 ──────────────────────────────────────────────
-        //{ id:"a_j1_1", local:"México",           visitante:"Sudáfrica",            fecha:"11 de junio", hora:"14:00", grupo:"A" },
-        //{ id:"a_j1_2", local:"Corea del Sur",    visitante:"República Checa",      fecha:"11 de junio", hora:"21:00", grupo:"A" },
-        //{ id:"b_j1_1", local:"Canadá",           visitante:"Bosnia y Herzegovina", fecha:"12 de junio", hora:"14:00", grupo:"B" },
+        //!{ id:"a_j1_1", local:"México",           visitante:"Sudáfrica",            fecha:"11 de junio", hora:"14:00", grupo:"A" },
+        //!{ id:"a_j1_2", local:"Corea del Sur",    visitante:"República Checa",      fecha:"11 de junio", hora:"21:00", grupo:"A" },
+        //!{ id:"b_j1_1", local:"Canadá",           visitante:"Bosnia y Herzegovina", fecha:"12 de junio", hora:"14:00", grupo:"B" },
         { id:"b_j1_2", local:"Qatar",            visitante:"Suiza",                fecha:"13 de junio", hora:"14:00", grupo:"B" },
         { id:"c_j1_1", local:"Brasil",           visitante:"Marruecos",            fecha:"13 de junio", hora:"17:00", grupo:"C" },
         { id:"c_j1_2", local:"Haití",            visitante:"Escocia",              fecha:"13 de junio", hora:"20:00", grupo:"C" },
-        //{ id:"d_j1_1", local:"Estados Unidos",   visitante:"Paraguay",             fecha:"12 de junio", hora:"20:00", grupo:"D" },
+        //!{ id:"d_j1_1", local:"Estados Unidos",   visitante:"Paraguay",             fecha:"12 de junio", hora:"20:00", grupo:"D" },
         { id:"d_j1_2", local:"Australia",        visitante:"Turquía",              fecha:"13 de junio", hora:"23:00", grupo:"D" },
         { id:"e_j1_1", local:"Alemania",         visitante:"Curazao",              fecha:"14 de junio", hora:"12:00", grupo:"E" },
         { id:"e_j1_2", local:"Costa de Marfil",  visitante:"Ecuador",              fecha:"14 de junio", hora:"15:00", grupo:"E" },

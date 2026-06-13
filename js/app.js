@@ -211,6 +211,9 @@ function checkAlreadySubmitted() {
         <div class="lock-icon">🔒</div>
         <h3>Pronósticos Cerrados</h3>
         <p>El plazo para esta fase ya finalizó.<br>Espera la actualización para la siguiente ronda.</p>
+        <button class="btn-download" onclick="descargarComprobante()">
+          📥 Descargar mi Comprobante
+        </button>
       </div>`;
     return;
   }
@@ -747,19 +750,23 @@ function closeModal() {
 }
 
 // ── DESCARGAR COMPROBANTE ──────────────────────
-function descargarComprobante() {
+function descargarComprobante(faseKey) {
+  const claveStorage = faseKey || MUNDIAL_DATA.config.faseActiva;
+
   let data = window._comprobanteData;
   if (!data) {
     try {
-      data = JSON.parse(localStorage.getItem("mundial2026_comprobante"));
+      data = JSON.parse(
+        localStorage.getItem(`mundial2026_comprobante_${claveStorage}`),
+      );
     } catch (e) {}
   }
   if (!data) {
-    showToast("No hay comprobante guardado", "error");
+    showToast("⚠ No enviaste un pronóstico desde este dispositivo", "error");
     return;
   }
 
-  const fase = MUNDIAL_DATA.fases[data.fase];
+  const faseData = MUNDIAL_DATA.fases[data.fase];
   const ts = new Date(data.timestamp).toLocaleString("es-EC", {
     dateStyle: "full",
     timeStyle: "short",
@@ -771,7 +778,7 @@ function descargarComprobante() {
     HEADER = 320,
     ROW = 36,
     PADDING = 40;
-  const partidos = fase?.partidos || [];
+  const partidos = faseData?.partidos || [];
   canvas.width = W;
   canvas.height = HEADER + partidos.length * ROW + 160;
 
