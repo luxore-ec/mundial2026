@@ -94,7 +94,7 @@ section { position: relative; z-index: 1; }
 .grupo-equipo:last-child { border-bottom: none; }
 
 /* ── RANKING ── */
-.ranking-section { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.ranking-section { max-width: 1000px; margin: 0 auto; padding: 0 0 5rem; }
 .ranking-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
 .ranking-table th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); padding: 0.75rem 0.75rem; text-align: left; border-bottom: 1px solid rgba(212,175,55,0.2); white-space: nowrap; }
 .ranking-table td { padding: 0.85rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); font-family: 'Barlow', sans-serif; font-size: 0.9rem; color: var(--gray-light); }
