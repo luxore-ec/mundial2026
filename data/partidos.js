@@ -64,7 +64,7 @@ const MUNDIAL_DATA = {
         //!{ id:"d_j1_1", local:"Estados Unidos",   visitante:"Paraguay",             fecha:"12 de junio", hora:"20:00", grupo:"D" },
         //!{ id:"d_j1_2", local:"Australia",        visitante:"Turquía",              fecha:"13 de junio", hora:"23:00", grupo:"D" },
         //!{ id:"e_j1_1", local:"Alemania",         visitante:"Curazao",              fecha:"14 de junio", hora:"12:00", grupo:"E" },
-        { id:"f_j1_1", local:"Países Bajos",     visitante:"Japón",                fecha:"14 de junio", hora:"15:00", grupo:"F" },
+        //!{ id:"f_j1_1", local:"Países Bajos",     visitante:"Japón",                fecha:"14 de junio", hora:"15:00", grupo:"F" },
         { id:"e_j1_2", local:"Costa de Marfil",  visitante:"Ecuador",              fecha:"14 de junio", hora:"18:00", grupo:"E" },
         { id:"f_j1_2", local:"Suecia",           visitante:"Túnez",                fecha:"14 de junio", hora:"21:00", grupo:"F" },
         { id:"g_j1_1", local:"Bélgica",          visitante:"Egipto",               fecha:"15 de junio", hora:"14:00", grupo:"G" },
