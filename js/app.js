@@ -1132,22 +1132,30 @@ function animConfetti() {
 
 // ── PARTIDOS DE HOY ────────────────────────────
 function renderPartidosHoy() {
-  const container = document.getElementById('partidos-hoy-container');
+  const container = document.getElementById("partidos-hoy-container");
   if (!container) return;
 
   // Fecha de hoy en formato "13 de junio"
   const hoy = new Date();
-  const fechaHoy = hoy.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
-  document.getElementById('hoy-fecha-label').textContent = 
-    hoy.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const fechaHoy = hoy.toLocaleDateString("es-ES", {
+    day: "numeric",
+    month: "long",
+  });
+  document.getElementById("hoy-fecha-label").textContent =
+    hoy.toLocaleDateString("es-ES", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
 
   // Recopilar todos los partidos de todas las fases
   const todosLosPartidos = [];
-  Object.values(MUNDIAL_DATA.fases).forEach(fase => {
-    if (fase.partidos) fase.partidos.forEach(p => todosLosPartidos.push(p));
+  Object.values(MUNDIAL_DATA.fases).forEach((fase) => {
+    if (fase.partidos) fase.partidos.forEach((p) => todosLosPartidos.push(p));
   });
 
-  const partidosHoy = todosLosPartidos.filter(p => p.fecha === fechaHoy);
+  const partidosHoy = todosLosPartidos.filter((p) => p.fecha === fechaHoy);
 
   if (partidosHoy.length === 0) {
     container.innerHTML = `
@@ -1157,21 +1165,37 @@ function renderPartidosHoy() {
     return;
   }
 
-  container.innerHTML = partidosHoy.map(p => `
-    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:1rem 1.25rem;border:1px solid rgba(212,175,55,0.12);margin-bottom:0.5rem;background:rgba(212,175,55,0.03);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px;">
-        <img src="https://flagcdn.com/24x18/${CODIGOS[p.local] || 'un'}.png" style="width:24px;height:18px;border-radius:2px">
-        ${escapeHtml(p.local)}
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;padding:0 1rem;">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gray);letter-spacing:0.1em">VS</span>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--gold);letter-spacing:0.05em">${p.hora} ECT</span>
-        ${p.grupo ? `<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--gray)">Grupo ${p.grupo}</span>` : ''}
-      </div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--white);text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:8px;">
-        ${escapeHtml(p.visitante)}
-        <img src="https://flagcdn.com/24x18/${CODIGOS[p.visitante] || 'un'}.png" style="width:24px;height:18px;border-radius:2px">
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = partidosHoy
+    .map((p) => {
+      const esEcuador = p.local === "Ecuador" || p.visitante === "Ecuador";
+      const contenido = `
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px;">
+          <img src="https://flagcdn.com/24x18/${CODIGOS[p.local] || "un"}.png" style="width:24px;height:18px;border-radius:2px">
+          ${escapeHtml(p.local)}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;padding:0 1rem;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gray);letter-spacing:0.1em">VS</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--gold);letter-spacing:0.05em">${p.hora} ECT</span>
+          ${p.grupo ? `<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--gray)">Grupo ${p.grupo}</span>` : ""}
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--white);text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:8px;">
+          ${escapeHtml(p.visitante)}
+          <img src="https://flagcdn.com/24x18/${CODIGOS[p.visitante] || "un"}.png" style="width:24px;height:18px;border-radius:2px">
+        </div>`;
+
+            return esEcuador
+              ? `
+        <div class="partido-ecuador">
+          <div class="electric-border"></div>
+          <div class="electric-glow-1"></div>
+          <div class="electric-glow-2"></div>
+          <div class="electric-bg"></div>
+          <div class="card-inner">${contenido}</div>
+        </div>`
+              : `
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:1rem 1.25rem;border:1px solid rgba(212,175,55,0.12);margin-bottom:0.5rem;background:rgba(212,175,55,0.03);">
+          ${contenido}
+        </div>`;
+    })
+    .join("");
 }
