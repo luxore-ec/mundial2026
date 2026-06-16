@@ -69,7 +69,7 @@ const MUNDIAL_DATA = {
         //!{ id:"f_j1_2", local:"Suecia",           visitante:"Túnez",                fecha:"14 de junio", hora:"21:00", grupo:"F" },
         //!{ id:"h_j1_1", local:"España",           visitante:"Cabo Verde",           fecha:"15 de junio", hora:"11:00", grupo:"H" },
         //!{ id:"g_j1_1", local:"Bélgica",          visitante:"Egipto",               fecha:"15 de junio", hora:"14:00", grupo:"G" },
-        { id:"h_j1_2", local:"Arabia Saudita",     visitante:"Uruguay",              fecha:"15 de junio", hora:"17:00", grupo:"H" },
+        //!{ id:"h_j1_2", local:"Arabia Saudita",     visitante:"Uruguay",              fecha:"15 de junio", hora:"17:00", grupo:"H" },
         { id:"g_j1_2", local:"Irán",             visitante:"Nueva Zelanda",        fecha:"15 de junio", hora:"20:00", grupo:"G" },
         { id:"i_j1_1", local:"Francia",          visitante:"Senegal",              fecha:"16 de junio", hora:"14:00", grupo:"I" },
         { id:"i_j1_2", local:"Irak",             visitante:"Noruega",              fecha:"16 de junio", hora:"17:00", grupo:"I" },
@@ -216,7 +216,7 @@ const MUNDIAL_DATA = {
     { nombre:"Steven",      apellido:"Ley",          aciertos:5, total:72, campeon: " Francia | Portugal | Brasil | Francia | Octavos " },
     { nombre:"Freddy",      apellido:"Pincay",       aciertos:6, total:72, campeon: " España | Argentina | Países Bajos | España | Octavos " },
     { nombre:"CARLOS",      apellido:"LOPEZ",        aciertos:8, total:72, campeon: " Francia | Portugal | Ecuador | España | Semifinales " },
-    { nombre:"Lissette",    apellido:"Banchon",      aciertos:4, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
+    { nombre:"Lissette",    apellido:"Banchon",      aciertos:5, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
     { nombre:"Carlos",      apellido:"Ochoa",        aciertos:6, total:72, campeon: " Francia | Brasil | Ecuador | Francia | Semifinales " },
 
     { nombre:"Rufo",        apellido:"Castro",       aciertos:5, total:72, campeon: " Portugal | Ecuador | Francia | España | Final " },
