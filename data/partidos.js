@@ -69,16 +69,17 @@ const MUNDIAL_DATA = {
         //!{ id:"f_j1_2", local:"Suecia",           visitante:"Túnez",                fecha:"14 de junio", hora:"21:00", grupo:"F" },
         //!{ id:"h_j1_1", local:"España",           visitante:"Cabo Verde",           fecha:"15 de junio", hora:"11:00", grupo:"H" },
         //!{ id:"g_j1_1", local:"Bélgica",          visitante:"Egipto",               fecha:"15 de junio", hora:"14:00", grupo:"G" },
-        //!{ id:"h_j1_2", local:"Arabia Saudita",     visitante:"Uruguay",              fecha:"15 de junio", hora:"17:00", grupo:"H" },
+        //!{ id:"h_j1_2", local:"Arabia Saudita",   visitante:"Uruguay",              fecha:"15 de junio", hora:"17:00", grupo:"H" },
         //!{ id:"g_j1_2", local:"Irán",             visitante:"Nueva Zelanda",        fecha:"15 de junio", hora:"20:00", grupo:"G" },
         //!{ id:"i_j1_1", local:"Francia",          visitante:"Senegal",              fecha:"16 de junio", hora:"14:00", grupo:"I" },
         //!{ id:"i_j1_2", local:"Irak",             visitante:"Noruega",              fecha:"16 de junio", hora:"17:00", grupo:"I" },
         //!{ id:"j_j1_1", local:"Argentina",        visitante:"Argelia",              fecha:"16 de junio", hora:"20:00", grupo:"J" },
         { id:"j_j1_2", local:"Austria",          visitante:"Jordania",             fecha:"16 de junio", hora:"23:00", grupo:"J" },
         { id:"k_j1_1", local:"Portugal",         visitante:"Congo",                fecha:"17 de junio", hora:"12:00", grupo:"K" },
-        { id:"k_j1_2", local:"Uzbekistán",       visitante:"Colombia",             fecha:"17 de junio", hora:"21:00", grupo:"K" },
+        
         { id:"l_j1_1", local:"Inglaterra",       visitante:"Croacia",              fecha:"17 de junio", hora:"15:00", grupo:"L" },
         { id:"l_j1_2", local:"Panamá",           visitante:"Ghana",                fecha:"17 de junio", hora:"18:00", grupo:"L" },
+        { id:"k_j1_2", local:"Uzbekistán",       visitante:"Colombia",             fecha:"17 de junio", hora:"21:00", grupo:"K" },
 
         // ── JORNADA 2 ──────────────────────────────────────────────
         { id:"a_j2_1", local:"República Checa", visitante:"Sudáfrica",             fecha:"18 de junio", hora:"11:00", grupo:"A" },
