@@ -281,7 +281,7 @@ const MUNDIAL_DATA = {
     Portugal: "pt",
     Colombia: "co",
     Uzbekistán: "uz",
-    "Rep. D. del Congo": "cd",
+    "Congo": "cd",
     Inglaterra: "gb-eng",
     Croacia: "hr",
     Panamá: "pa",
