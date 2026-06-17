@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════════════
-//  MUNDIAL 2026 · DATOS OFICIALES
-//  Editar manualmente según avance el torneo
-// ═══════════════════════════════════════════════════════════
 const MUNDIAL_DATA = {
 
   config: {
@@ -14,7 +10,6 @@ const MUNDIAL_DATA = {
     fechaLimiteFase: "2026-06-12T14:00:00-05:00",
   },
 
-  // ── EQUIPOS CAMPEÓN (todos los 48 para el pronóstico inicial)
   equipos: [
     "México","Sudáfrica","Corea del Sur","República Checa",
     "Canadá","Bosnia y Herzegovina","Qatar","Suiza",
@@ -30,7 +25,6 @@ const MUNDIAL_DATA = {
     "Inglaterra","Croacia","Panamá","Ghana"
   ],
 
-  // ── GRUPOS OFICIALES
   grupos: [
     { id:"A", equipos:["México","Sudáfrica","Corea del Sur","República Checa"] },
     { id:"B", equipos:["Canadá","Bosnia y Herzegovina","Qatar","Suiza"] },
@@ -75,8 +69,8 @@ const MUNDIAL_DATA = {
         //!{ id:"i_j1_2", local:"Irak",             visitante:"Noruega",              fecha:"16 de junio", hora:"17:00", grupo:"I" },
         //!{ id:"j_j1_1", local:"Argentina",        visitante:"Argelia",              fecha:"16 de junio", hora:"20:00", grupo:"J" },
         //!{ id:"j_j1_2", local:"Austria",          visitante:"Jordania",             fecha:"16 de junio", hora:"23:00", grupo:"J" },
-        //!{ id:"k_j1_1", local:"Portugal",         visitante:"Congo",                fecha:"17 de junio", hora:"12:00", grupo:"K" },
-        { id:"l_j1_1", local:"Inglaterra",       visitante:"Croacia",              fecha:"17 de junio", hora:"15:00", grupo:"L" },
+        //!{ id:"k_j1_1", local:"Portugal",         visitante:"Rep. D. del Congo",    fecha:"17 de junio", hora:"12:00", grupo:"K" },
+        //!{ id:"l_j1_1", local:"Inglaterra",       visitante:"Croacia",              fecha:"17 de junio", hora:"15:00", grupo:"L" },
         { id:"l_j1_2", local:"Panamá",           visitante:"Ghana",                fecha:"17 de junio", hora:"18:00", grupo:"L" },
         { id:"k_j1_2", local:"Uzbekistán",       visitante:"Colombia",             fecha:"17 de junio", hora:"21:00", grupo:"K" },
 
@@ -102,7 +96,7 @@ const MUNDIAL_DATA = {
         { id:"j_j2_1", local:"Argentina",       visitante:"Austria",               fecha:"22 de junio", hora:"12:00", grupo:"J" },
         { id:"j_j2_2", local:"Jordania",        visitante:"Argelia",               fecha:"22 de junio", hora:"22:00", grupo:"J" },
         { id:"k_j2_1", local:"Portugal",        visitante:"Uzbekistán",            fecha:"23 de junio", hora:"12:00", grupo:"K" },
-        { id:"k_j2_2", local:"Colombia",        visitante:"Congo",                 fecha:"23 de junio", hora:"21:00", grupo:"K" },
+        { id:"k_j2_2", local:"Colombia",        visitante:"Rep. D. del Congo",     fecha:"23 de junio", hora:"21:00", grupo:"K" },
         { id:"l_j2_1", local:"Inglaterra",      visitante:"Ghana",                 fecha:"23 de junio", hora:"15:00", grupo:"L" },
         { id:"l_j2_2", local:"Panamá",          visitante:"Croacia",               fecha:"23 de junio", hora:"18:00", grupo:"L" },
 
@@ -128,7 +122,7 @@ const MUNDIAL_DATA = {
         { id:"j_j3_1", local:"Jordania",             visitante:"Argentina",       fecha:"27 de junio", hora:"21:00", grupo:"J" },
         { id:"j_j3_2", local:"Argelia",              visitante:"Austria",         fecha:"27 de junio", hora:"21:00", grupo:"J" },
         { id:"k_j3_1", local:"Colombia",             visitante:"Portugal",        fecha:"27 de junio", hora:"18:30", grupo:"K" },
-        { id:"k_j3_2", local:"Congo",                visitante:"Uzbekistán",      fecha:"27 de junio", hora:"18:30", grupo:"K" },
+        { id:"k_j3_2", local:"Rep. D. del Congo",    visitante:"Uzbekistán",      fecha:"27 de junio", hora:"18:30", grupo:"K" },
         { id:"l_j3_1", local:"Croacia",              visitante:"Ghana",           fecha:"27 de junio", hora:"16:00", grupo:"L" },
         { id:"l_j3_2", local:"Panamá",               visitante:"Inglaterra",      fecha:"27 de junio", hora:"16:00", grupo:"L" }
       ]
@@ -175,59 +169,59 @@ const MUNDIAL_DATA = {
 
   // ── RANKING
   ranking: [
-    { nombre:"Bruno",       apellido:"Arevalo",      aciertos:9, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
-    { nombre:"Toga",        apellido:"Kevin",        aciertos:9, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
+    { nombre:"Bruno",       apellido:"Arevalo",      aciertos:10, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
+    { nombre:"Toga",        apellido:"Kevin",        aciertos:10, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
     { nombre:"JOSE",        apellido:"XAVIER",       aciertos:10, total:72, campeon: " España | Francia | Argentina | Francia | Octavos " },
-    { nombre:"David",       apellido:"Sellan",       aciertos:11, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
+    { nombre:"David",       apellido:"Sellan",       aciertos:12, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
     { nombre:"Elizabeth",   apellido:"Cabeza",       aciertos:9, total:72, campeon: " Francia | España | Portugal | Francia | Fase de grupos " },
-    { nombre:"Victor",      apellido:"Gonzalez",     aciertos:8, total:72, campeon: " España | Portugal | Francia | España | Octavos " },
-    { nombre:"Fabian",      apellido:"Cevallos",     aciertos:11, total:72, campeon: " España | Argentina | Francia | España | Octavos " },
-    { nombre:"JEFFERSON",   apellido:"ARÉVALO",      aciertos:7, total:72, campeon: " Portugal| Brasil| Ecuador| Francia| Semifinales " },
+    { nombre:"Victor",      apellido:"Gonzalez",     aciertos:9, total:72, campeon: " España | Portugal | Francia | España | Octavos " },
+    { nombre:"Fabian",      apellido:"Cevallos",     aciertos:12, total:72, campeon: " España | Argentina | Francia | España | Octavos " },
+    { nombre:"JEFFERSON",   apellido:"ARÉVALO",      aciertos:8, total:72, campeon: " Portugal| Brasil| Ecuador| Francia| Semifinales " },
     { nombre:"Carlos",      apellido:"Delgado",      aciertos:8, total:72, campeon: " Ecuador| Países Bajos| España| Francia| Final " },
-    { nombre:"Paul",        apellido:"Garcia",       aciertos:12, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
+    { nombre:"Paul",        apellido:"Garcia",       aciertos:13, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
 
     { nombre:"Paul",        apellido:"Rodríguez",    aciertos:10, total:72, campeon: " Portugal | España | Argentina | Brasil | Octavos " },
     { nombre:"Juan",        apellido:"Navarrete",    aciertos:9, total:72, campeon: " Francia| Portugal| Ecuador| Francia| Semifinales " },
-    { nombre:"Dussan",      apellido:"Maruri",       aciertos:8, total:72, campeon: " Argentina | Francia | Brasil | Francia | Octavos " },
-    { nombre:"Francisco",   apellido:"Camacho",      aciertos:11, total:72, campeon: " Portugal | Francia | Argentina | Francia | Octavos " },
-    { nombre:"Gary",        apellido:"Laborde",      aciertos:10, total:72, campeon: " Francia | Portugal | Ecuador | Francia | Semifinales " },
-    { nombre:"Julio",       apellido:"Mazacon",      aciertos:11, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
-    { nombre:"Kelvin",      apellido:"Cornejo",      aciertos:8, total:72, campeon: " España | Francia | Francia | España | Octavos " },
-    { nombre:"Julio",       apellido:"Sanchez",      aciertos:10, total:72, campeon: " Portugal | Alemania | Brasil | Portugal | Octavos " },
-    { nombre:"Oscar",       apellido:"Ortega",       aciertos:9, total:72, campeon: " Argentina | Francia | España | Francia | Octavos " },
-    { nombre:"Andrés",      apellido:"Soto",         aciertos:9, total:72, campeon: " España | Argentina | Portugal | Francia | Octavos " },
+    { nombre:"Dussan",      apellido:"Maruri",       aciertos:9, total:72, campeon: " Argentina | Francia | Brasil | Francia | Octavos " },
+    { nombre:"Francisco",   apellido:"Camacho",      aciertos:12, total:72, campeon: " Portugal | Francia | Argentina | Francia | Octavos " },
+    { nombre:"Gary",        apellido:"Laborde",      aciertos:11, total:72, campeon: " Francia | Portugal | Ecuador | Francia | Semifinales " },
+    { nombre:"Julio",       apellido:"Mazacon",      aciertos:12, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
+    { nombre:"Kelvin",      apellido:"Cornejo",      aciertos:9, total:72, campeon: " España | Francia | Francia | España | Octavos " },
+    { nombre:"Julio",       apellido:"Sanchez",      aciertos:11, total:72, campeon: " Portugal | Alemania | Brasil | Portugal | Octavos " },
+    { nombre:"Oscar",       apellido:"Ortega",       aciertos:10, total:72, campeon: " Argentina | Francia | España | Francia | Octavos " },
+    { nombre:"Andrés",      apellido:"Soto",         aciertos:10, total:72, campeon: " España | Argentina | Portugal | Francia | Octavos " },
 
-    { nombre:"Jonathan",    apellido:"Di Luca",      aciertos:10, total:72, campeon: " Países Bajos | Portugal | España | Francia | Octavos " },
+    { nombre:"Jonathan",    apellido:"Di Luca",      aciertos:11, total:72, campeon: " Países Bajos | Portugal | España | Francia | Octavos " },
     { nombre:"JEAN",        apellido:"Arévalo",      aciertos:9, total:72, campeon: " Portugal | Francia | Ecuador | Marruecos | Cuartos " },
     { nombre:"Andrea",      apellido:"Soto",         aciertos:13, total:72, campeon: " España | Francia | Argentina | España | Octavos " },
-    { nombre:"Jose",        apellido:"Garcia",       aciertos:10, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
-    { nombre:"Jose",        apellido:"Bailon",       aciertos:9, total:72, campeon: " Francia | España | Países Bajos | Francia | Cuartos " },
+    { nombre:"Jose",        apellido:"Garcia",       aciertos:11, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
+    { nombre:"Jose",        apellido:"Bailon",       aciertos:10, total:72, campeon: " Francia | España | Países Bajos | Francia | Cuartos " },
     { nombre:"Joselyn",     apellido:"Salcedo",      aciertos:8, total:72, campeon: " Argentina | Portugal | Ecuador | Ecuador | Semifinales " },
     { nombre:"Jose",        apellido:"Crespo",       aciertos:8, total:72, campeon: " Francia | Argentina | España | Francia | Octavos " },
-    { nombre:"Victor",      apellido:"Camacho",      aciertos:9, total:72, campeon: " Portugal | Francia | Brasil | Francia | Cuartos " },
-    { nombre:"Marcos",      apellido:"Ramírez",      aciertos:9, total:72, campeon: " Portugal | Francia | Ecuador | Portugal | Semifinales " },
-    { nombre:"Mayra",       apellido:"Huerts",       aciertos:11, total:72, campeon: " Portugal | Francia | España | Portugal | Dieciseisavos " },
+    { nombre:"Victor",      apellido:"Camacho",      aciertos:10, total:72, campeon: " Portugal | Francia | Brasil | Francia | Cuartos " },
+    { nombre:"Marcos",      apellido:"Ramírez",      aciertos:10, total:72, campeon: " Portugal | Francia | Ecuador | Portugal | Semifinales " },
+    { nombre:"Mayra",       apellido:"Huerts",       aciertos:12, total:72, campeon: " Portugal | Francia | España | Portugal | Dieciseisavos " },
 
-    { nombre:"Ronny",       apellido:"Moreira",      aciertos:6, total:72, campeon: " Francia | Argentina | Ecuador | Francia | Cuartos " },
-    { nombre:"Aldo",        apellido:"Arevalo",      aciertos:5, total:72, campeon: " Portugal | Inglaterra | Argentina | Argentina | Semifinales " },
-    { nombre:"Sandy",       apellido:"Carpio",       aciertos:10, total:72, campeon: " Francia | Argentina | Inglaterra | Francia | Fase de grupos " },
+    { nombre:"Ronny",       apellido:"Moreira",      aciertos:7, total:72, campeon: " Francia | Argentina | Ecuador | Francia | Cuartos " },
+    { nombre:"Aldo",        apellido:"Arevalo",      aciertos:6, total:72, campeon: " Portugal | Inglaterra | Argentina | Argentina | Semifinales " },
+    { nombre:"Sandy",       apellido:"Carpio",       aciertos:11, total:72, campeon: " Francia | Argentina | Inglaterra | Francia | Fase de grupos " },
     { nombre:"Cristopher",  apellido:"Crespo",       aciertos:9, total:72, campeon: " Argentina | Brasil | Paraguay | Portugal | Octavos " },
-    { nombre:"Bolívar",     apellido:"Pérez",        aciertos:8, total:72, campeon: " España | Brasil | Inglaterra | Sudáfrica | Octavos " },
+    { nombre:"Bolívar",     apellido:"Pérez",        aciertos:9, total:72, campeon: " España | Brasil | Inglaterra | Sudáfrica | Octavos " },
     { nombre:"Steven",      apellido:"Ley",          aciertos:10, total:72, campeon: " Francia | Portugal | Brasil | Francia | Octavos " },
-    { nombre:"Freddy",      apellido:"Pincay",       aciertos:8, total:72, campeon: " España | Argentina | Países Bajos | España | Octavos " },
-    { nombre:"CARLOS",      apellido:"LOPEZ",        aciertos:13, total:72, campeon: " Francia | Portugal | Ecuador | España | Semifinales " },
-    { nombre:"Lissette",    apellido:"Banchon",      aciertos:9, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
-    { nombre:"Carlos",      apellido:"Ochoa",        aciertos:11, total:72, campeon: " Francia | Brasil | Ecuador | Francia | Semifinales " },
+    { nombre:"Freddy",      apellido:"Pincay",       aciertos:9, total:72, campeon: " España | Argentina | Países Bajos | España | Octavos " },
+    { nombre:"CARLOS",      apellido:"LOPEZ",        aciertos:14, total:72, campeon: " Francia | Portugal | Ecuador | España | Semifinales " },
+    { nombre:"Lissette",    apellido:"Banchon",      aciertos:10, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
+    { nombre:"Carlos",      apellido:"Ochoa",        aciertos:12, total:72, campeon: " Francia | Brasil | Ecuador | Francia | Semifinales " },
 
-    { nombre:"Rufo",        apellido:"Castro",       aciertos:8, total:72, campeon: " Portugal | Ecuador | Francia | España | Final " },
-    { nombre:"Jorge",       apellido:"Rodriguez",    aciertos:8, total:72, campeon: " España | Portugal | Francia | España | Octavos " },    
-    { nombre:"JUAN",        apellido:"PARRAGA",      aciertos:10, total:70, campeon: " Portugal | España | Ecuador | Portugal | Semifinales " },
-    { nombre:"Fernando",    apellido:"Parraga",      aciertos:7, total:70, campeon: " Francia | Portugal | España | Francia | Octavos " },
-    { nombre:"Gabriel",     apellido:"Parraga",      aciertos:8, total:70, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
-    { nombre:"Bryan",       apellido:"Parrales",     aciertos:6, total:70, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
-    { nombre:"Livia",       apellido:"Arévalo",      aciertos:5, total:70, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
-    { nombre:"Pablo",       apellido:"Zambrano",     aciertos:8, total:70, campeon: " España | Francia | Portugal | España | Octavos " },
-    { nombre:"Josue",       apellido:"Villacis",     aciertos:7, total:70, campeon: " Brasil | Francia | Ecuador | Brasil | Cuartos " },
+    { nombre:"Rufo",        apellido:"Castro",       aciertos:9, total:72, campeon: " Portugal | Ecuador | Francia | España | Final " },
+    { nombre:"Jorge",       apellido:"Rodriguez",    aciertos:9, total:72, campeon: " España | Portugal | Francia | España | Octavos " },    
+    { nombre:"JUAN",        apellido:"PARRAGA",      aciertos:11, total:70, campeon: " Portugal | España | Ecuador | Portugal | Semifinales " },
+    { nombre:"Fernando",    apellido:"Parraga",      aciertos:8, total:70, campeon: " Francia | Portugal | España | Francia | Octavos " },
+    { nombre:"Gabriel",     apellido:"Parraga",      aciertos:9, total:70, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
+    { nombre:"Bryan",       apellido:"Parrales",     aciertos:7, total:70, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
+    { nombre:"Livia",       apellido:"Arévalo",      aciertos:6, total:70, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
+    { nombre:"Pablo",       apellido:"Zambrano",     aciertos:9, total:70, campeon: " España | Francia | Portugal | España | Octavos " },
+    { nombre:"Josue",       apellido:"Villacis",     aciertos:8, total:70, campeon: " Brasil | Francia | Ecuador | Brasil | Cuartos " },
     { nombre:"Junior",      apellido:"Castro",       aciertos:7, total:70, campeon: " Francia | Alemania | Argentina | Francia | Octavos " }
     
   ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
@@ -281,7 +275,7 @@ const MUNDIAL_DATA = {
     Portugal: "pt",
     Colombia: "co",
     Uzbekistán: "uz",
-    "Congo": "cd",
+    "Rep. D. del Congo": "cd",
     Inglaterra: "gb-eng",
     Croacia: "hr",
     Panamá: "pa",
