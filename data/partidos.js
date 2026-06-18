@@ -7,7 +7,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "grupos_j1",
-    fechaLimiteFase: "2026-06-12T14:00:00-05:00",
+    fechaLimiteFase: "2026-06-11T14:00:00-05:00",
   },
 
   equipos: [
@@ -74,8 +74,8 @@ const MUNDIAL_DATA = {
         //!{ id:"l_j1_2", local:"Panamá",           visitante:"Ghana",                fecha:"17 de junio", hora:"18:00", grupo:"L" },
         //!{ id:"k_j1_2", local:"Uzbekistán",       visitante:"Colombia",             fecha:"17 de junio", hora:"21:00", grupo:"K" },
 
-        // ── JORNADA 2 ──────────────────────────────────────────────
-        { id:"a_j2_1", local:"República Checa", visitante:"Sudáfrica",             fecha:"18 de junio", hora:"11:00", grupo:"A" },
+        //? ── JORNADA 2 ──────────────────────────────────────────────
+        //!{ id:"a_j2_1", local:"República Checa", visitante:"Sudáfrica",             fecha:"18 de junio", hora:"11:00", grupo:"A" },
         { id:"a_j2_2", local:"México",          visitante:"Corea del Sur",         fecha:"18 de junio", hora:"20:00", grupo:"A" },
         { id:"b_j2_1", local:"Suiza",           visitante:"Bosnia y Herzegovina",  fecha:"18 de junio", hora:"14:00", grupo:"B" },
         { id:"b_j2_2", local:"Canadá",          visitante:"Qatar",                 fecha:"18 de junio", hora:"17:00", grupo:"B" },
@@ -130,39 +130,67 @@ const MUNDIAL_DATA = {
 
     dieciseisavos: {
       label: "Dieciseisavos de Final",
-      descripcion: "Ronda de 32 — partidos eliminatorios (1–5 Jul)",
+      descripcion: "Ronda de 32 — partidos eliminatorios (28 Jun – 3 Jul)",
       partidos: [
-        // Se completan cuando se conozcan los clasificados
-        { id:"r32_01", local:"1º Grupo A", visitante:"3º Mejor", fecha:"1 Jul", hora:"18:00", grupo:null },
-        { id:"r32_02", local:"1º Grupo B", visitante:"3º Mejor", fecha:"1 Jul", hora:"21:00", grupo:null },
-        { id:"r32_03", local:"1º Grupo C", visitante:"2º Grupo D", fecha:"2 Jul", hora:"18:00", grupo:null },
-        { id:"r32_04", local:"1º Grupo D", visitante:"2º Grupo C", fecha:"2 Jul", hora:"21:00", grupo:null },
+        { id:"d01", local:"México",        visitante:"Francia",       fecha:"28 de junio", hora:"14:00", grupo:null },
+        { id:"d02", local:"Argentina",     visitante:"Portugal",      fecha:"28 de junio", hora:"18:00", grupo:null },
+        { id:"d03", local:"Brasil",        visitante:"Alemania",      fecha:"28 de junio", hora:"21:00", grupo:null },
+        { id:"d04", local:"España",        visitante:"Inglaterra",    fecha:"29 de junio", hora:"14:00", grupo:null },
+        { id:"d05", local:"Países Bajos",  visitante:"Australia",     fecha:"29 de junio", hora:"18:00", grupo:null },
+        { id:"d06", local:"Suecia",        visitante:"Croacia",       fecha:"29 de junio", hora:"21:00", grupo:null },
+        { id:"d07", local:"Corea del Sur", visitante:"Colombia",      fecha:"30 de junio", hora:"14:00", grupo:null },
+        { id:"d08", local:"Uruguay",       visitante:"Noruega",       fecha:"30 de junio", hora:"18:00", grupo:null },
+        { id:"d09", local:"Canadá",        visitante:"Ecuador",       fecha:"30 de junio", hora:"21:00", grupo:null },
+        { id:"d10", local:"Senegal",       visitante:"Japón",         fecha:"1 de julio",  hora:"14:00", grupo:null },
+        { id:"d11", local:"Marruecos",     visitante:"Austria",       fecha:"1 de julio",  hora:"18:00", grupo:null },
+        { id:"d12", local:"Estados Unidos",visitante:"Suiza",         fecha:"1 de julio",  hora:"21:00", grupo:null },
+        { id:"d13", local:"Bélgica",       visitante:"Escocia",       fecha:"2 de julio",  hora:"14:00", grupo:null },
+        { id:"d14", local:"Ghana",         visitante:"Irán",          fecha:"2 de julio",  hora:"18:00", grupo:null },
+        { id:"d15", local:"Turquía",       visitante:"Nueva Zelanda", fecha:"2 de julio",  hora:"21:00", grupo:null },
+        { id:"d16", local:"Qatar",         visitante:"Uzbekistán",    fecha:"3 de julio",  hora:"18:00", grupo:null },
       ]
     },
 
     octavos: {
       label: "Octavos de Final",
-      descripcion: "Ronda de 16 (7–10 Jul)",
-      partidos: []
+      descripcion: "Ronda de 16 (4–7 Jul)",
+      partidos: [
+        { id:"o01", local:"México",         visitante:"Argentina",     fecha:"4 de julio",  hora:"14:00", grupo:null },
+        { id:"o02", local:"Brasil",         visitante:"España",        fecha:"4 de julio",  hora:"21:00", grupo:null },
+        { id:"o03", local:"Países Bajos",   visitante:"Suecia",        fecha:"5 de julio",  hora:"14:00", grupo:null },
+        { id:"o04", local:"Uruguay",        visitante:"Canadá",        fecha:"5 de julio",  hora:"21:00", grupo:null },
+        { id:"o05", local:"Senegal",        visitante:"Marruecos",     fecha:"6 de julio",  hora:"14:00", grupo:null },
+        { id:"o06", local:"Estados Unidos", visitante:"Bélgica",       fecha:"6 de julio",  hora:"21:00", grupo:null },
+        { id:"o07", local:"Inglaterra",     visitante:"Corea del Sur", fecha:"7 de julio",  hora:"14:00", grupo:null },
+        { id:"o08", local:"Noruega",        visitante:"Japón",         fecha:"7 de julio",  hora:"21:00", grupo:null },
+      ]
     },
 
     cuartos: {
       label: "Cuartos de Final",
-      descripcion: "Ronda de 8 (12–13 Jul)",
-      partidos: []
+      descripcion: "Ronda de 8 (9–11 Jul)",
+      partidos: [
+        { id:"c01", local:"México",       visitante:"Brasil",        fecha:"9 de julio",  hora:"14:00", grupo:null },
+        { id:"c02", local:"Países Bajos", visitante:"Uruguay",       fecha:"9 de julio",  hora:"21:00", grupo:null },
+        { id:"c03", local:"Senegal",      visitante:"Estados Unidos", fecha:"10 de julio", hora:"14:00", grupo:null },
+        { id:"c04", local:"Inglaterra",   visitante:"Noruega",       fecha:"10 de julio", hora:"21:00", grupo:null },
+      ]
     },
 
     semifinales: {
       label: "Semifinales",
-      descripcion: "Ronda de 4 (15–16 Jul)",
-      partidos: []
+      descripcion: "Ronda de 4 (14–15 Jul)",
+      partidos: [
+        { id:"s01", local:"México",       visitante:"Países Bajos",  fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s02", local:"Senegal",      visitante:"Inglaterra",    fecha:"15 de julio", hora:"18:00", grupo:null },
+      ]
     },
 
     final: {
       label: "Final",
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"final_01", local:"Por definir", visitante:"Por definir", fecha:"19 Jul", hora:"18:00", grupo:null },
+        { id:"f01", local:"México",  visitante:"Senegal",    fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },

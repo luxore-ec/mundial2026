@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════ */
 
 const URL_SCRIPT =
-  "https://script.google.com/macros/s/AKfycbyABk4PMAX4pS0-bHKIm9h7BL5GSA3_MQS20o_76pB3qcXTM3a0W_5YZ3uQb1TJSFZ0Mg/exec";
+  "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
 
 // ── STATE ──────────────────────────────────────
 const state = {
@@ -109,7 +109,8 @@ function renderGrupos() {
 async function renderRanking() {
   const container = document.getElementById("ranking-body");
   const toggleContainer = document.getElementById("ranking-toggle-container");
-  const urlAppsScript = "https://script.google.com/macros/s/AKfycbwz48e4hVhAqavjYelpMeG96_Mw90hQJC46f0lnJvVCYBqnCRjH9RazbAIzeaM0freinA/exec";
+  const urlAppsScript =
+    "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
 
   try {
     const response = await fetch(urlAppsScript);
@@ -1039,7 +1040,7 @@ function closeInstructionsModal() {
 // ── RANKING POPUP ──────────────────────────────
 async function showRankingPopup() {
   const urlAppsScript =
-    "https://script.google.com/macros/s/AKfycbwz48e4hVhAqavjYelpMeG96_Mw90hQJC46f0lnJvVCYBqnCRjH9RazbAIzeaM0freinA/exec";
+    "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
 
   try {
     const response = await fetch(urlAppsScript);
