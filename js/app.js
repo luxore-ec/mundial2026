@@ -106,97 +106,116 @@ function renderGrupos() {
 }
 
 // ── RANKING ────────────────────────────────────
-function renderRanking() {
+async function renderRanking() {
   const container = document.getElementById("ranking-body");
   const toggleContainer = document.getElementById("ranking-toggle-container");
-  const data = MUNDIAL_DATA.ranking;
+  const urlAppsScript = "https://script.google.com/macros/s/AKfycbwz48e4hVhAqavjYelpMeG96_Mw90hQJC46f0lnJvVCYBqnCRjH9RazbAIzeaM0freinA/exec";
 
-  if (!data || data.length === 0) {
+  try {
+    const response = await fetch(urlAppsScript);
+    if (!response.ok) throw new Error("Error de red");
+    
+    const apiData = await response.json();
+    const data = apiData.ranking;
+
+    if (!data || data.length === 0) {
+      container.innerHTML = `
+        <tr>
+          <td colspan="6" class="empty-ranking" style="text-align:center;">
+            🏆 El ranking se actualizará con los primeros resultados
+          </td>
+        </tr>`;
+      toggleContainer.innerHTML = "";
+      return;
+    }
+
+    const sorted = [...data].sort((a, b) => b.total_pts - a.total_pts);
+
+    container.innerHTML = sorted
+      .map((p, i) => {
+        const pos = i + 1;
+        const posClass = pos <= 3 ? `top${pos}` : "";
+        const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+        const pct = Math.round((p.aciertos / 36) * 100);
+
+        const hiddenClass = pos > 10 ? "ranking-hidden" : "";
+        const hiddenStyle = pos > 10 ? "display:none;" : "";
+
+        const primerNombre = (p.nombre || "").trim().split(/\s+/)[0];
+        const primerApellido = (p.apellido || "").trim().split(/\s+/)[0];
+        const nombreCorto = `${primerNombre} ${primerApellido}`.trim();
+
+        const esp = p.especiales || {};
+        
+        let selectHTML = "";
+        if (esp.campeon || esp.subcampeon || esp.tercero || esp.balonoro || esp.ecuador) {
+          selectHTML = `
+            <select class="ranking-select-especiales" style="max-width:100px; margin:0 auto; display:block;">
+              <option value="">Ver</option>
+              <option disabled>🥇 Campeón: ${escapeHtml(esp.campeon || "—")}</option>
+              <option disabled>🥈 Subcampeon: ${escapeHtml(esp.subcampeon || "—")}</option>
+              <option disabled>🥉 3er Lugar: ${escapeHtml(esp.tercero || "—")}</option>
+              <option disabled>⚽ Balón Oro: ${escapeHtml(esp.balonoro || "—")}</option>
+              <option disabled>La Tri: ${escapeHtml(esp.ecuador || "—")}</option>
+            </select>
+          `;
+        } else {
+          selectHTML = `<span class="rank-campeon">—</span>`;
+        }
+
+        // Estilos inline compartidos para forzar el centrado absoluto y evitar deformaciones por padding excesivo
+        const tdBaseStyle = "text-align:center; vertical-align:middle; padding:8px 4px; box-sizing:border-box;";
+
+        return `
+        <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle} height:45px;">
+          <td style="${tdBaseStyle} width:10%;"><span class="rank-pos ${posClass}">${medal}</span></td>
+          <td style="${tdBaseStyle} width:35%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><span class="rank-name" style="display:inline-block; max-width:100%;">${escapeHtml(nombreCorto)}</span></td>
+          <td style="${tdBaseStyle} width:20%;">${selectHTML}</td>
+          <td style="${tdBaseStyle} width:15%;"><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
+          <td style="${tdBaseStyle} width:10%; color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-size:0.9rem;">${pct}%</td>
+          <td style="${tdBaseStyle} width:10%; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
+            ${p.total_pts}<span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;">PTS</span>
+          </td>
+        </tr>`;
+      })
+      .join("");
+
+    const restantes = sorted.length - 10;
+
+    if (restantes > 0) {
+      toggleContainer.innerHTML = `
+        <button id="ranking-toggle" class="btn-secondary">
+          Ver restantes (${restantes})
+        </button>
+      `;
+
+      document
+        .getElementById("ranking-toggle")
+        .addEventListener("click", function () {
+          const hiddenRows = document.querySelectorAll(".ranking-hidden");
+          const expanded = this.dataset.expanded === "true";
+
+          hiddenRows.forEach((row) => {
+            row.style.display = expanded ? "none" : "";
+          });
+
+          this.dataset.expanded = !expanded;
+          this.textContent = expanded
+            ? `Ver restantes (${restantes})`
+            : "Ocultar ranking";
+        });
+    } else {
+      toggleContainer.innerHTML = "";
+    }
+
+  } catch (error) {
+    console.error("Error al renderizar el ranking:", error);
     container.innerHTML = `
       <tr>
-        <td colspan="6" class="empty-ranking">
-          🏆 El ranking se actualizará con los primeros resultados
+        <td colspan="6" class="empty-ranking" style="text-align:center; color:red;">
+          ❌ Error al conectar con el servidor de posiciones.
         </td>
       </tr>`;
-    toggleContainer.innerHTML = "";
-    return;
-  }
-
-  const sorted = [...data].sort((a, b) => b.aciertos - a.aciertos);
-  const maxAciertos = sorted[0]?.aciertos || 1;
-
-  container.innerHTML = sorted
-    .map((p, i) => {
-      const pos = i + 1;
-      const posClass = pos <= 3 ? `top${pos}` : "";
-      const medal =
-        pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
-      const pct = Math.round((p.aciertos / (p.total || 1)) * 100);
-      const barWidth = Math.round((p.aciertos / maxAciertos) * 100);
-
-      const hiddenClass = pos > 10 ? "ranking-hidden" : "";
-      const hiddenStyle = pos > 10 ? "display:none" : "";
-
-      const puntosReales = p.aciertos * 3;
-      const especiales = p.campeon ? p.campeon.split("|") : [];
-
-      let selectHTML = "";
-      if (especiales.length >= 5) {
-        selectHTML = `
-          <select class="ranking-select-especiales">
-            <option value="">Ver</option>
-            <option disabled>🥇 Campeón: ${especiales[0].trim()}</option>
-            <option disabled>🥈 Subcampeón: ${especiales[1].trim()}</option>
-            <option disabled>🥉 3er Lugar: ${especiales[2].trim()}</option>
-            <option disabled>⚽ Balón Oro: ${especiales[3].trim()}</option>
-            <option disabled>La Tri: ${especiales[4].trim()}</option>
-          </select>
-        `;
-      } else {
-        selectHTML = `<span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span>`;
-      }
-
-      return `
-      <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
-        <td><span class="rank-pos ${posClass}">${medal}</span></td>
-        <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td>${selectHTML}</td>
-        <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
-        <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
-        <td style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white); text-align:center;">
-          ${puntosReales} <span style="font-size:0.8rem; color:var(--gold); font-weight:400;">PTS</span>
-        </td>
-      </tr>`;
-    })
-    .join("");
-
-  const restantes = sorted.length - 10;
-
-  if (restantes > 0) {
-    toggleContainer.innerHTML = `
-      <button id="ranking-toggle" class="btn-secondary">
-        Ver restantes (${restantes})
-      </button>
-    `;
-
-    document
-      .getElementById("ranking-toggle")
-      .addEventListener("click", function () {
-        const hiddenRows = document.querySelectorAll(".ranking-hidden");
-        const expanded = this.dataset.expanded === "true";
-
-        hiddenRows.forEach((row) => {
-          row.style.display = expanded ? "none" : "";
-        });
-
-        this.dataset.expanded = !expanded;
-
-        this.textContent = expanded
-          ? `Ver restantes (${restantes})`
-          : "Ocultar ranking";
-      });
-  } else {
-    toggleContainer.innerHTML = "";
   }
 }
 
