@@ -1037,33 +1037,45 @@ function closeInstructionsModal() {
 }
 
 // ── RANKING POPUP ──────────────────────────────
-function showRankingPopup() {
-  const data = MUNDIAL_DATA.ranking;
-  if (!data || data.length === 0) return;
+async function showRankingPopup() {
+  const urlAppsScript =
+    "https://script.google.com/macros/s/AKfycbwz48e4hVhAqavjYelpMeG96_Mw90hQJC46f0lnJvVCYBqnCRjH9RazbAIzeaM0freinA/exec";
 
-  const sorted = [...data].sort((a, b) => b.aciertos - a.aciertos).slice(0, 5);
+  try {
+    const response = await fetch(urlAppsScript);
+    const apiData = await response.json();
+    const data = apiData.ranking;
 
-  document.getElementById("ranking-popup-body").innerHTML = sorted
-    .map((p, i) => {
-      const pos = i + 1;
-      const medal =
-        pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
-      const posClass = pos <= 3 ? `top${pos}` : "";
-      const puntosReales = p.aciertos * 3;
-      return `
-      <tr class="ranking-row">
-        <td><span class="rank-pos ${posClass}">${medal}</span></td>
-        <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
-        <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
-          ${puntosReales} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
-        </td>
-      </tr>`;
-    })
-    .join("");
+    if (!data || data.length === 0) return;
 
-  document.getElementById("ranking-popup").classList.add("show");
-  lanzarAnimacion();
+    const sorted = [...data].sort((a, b) => b.total - a.total).slice(0, 5);
+
+    document.getElementById("ranking-popup-body").innerHTML = sorted
+      .map((p, i) => {
+        const pos = i + 1;
+        const medal =
+          pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+        const posClass = pos <= 3 ? `top${pos}` : "";
+        const primerNombre = (p.nombre || "").trim().split(/\s+/)[0];
+        const primerApellido = (p.apellido || "").trim().split(/\s+/)[0];
+
+        return `
+        <tr class="ranking-row">
+          <td><span class="rank-pos ${posClass}">${medal}</span></td>
+          <td><span class="rank-name">${escapeHtml(primerNombre)} ${escapeHtml(primerApellido)}</span></td>
+          <td><span class="rank-aciertos">${p.aciertos || 0}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
+          <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
+            ${p.total} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
+          </td>
+        </tr>`;
+      })
+      .join("");
+
+    document.getElementById("ranking-popup").classList.add("show");
+    lanzarAnimacion();
+  } catch (e) {
+    console.error("Error cargando popup ranking:", e);
+  }
 }
 
 function closeRankingPopup() {
