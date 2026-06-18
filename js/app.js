@@ -106,99 +106,104 @@ function renderGrupos() {
 }
 
 // ── RANKING ────────────────────────────────────
-function renderRanking() {
+async function renderRanking() {
   const container = document.getElementById("ranking-body");
   const toggleContainer = document.getElementById("ranking-toggle-container");
-  const data = MUNDIAL_DATA.ranking;
 
-  if (!data || data.length === 0) {
-    container.innerHTML = `
-      <tr>
-        <td colspan="6" class="empty-ranking">
-          🏆 El ranking se actualizará con los primeros resultados
-        </td>
-      </tr>`;
-    toggleContainer.innerHTML = "";
-    return;
-  }
+  const URL_RANKING =
+    "https://script.google.com/macros/s/AKfycbyReYzFXNfJo9DNNvryTJcaUE5LLJfsMHPvO-XYP_K_5NNkD_bMjypkgYgsI3U1R8E/exec";
 
-  const sorted = [...data].sort((a, b) => b.aciertos - a.aciertos);
-  const maxAciertos = sorted[0]?.aciertos || 1;
+  try {
+    const res = await fetch(URL_RANKING);
+    const data = await res.json();
 
-  container.innerHTML = sorted
-    .map((p, i) => {
-      const pos = i + 1;
-      const posClass = pos <= 3 ? `top${pos}` : "";
-      const medal =
-        pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
-      const pct = Math.round((p.aciertos / (p.total || 1)) * 100);
-      const barWidth = Math.round((p.aciertos / maxAciertos) * 100);
+    if (data.error || !data.ranking || data.ranking.length === 0) {
+      container.innerHTML = `<tr><td colspan="6" class="empty-ranking">🏆 El ranking se actualizará con los primeros resultados</td></tr>`;
+      toggleContainer.innerHTML = "";
+      return;
+    }
 
-      const hiddenClass = pos > 10 ? "ranking-hidden" : "";
-      const hiddenStyle = pos > 10 ? "display:none" : "";
+    const sorted = data.ranking;
+    const maxPuntos = sorted[0]?.total || 1;
 
-      const puntosReales = p.aciertos * 3;
-      const especiales = p.campeon ? p.campeon.split("|") : [];
+    container.innerHTML = sorted
+      .map((p, i) => {
+        const pos = i + 1;
+        const posClass = pos <= 3 ? `top${pos}` : "";
+        const medal =
+          pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+        const pct = Math.round((p.total / maxPuntos) * 100);
 
-      let selectHTML = "";
-      if (especiales.length >= 5) {
-        selectHTML = `
+        const hiddenClass = pos > 10 ? "ranking-hidden" : "";
+        const hiddenStyle = pos > 10 ? "display:none" : "";
+
+        // ── Truncar a primer nombre y primer apellido ──
+        const primerNombre = escapeHtml((p.nombre || "").trim().split(" ")[0]);
+        const primerApellido = escapeHtml(
+          (p.apellido || "").trim().split(" ")[0],
+        );
+
+        // ── Lista desplegable con campos separados de la Sheet ──
+        const campeon = p.campeon || "";
+        const subcampeon = p.subcampeon || "";
+        const tercero = p.tercero || "";
+        const balonoro = p.balonoro || "";
+        const ecuador = p.ecuador || "";
+
+        let selectHTML = "";
+        if (campeon || subcampeon || tercero || balonoro || ecuador) {
+          selectHTML = `
           <select class="ranking-select-especiales">
             <option value="">Ver</option>
-            <option disabled>🥇 Campeón: ${especiales[0].trim()}</option>
-            <option disabled>🥈 Subcampeón: ${especiales[1].trim()}</option>
-            <option disabled>🥉 3er Lugar: ${especiales[2].trim()}</option>
-            <option disabled>⚽ Balón Oro: ${especiales[3].trim()}</option>
-            <option disabled>La Tri: ${especiales[4].trim()}</option>
-          </select>
-        `;
-      } else {
-        selectHTML = `<span class="rank-campeon">${escapeHtml(p.campeon || "—")}</span>`;
-      }
+            <option disabled>🥇 Campeón: ${escapeHtml(campeon)}</option>
+            <option disabled>🥈 Subcampeón: ${escapeHtml(subcampeon)}</option>
+            <option disabled>🥉 3er Lugar: ${escapeHtml(tercero)}</option>
+            <option disabled>⚽ Balón Oro: ${escapeHtml(balonoro)}</option>
+            <option disabled>🇪🇨 La Tri: ${escapeHtml(ecuador)}</option>
+          </select>`;
+        } else {
+          selectHTML = `<span class="rank-campeon">—</span>`;
+        }
 
-      return `
-      <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
-        <td><span class="rank-pos ${posClass}">${medal}</span></td>
-        <td><span class="rank-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</span></td>
-        <td>${selectHTML}</td>
-        <td><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / ${p.total}</span></td>
-        <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
-        <td style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white); text-align:center;">
-          ${puntosReales} <span style="font-size:0.8rem; color:var(--gold); font-weight:400;">PTS</span>
-        </td>
-      </tr>`;
-    })
-    .join("");
+        return `
+        <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle}">
+          <td><span class="rank-pos ${posClass}">${medal}</span></td>
+          <td><span class="rank-name">${primerNombre} ${primerApellido}</span></td>
+          <td>${selectHTML}</td>
+          <td><span class="rank-aciertos">${p.aciertos_grupos || 0}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
+          <td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem">${pct}%</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
+            ${p.total} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
+          </td>
+        </tr>`;
+      })
+      .join("");
 
-  const restantes = sorted.length - 10;
-
-  if (restantes > 0) {
-    toggleContainer.innerHTML = `
-      <button id="ranking-toggle" class="btn-secondary">
-        Ver restantes (${restantes})
-      </button>
-    `;
-
-    document
-      .getElementById("ranking-toggle")
-      .addEventListener("click", function () {
-        const hiddenRows = document.querySelectorAll(".ranking-hidden");
-        const expanded = this.dataset.expanded === "true";
-
-        hiddenRows.forEach((row) => {
-          row.style.display = expanded ? "none" : "";
+    // ── Botón ver más ──
+    const restantes = sorted.length - 10;
+    if (restantes > 0) {
+      toggleContainer.innerHTML = `
+        <button id="ranking-toggle" class="btn-secondary">Ver restantes (${restantes})</button>`;
+      document
+        .getElementById("ranking-toggle")
+        .addEventListener("click", function () {
+          const hidden = document.querySelectorAll(".ranking-hidden");
+          const expanded = this.dataset.expanded === "true";
+          hidden.forEach((r) => (r.style.display = expanded ? "none" : ""));
+          this.dataset.expanded = !expanded;
+          this.textContent = expanded
+            ? `Ver restantes (${restantes})`
+            : "Ocultar ranking";
         });
-
-        this.dataset.expanded = !expanded;
-
-        this.textContent = expanded
-          ? `Ver restantes (${restantes})`
-          : "Ocultar ranking";
-      });
-  } else {
-    toggleContainer.innerHTML = "";
+    } else {
+      toggleContainer.innerHTML = "";
+    }
+  } catch (e) {
+    console.error("Error cargando ranking:", e);
+    container.innerHTML = `<tr><td colspan="6" class="empty-ranking">⚠ Error cargando ranking</td></tr>`;
   }
 }
+
 
 // ── CHECK SUBMITTED ────────────────────────────
 function checkAlreadySubmitted() {
