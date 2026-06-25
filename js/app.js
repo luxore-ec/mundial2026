@@ -137,7 +137,7 @@ async function renderRanking() {
         const pos = i + 1;
         const posClass = pos <= 3 ? `top${pos}` : "";
         const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
-        const pct = Math.round((p.aciertos / 36) * 100);
+        const pct = Math.round((p.aciertos / 72) * 100);
 
         const hiddenClass = pos > 10 ? "ranking-hidden" : "";
         const hiddenStyle = pos > 10 ? "display:none;" : "";
