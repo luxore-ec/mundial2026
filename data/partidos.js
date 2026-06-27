@@ -119,10 +119,10 @@ const MUNDIAL_DATA = {
         //!{ id:"h_j3_2", local:"Cabo Verde",           visitante:"Arabia Saudita",  fecha:"26 de junio", hora:"19:00", grupo:"H" },
         //!{ id:"i_j3_1", local:"Senegal",              visitante:"Irak",            fecha:"26 de junio", hora:"14:00", grupo:"I" },
         //!{ id:"i_j3_2", local:"Noruega",              visitante:"Francia",         fecha:"26 de junio", hora:"14:00", grupo:"I" },                
-        { id:"l_j3_1", local:"Croacia",              visitante:"Ghana",           fecha:"27 de junio", hora:"16:00", grupo:"L" },
-        { id:"l_j3_2", local:"Panamá",               visitante:"Inglaterra",      fecha:"27 de junio", hora:"16:00", grupo:"L" },
-        { id:"k_j3_1", local:"Colombia",             visitante:"Portugal",        fecha:"27 de junio", hora:"18:30", grupo:"K" },
-        { id:"k_j3_2", local:"Rep. D. del Congo",    visitante:"Uzbekistán",      fecha:"27 de junio", hora:"18:30", grupo:"K" },
+        //!{ id:"l_j3_1", local:"Croacia",              visitante:"Ghana",           fecha:"27 de junio", hora:"16:00", grupo:"L" },
+        //!{ id:"l_j3_2", local:"Panamá",               visitante:"Inglaterra",      fecha:"27 de junio", hora:"16:00", grupo:"L" },
+        //!{ id:"k_j3_1", local:"Colombia",             visitante:"Portugal",        fecha:"27 de junio", hora:"18:30", grupo:"K" },
+        //!{ id:"k_j3_2", local:"Rep. D. del Congo",    visitante:"Uzbekistán",      fecha:"27 de junio", hora:"18:30", grupo:"K" },
         { id:"j_j3_1", local:"Jordania",             visitante:"Argentina",       fecha:"27 de junio", hora:"21:00", grupo:"J" },
         { id:"j_j3_2", local:"Argelia",              visitante:"Austria",         fecha:"27 de junio", hora:"21:00", grupo:"J" },
       ]
@@ -134,21 +134,26 @@ const MUNDIAL_DATA = {
       fasePenales: true, // <-- Atributo clave indispensable para habilitar el flujo de penales
       partidos: [
         { id:"d01", local:"Sudáfrica",       visitante:"Canadá",               fecha:"28 de junio", hora:"14:00", grupo:null },
+
         { id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
         { id:"d03", local:"Alemania",        visitante:"Paraguay",             fecha:"29 de junio", hora:"15:30", grupo:null },
         { id:"d04", local:"Países Bajos",    visitante:"Marruecos",            fecha:"29 de junio", hora:"20:00", grupo:null },
+
         { id:"d05", local:"Costa de Marfil", visitante:"Noruega",              fecha:"30 de junio", hora:"12:00", grupo:null },
         { id:"d06", local:"Francia",         visitante:"Suecia",               fecha:"30 de junio", hora:"16:00", grupo:null },
-        { id:"d07", local:"México",          visitante:"null",                 fecha:"30 de junio", hora:"20:00", grupo:null },
-        { id:"d08", local:"null",            visitante:"null",                 fecha:"1 de julio",  hora:"11:00", grupo:null },
+        { id:"d07", local:"México",          visitante:"Ecuador",              fecha:"30 de junio", hora:"20:00", grupo:null },
+
+        { id:"d08", local:"Inglaterra",      visitante:"null",                 fecha:"1 de julio",  hora:"11:00", grupo:null },
         { id:"d09", local:"Bélgica",         visitante:"null",                 fecha:"1 de julio",  hora:"15:00", grupo:null },
         { id:"d10", local:"Estados Unidos",  visitante:"Bosnia y Herzegovina", fecha:"1 de julio",  hora:"19:00", grupo:null },
+
         { id:"d11", local:"España",          visitante:"null",                 fecha:"2 de julio",  hora:"14:00", grupo:null },
-        { id:"d12", local:"null",            visitante:"null",                 fecha:"2 de julio",  hora:"18:00", grupo:null },
+        { id:"d12", local:"null",            visitante:"Croacia",              fecha:"2 de julio",  hora:"18:00", grupo:null },
         { id:"d13", local:"Suiza",           visitante:"null",                 fecha:"2 de julio",  hora:"22:00", grupo:null },
+        
         { id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
         { id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
-        { id:"d16", local:"null",            visitante:"null",                 fecha:"3 de julio",  hora:"20:30", grupo:null },
+        { id:"d16", local:"null",            visitante:"Ghana",                fecha:"3 de julio",  hora:"20:30", grupo:null },
       ]
     },
 
