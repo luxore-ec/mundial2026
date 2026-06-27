@@ -7,7 +7,7 @@ const URL_SCRIPT =
 
 // ── STATE ──────────────────────────────────────
 const state = {
-  predicciones: {}, // { matchId: "local"|"empate"|"visitante" }
+  predicciones: {}, // { matchId: "local"|"empate"|"visitante" } // Para dieciseisavos guardará: { d01: { ganador: "local", penales: "No" } }
   campeon: "",
   grupoActivo: null, // tab activo en el formulario
 };
@@ -473,6 +473,45 @@ function getFlagImg(pais) {
 
 // ── RENDER PARTIDO ─────────────────────────────
 function renderPartido(p) {
+  const fase = getCurrentFase();
+  const esFasePenales = fase && fase.fasePenales;
+
+  if (esFasePenales) {
+    return `
+      <div class="match-card" id="mc-${p.id}" style="display: flex; flex-direction: column; align-items: stretch;">
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%;">
+          <div class="match-team">
+            ${getFlagImg(p.local)} <span class="team-name">${escapeHtml(p.local)}</span>
+          </div>
+          <div class="match-info">
+            <span class="match-vs">VS</span>
+            <span class="match-date">${p.fecha} · ${p.hora}</span>
+          </div>
+          <div class="match-team right">
+            <span class="team-name">${escapeHtml(p.visitante)}</span> ${getFlagImg(p.visitante)}
+          </div>
+        </div>
+        
+        <div class="pred-buttons" style="width: 100%; margin-top: 1rem;">
+          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','local',this)">🏆 ${escapeHtml(p.local)} (+4 pts)</button>
+          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','visitante',this)">🏆 ${escapeHtml(p.visitante)} (+4 pts)</button>
+        </div>
+
+        <div id="penales-section-${p.id}" class="penales-container" style="display: none; width: 100% !important; min-width: 100% !important; clear: both !important; margin-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.25rem; box-sizing: border-box;">
+          <p style="font-family:'Barlow Condensed',sans-serif; font-size: 1rem; color: var(--gold); margin: 0 0 0.85rem 0; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; width: 100% !important; display: block !important;">
+            ¿La selección que elegiste gana por penales? <span style="color: #fff; font-weight: bold;">(+3 PTS)</span>
+          </p>
+          <div style="display: flex !important; justify-content: center !important; gap: 12px; width: 100% !important; max-width: 280px !important; margin: 0 auto !important;">
+            <button class="pred-btn penales-btn" style="flex: 1; min-width: 100px;" onclick="selectPenales('${p.id}','Si',this)">⚽ Sí</button>
+            <button class="pred-btn penales-btn" style="flex: 1; min-width: 100px;" onclick="selectPenales('${p.id}','No',this)">❌ No</button>
+          </div>
+        </div>
+
+        <span class="match-required" style="margin-top: 0.5rem;">⚠ Selecciona el ganador y la definición del partido</span>
+      </div>`;
+  }
+
+  // Lógica original intacta para fases regulares
   return `
     <div class="match-card" id="mc-${p.id}">
       <div class="match-team">
@@ -486,15 +525,15 @@ function renderPartido(p) {
         <span class="team-name">${escapeHtml(p.visitante)}</span> ${getFlagImg(p.visitante)}
       </div>
       <div class="pred-buttons">
-        <button class="pred-btn" onclick="selectPred('${p.id}','local',this)"> ${escapeHtml(p.local)}</button>
+        <button class="pred-btn" onclick="selectPred('${p.id}','local',this)">${escapeHtml(p.local)}</button>
         <button class="pred-btn" onclick="selectPred('${p.id}','empate',this)">🤝 Empate</button>
-        <button class="pred-btn" onclick="selectPred('${p.id}','visitante',this)"> ${escapeHtml(p.visitante)}</button>
+        <button class="pred-btn" onclick="selectPred('${p.id}','visitante',this)">${escapeHtml(p.visitante)}</button>
       </div>
       <span class="match-required">⚠ Selecciona un resultado</span>
     </div>`;
 }
 
-// ── SELECT PRED ────────────────────────────────
+/*/ ── SELECT PRED ────────────────────────────────
 function selectPred(matchId, val, btn) {
   state.predicciones[matchId] = val;
 
@@ -512,6 +551,57 @@ function selectPred(matchId, val, btn) {
   card.classList.remove("has-error");
 
   updateProgress();
+}*/
+
+// ── SELECT GANADOR ─────────────────────────────
+function selectGanador(matchId, val, btn) {
+  const fase = getCurrentFase();
+  const card = document.getElementById(`mc-${matchId}`);
+
+  if (fase?.fasePenales) {
+    if (!state.predicciones[matchId] || typeof state.predicciones[matchId] === 'string') {
+      state.predicciones[matchId] = { ganador: "", penales: "" };
+    }
+    state.predicciones[matchId].ganador = val;
+
+    card.querySelectorAll(".ganador-btn").forEach((b) =>
+      b.classList.remove("selected-local", "selected-visitante")
+    );
+    btn.classList.add(`selected-${val}`);
+    
+    const penalesSection = document.getElementById(`penales-section-${matchId}`);
+    if (penalesSection)
+      penalesSection.style.setProperty("display", "block", "important");
+  } else {
+    state.predicciones[matchId] = val;
+    card.querySelectorAll(".pred-btn").forEach((b) =>
+      b.classList.remove("selected-local", "selected-empate", "selected-visitante")
+    );
+    btn.classList.add(`selected-${val}`);
+  }
+
+  card.classList.remove("has-error");
+  updateProgress();
+}
+
+// ── SELECT PENALES ─────────────────────────────
+function selectPenales(matchId, val, btn) {
+  if (!state.predicciones[matchId]) return;
+  
+  state.predicciones[matchId].penales = val;
+
+  const card = document.getElementById(`mc-${matchId}`);
+  // Remueve las clases previas de los botones de penales
+  card.querySelectorAll(".penales-btn").forEach((b) =>
+    b.classList.remove("selected-local", "selected-visitante")
+  );
+  
+  // Mapea 'Si' -> 'local' y 'No' -> 'visitante' para reutilizar tus estilos CSS existentes de colores
+  const cssClass = val === "Si" ? "local" : "visitante";
+  btn.classList.add(`selected-${cssClass}`);
+
+  card.classList.remove("has-error");
+  updateProgress();
 }
 
 // ── PROGRESS ───────────────────────────────────
@@ -519,12 +609,30 @@ function updateProgress() {
   const fase = getCurrentFase();
   if (!fase) return;
 
-  const selected = Object.keys(state.predicciones).length;
-  const puntosPotenciales = selected * 3;
+  let puntosPotenciales = 0;
+  let partidosRespondidos = 0;
+
+  if (fase.fasePenales) {
+    Object.values(state.predicciones).forEach((pred) => {
+      if (pred && typeof pred === 'object') {
+        if (pred.ganador) {
+          puntosPotenciales += 4; // 4 puntos por elegir ganador
+          partidosRespondidos++;
+        }
+        if (pred.penales) {
+          puntosPotenciales += 3; // 3 puntos por elegir penales (Sí/No)
+        }
+      }
+    });
+  } else {
+    const selected = Object.keys(state.predicciones).length;
+    puntosPotenciales = selected * 3;
+    partidosRespondidos = selected;
+  }
 
   const lbl = document.getElementById("prog-label");
   if (lbl) {
-    lbl.innerHTML = `Puntos en juego: <strong style="color:var(--gold)">${puntosPotenciales}</strong> pts (${selected} de ${fase.partidos.length} partidos)`;
+    lbl.innerHTML = `Puntos potenciales en juego: <strong style="color:var(--gold)">${puntosPotenciales}</strong> pts (${partidosRespondidos} de ${fase.partidos.length} partidos)`;
   }
 }
 
@@ -637,12 +745,27 @@ function validateForm() {
 
   // Validate all matches
   let missingMatches = false;
-  getCurrentFase()?.partidos.forEach((p) => {
-    if (!state.predicciones[p.id]) {
+  const fase = getCurrentFase();
+
+  fase?.partidos.forEach((p) => {
+    const pred = state.predicciones[p.id];
+    let partidoIncompleto = false;
+
+    if (fase.fasePenales) {
+      // Es obligatorio que exista el objeto y que posea tanto ganador como penales definidos
+      if (!pred || typeof pred !== "object" || !pred.ganador || !pred.penales) {
+        partidoIncompleto = true;
+      }
+    } else {
+      if (!pred || typeof pred !== "string") {
+        partidoIncompleto = true;
+      }
+    }
+
+    if (partidoIncompleto) {
       document.getElementById(`mc-${p.id}`)?.classList.add("has-error");
       missingMatches = true;
       valid = false;
-      // Switch to tab with error
       if (p.grupo) switchGrupoTab(p.grupo);
     }
   });
@@ -664,14 +787,23 @@ async function getUserIP() {
 
   for (const url of servicios) {
     try {
-      const res = await fetch(url);
-      const data = await res.json();
-      return data.ip || data.IP || "";
-    } catch {
-      continue;
+      // Usamos un timeout corto para no retrasar el envío si el bloqueo de cliente está activo
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), 1500);
+
+      const res = await fetch(url, { signal: controller.signal }).catch(() => null);
+      clearTimeout(id);
+
+      if (!res || !res.ok) continue;
+      
+      const data = await res.json().catch(() => ({}));
+      const ip = data.ip || data.IP || "";
+      if (ip) return ip;
+    } catch (e) {
+      // Silenciar el error en consola provocado por bloqueadores de publicidad
     }
   }
-  return "no-disponible";
+  return "bloqueado-por-cliente";
 }
 
 // ── HANDLE SUBMIT ──────────────────────────────
@@ -696,6 +828,21 @@ async function handleSubmit() {
   const faseKey = MUNDIAL_DATA.config.faseActiva;
   const fase = getCurrentFase();
 
+  // Aplanamiento dinámico de predicciones para la base de datos
+  const prediccionesAplanadas = {};
+  
+  if (fase?.fasePenales) {
+    Object.keys(state.predicciones).forEach((id) => {
+      const pred = state.predicciones[id];
+      if (pred && typeof pred === 'object') {
+        prediccionesAplanadas[`${id}_G`] = pred.ganador;
+        prediccionesAplanadas[`${id}_P`] = pred.penales;
+      }
+    });
+  } else {
+    Object.assign(prediccionesAplanadas, state.predicciones);
+  }
+
   const datos = {
     timestamp: new Date().toISOString(),
     nombre,
@@ -712,7 +859,7 @@ async function handleSubmit() {
     fase: faseKey,
     ip: await getUserIP(),
     dispositivo: navigator.userAgent,
-    ...state.predicciones,
+    ...prediccionesAplanadas, // Se inyectan las cabeceras estructuradas como d01_G y d01_P
   };
 
   // Save locally for comprobante
@@ -878,22 +1025,27 @@ function descargarComprobante(faseKey) {
   partidos.forEach((p, i) => {
     const y = HEADER + i * ROW + 22;
     const pred = data.predicciones[p.id];
-    const resultado =
-      pred === "local"
-        ? p.local
-        : pred === "visitante"
-          ? p.visitante
-          : pred === "empate"
-            ? "Empate"
-            : "—";
-    const emoji =
-      pred === "local"
-        ? "✅"
-        : pred === "visitante"
-          ? "✅"
-          : pred === "empate"
-            ? "🤝"
-            : "❌";
+
+    let resultado = "—";
+    let emoji = "❌";
+    let esEmpate = false;
+
+    // Verificar si la predicción es un objeto (Fase Penales) o un string (Fase Regular)
+    if (pred && typeof pred === "object") {
+      const ganadorTexto = pred.ganador === "local" ? p.local : p.visitante;
+      const penalesTexto = pred.penales === "Si" ? " (Penales)" : "";
+      resultado = `${ganadorTexto}${penalesTexto}`;
+      emoji = "🏆";
+    } else if (pred && typeof pred === "string") {
+      resultado =
+        pred === "local"
+          ? p.local
+          : pred === "visitante"
+            ? p.visitante
+            : "Empate";
+      emoji = pred === "empate" ? "🤝" : "✅";
+      esEmpate = pred === "empate";
+    }
 
     // Row bg
     ctx.fillStyle = i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent";
@@ -901,15 +1053,14 @@ function descargarComprobante(faseKey) {
 
     ctx.fillStyle = "#888899";
     ctx.font = "11px Arial";
-    ctx.fillText(`Grupo ${p.grupo || ""}`, PADDING, y - 4);
+    ctx.fillText(p.grupo ? `Grupo ${p.grupo}` : "Eliminatoria", PADDING, y - 4);
 
     ctx.fillStyle = "#F5F0E8";
     ctx.font = "14px Arial";
     ctx.fillText(`${p.local} vs ${p.visitante}`, PADDING, y + 12);
 
     ctx.textAlign = "right";
-    ctx.fillStyle =
-      pred === "empate" ? "#D4AF37" : pred ? "#00C853" : "#C8102E";
+    ctx.fillStyle = esEmpate ? "#D4AF37" : pred ? "#00C853" : "#C8102E";
     ctx.font = "bold 14px Arial";
     ctx.fillText(`${emoji} ${resultado}`, W - PADDING, y + 12);
     ctx.textAlign = "left";

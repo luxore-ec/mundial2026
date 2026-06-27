@@ -7,7 +7,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "grupos_j1",
-    fechaLimiteFase: "2026-06-11T14:00:00-05:00",
+    fechaLimiteFase: "2026-06-11T14:30:00-05:00",
   },
 
   equipos: [
@@ -107,50 +107,48 @@ const MUNDIAL_DATA = {
         //!{ id:"b_j3_2", local:"Suiza",                visitante:"Canadá",          fecha:"24 de junio", hora:"14:00", grupo:"B" },
         //!{ id:"c_j3_1", local:"Escocia",              visitante:"Brasil",          fecha:"24 de junio", hora:"17:00", grupo:"C" },
         //!{ id:"c_j3_2", local:"Marruecos",            visitante:"Haití",           fecha:"24 de junio", hora:"17:00", grupo:"C" },
-
-        { id:"e_j3_1", local:"Ecuador",              visitante:"Alemania",        fecha:"25 de junio", hora:"15:00", grupo:"E" },
-        { id:"e_j3_2", local:"Curazao",              visitante:"Costa de Marfil", fecha:"25 de junio", hora:"15:00", grupo:"E" },
-        { id:"f_j3_1", local:"Japón",                visitante:"Suecia",          fecha:"25 de junio", hora:"18:00", grupo:"F" },
-        { id:"f_j3_2", local:"Túnez",                visitante:"Países Bajos",    fecha:"25 de junio", hora:"18:00", grupo:"F" },
-        { id:"d_j3_1", local:"Turquía",              visitante:"Estados Unidos",  fecha:"25 de junio", hora:"21:00", grupo:"D" },
-        { id:"d_j3_2", local:"Paraguay",             visitante:"Australia",       fecha:"25 de junio", hora:"21:00", grupo:"D" },
-
-        { id:"g_j3_1", local:"Nueva Zelanda",        visitante:"Bélgica",         fecha:"26 de junio", hora:"22:00", grupo:"G" },
-        { id:"g_j3_2", local:"Egipto",               visitante:"Irán",            fecha:"26 de junio", hora:"22:00", grupo:"G" },
-        { id:"h_j3_1", local:"Uruguay",              visitante:"España",          fecha:"26 de junio", hora:"19:00", grupo:"H" },
-        { id:"h_j3_2", local:"Cabo Verde",           visitante:"Arabia Saudita",  fecha:"26 de junio", hora:"19:00", grupo:"H" },
-        { id:"i_j3_1", local:"Senegal",              visitante:"Irak",            fecha:"26 de junio", hora:"14:00", grupo:"I" },
-        { id:"i_j3_2", local:"Noruega",              visitante:"Francia",         fecha:"26 de junio", hora:"14:00", grupo:"I" },
-
-        { id:"j_j3_1", local:"Jordania",             visitante:"Argentina",       fecha:"27 de junio", hora:"21:00", grupo:"J" },
-        { id:"j_j3_2", local:"Argelia",              visitante:"Austria",         fecha:"27 de junio", hora:"21:00", grupo:"J" },
+        //!{ id:"e_j3_1", local:"Ecuador",              visitante:"Alemania",        fecha:"25 de junio", hora:"15:00", grupo:"E" },
+        //!{ id:"e_j3_2", local:"Curazao",              visitante:"Costa de Marfil", fecha:"25 de junio", hora:"15:00", grupo:"E" },
+        //!{ id:"f_j3_1", local:"Japón",                visitante:"Suecia",          fecha:"25 de junio", hora:"18:00", grupo:"F" },
+        //!{ id:"f_j3_2", local:"Túnez",                visitante:"Países Bajos",    fecha:"25 de junio", hora:"18:00", grupo:"F" },
+        //!{ id:"d_j3_1", local:"Turquía",              visitante:"Estados Unidos",  fecha:"25 de junio", hora:"21:00", grupo:"D" },
+        //!{ id:"d_j3_2", local:"Paraguay",             visitante:"Australia",       fecha:"25 de junio", hora:"21:00", grupo:"D" },
+        //!{ id:"g_j3_1", local:"Nueva Zelanda",        visitante:"Bélgica",         fecha:"26 de junio", hora:"22:00", grupo:"G" },
+        //!{ id:"g_j3_2", local:"Egipto",               visitante:"Irán",            fecha:"26 de junio", hora:"22:00", grupo:"G" },
+        //!{ id:"h_j3_1", local:"Uruguay",              visitante:"España",          fecha:"26 de junio", hora:"19:00", grupo:"H" },
+        //!{ id:"h_j3_2", local:"Cabo Verde",           visitante:"Arabia Saudita",  fecha:"26 de junio", hora:"19:00", grupo:"H" },
+        //!{ id:"i_j3_1", local:"Senegal",              visitante:"Irak",            fecha:"26 de junio", hora:"14:00", grupo:"I" },
+        //!{ id:"i_j3_2", local:"Noruega",              visitante:"Francia",         fecha:"26 de junio", hora:"14:00", grupo:"I" },                
+        { id:"l_j3_1", local:"Croacia",              visitante:"Ghana",           fecha:"27 de junio", hora:"16:00", grupo:"L" },
+        { id:"l_j3_2", local:"Panamá",               visitante:"Inglaterra",      fecha:"27 de junio", hora:"16:00", grupo:"L" },
         { id:"k_j3_1", local:"Colombia",             visitante:"Portugal",        fecha:"27 de junio", hora:"18:30", grupo:"K" },
         { id:"k_j3_2", local:"Rep. D. del Congo",    visitante:"Uzbekistán",      fecha:"27 de junio", hora:"18:30", grupo:"K" },
-        { id:"l_j3_1", local:"Croacia",              visitante:"Ghana",           fecha:"27 de junio", hora:"16:00", grupo:"L" },
-        { id:"l_j3_2", local:"Panamá",               visitante:"Inglaterra",      fecha:"27 de junio", hora:"16:00", grupo:"L" }
+        { id:"j_j3_1", local:"Jordania",             visitante:"Argentina",       fecha:"27 de junio", hora:"21:00", grupo:"J" },
+        { id:"j_j3_2", local:"Argelia",              visitante:"Austria",         fecha:"27 de junio", hora:"21:00", grupo:"J" },
       ]
     },
 
     dieciseisavos: {
       label: "Dieciseisavos de Final",
       descripcion: "Ronda de 32 — partidos eliminatorios (28 Jun – 3 Jul)",
+      fasePenales: true, // <-- Atributo clave indispensable para habilitar el flujo de penales
       partidos: [
-        { id:"d01", local:"México",        visitante:"Francia",       fecha:"28 de junio", hora:"14:00", grupo:null },
-        { id:"d02", local:"Argentina",     visitante:"Portugal",      fecha:"28 de junio", hora:"18:00", grupo:null },
-        { id:"d03", local:"Brasil",        visitante:"Alemania",      fecha:"28 de junio", hora:"21:00", grupo:null },
-        { id:"d04", local:"España",        visitante:"Inglaterra",    fecha:"29 de junio", hora:"14:00", grupo:null },
-        { id:"d05", local:"Países Bajos",  visitante:"Australia",     fecha:"29 de junio", hora:"18:00", grupo:null },
-        { id:"d06", local:"Suecia",        visitante:"Croacia",       fecha:"29 de junio", hora:"21:00", grupo:null },
-        { id:"d07", local:"Corea del Sur", visitante:"Colombia",      fecha:"30 de junio", hora:"14:00", grupo:null },
-        { id:"d08", local:"Uruguay",       visitante:"Noruega",       fecha:"30 de junio", hora:"18:00", grupo:null },
-        { id:"d09", local:"Canadá",        visitante:"Ecuador",       fecha:"30 de junio", hora:"21:00", grupo:null },
-        { id:"d10", local:"Senegal",       visitante:"Japón",         fecha:"1 de julio",  hora:"14:00", grupo:null },
-        { id:"d11", local:"Marruecos",     visitante:"Austria",       fecha:"1 de julio",  hora:"18:00", grupo:null },
-        { id:"d12", local:"Estados Unidos",visitante:"Suiza",         fecha:"1 de julio",  hora:"21:00", grupo:null },
-        { id:"d13", local:"Bélgica",       visitante:"Escocia",       fecha:"2 de julio",  hora:"14:00", grupo:null },
-        { id:"d14", local:"Ghana",         visitante:"Irán",          fecha:"2 de julio",  hora:"18:00", grupo:null },
-        { id:"d15", local:"Turquía",       visitante:"Nueva Zelanda", fecha:"2 de julio",  hora:"21:00", grupo:null },
-        { id:"d16", local:"Qatar",         visitante:"Uzbekistán",    fecha:"3 de julio",  hora:"18:00", grupo:null },
+        { id:"d01", local:"Sudáfrica",       visitante:"Canadá",               fecha:"28 de junio", hora:"14:00", grupo:null },
+        { id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
+        { id:"d03", local:"Alemania",        visitante:"Paraguay",             fecha:"29 de junio", hora:"15:30", grupo:null },
+        { id:"d04", local:"Países Bajos",    visitante:"Marruecos",            fecha:"29 de junio", hora:"20:00", grupo:null },
+        { id:"d05", local:"Costa de Marfil", visitante:"Noruega",              fecha:"30 de junio", hora:"12:00", grupo:null },
+        { id:"d06", local:"Francia",         visitante:"Suecia",               fecha:"30 de junio", hora:"16:00", grupo:null },
+        { id:"d07", local:"México",          visitante:"null",                 fecha:"30 de junio", hora:"20:00", grupo:null },
+        { id:"d08", local:"null",            visitante:"null",                 fecha:"1 de julio",  hora:"11:00", grupo:null },
+        { id:"d09", local:"Bélgica",         visitante:"null",                 fecha:"1 de julio",  hora:"15:00", grupo:null },
+        { id:"d10", local:"Estados Unidos",  visitante:"Bosnia y Herzegovina", fecha:"1 de julio",  hora:"19:00", grupo:null },
+        { id:"d11", local:"España",          visitante:"null",                 fecha:"2 de julio",  hora:"14:00", grupo:null },
+        { id:"d12", local:"null",            visitante:"null",                 fecha:"2 de julio",  hora:"18:00", grupo:null },
+        { id:"d13", local:"Suiza",           visitante:"null",                 fecha:"2 de julio",  hora:"22:00", grupo:null },
+        { id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
+        { id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
+        { id:"d16", local:"null",            visitante:"null",                 fecha:"3 de julio",  hora:"20:30", grupo:null },
       ]
     },
 
@@ -158,14 +156,14 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"México",         visitante:"Argentina",     fecha:"4 de julio",  hora:"14:00", grupo:null },
-        { id:"o02", local:"Brasil",         visitante:"España",        fecha:"4 de julio",  hora:"21:00", grupo:null },
-        { id:"o03", local:"Países Bajos",   visitante:"Suecia",        fecha:"5 de julio",  hora:"14:00", grupo:null },
-        { id:"o04", local:"Uruguay",        visitante:"Canadá",        fecha:"5 de julio",  hora:"21:00", grupo:null },
+        { id:"o01", local:"México",         visitante:"Argentina",     fecha:"4 de julio",  hora:"12:00", grupo:null },
+        { id:"o02", local:"Brasil",         visitante:"España",        fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o03", local:"Países Bajos",   visitante:"Suecia",        fecha:"5 de julio",  hora:"15:00", grupo:null },
+        { id:"o04", local:"Uruguay",        visitante:"Canadá",        fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"Senegal",        visitante:"Marruecos",     fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"Estados Unidos", visitante:"Bélgica",       fecha:"6 de julio",  hora:"21:00", grupo:null },
-        { id:"o07", local:"Inglaterra",     visitante:"Corea del Sur", fecha:"7 de julio",  hora:"14:00", grupo:null },
-        { id:"o08", local:"Noruega",        visitante:"Japón",         fecha:"7 de julio",  hora:"21:00", grupo:null },
+        { id:"o06", local:"Estados Unidos", visitante:"Bélgica",       fecha:"6 de julio",  hora:"19:00", grupo:null },
+        { id:"o07", local:"Inglaterra",     visitante:"Corea del Sur", fecha:"7 de julio",  hora:"11:00", grupo:null },
+        { id:"o08", local:"Noruega",        visitante:"Japón",         fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
@@ -173,10 +171,10 @@ const MUNDIAL_DATA = {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
       partidos: [
-        { id:"c01", local:"México",       visitante:"Brasil",        fecha:"9 de julio",  hora:"14:00", grupo:null },
-        { id:"c02", local:"Países Bajos", visitante:"Uruguay",       fecha:"9 de julio",  hora:"21:00", grupo:null },
-        { id:"c03", local:"Senegal",      visitante:"Estados Unidos", fecha:"10 de julio", hora:"14:00", grupo:null },
-        { id:"c04", local:"Inglaterra",   visitante:"Noruega",       fecha:"10 de julio", hora:"21:00", grupo:null },
+        { id:"c01", local:"México",       visitante:"Brasil",        fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c02", local:"Países Bajos", visitante:"Uruguay",       fecha:"10 de julio",  hora:"14:00", grupo:null },
+        { id:"c03", local:"Senegal",      visitante:"Estados Unidos", fecha:"11 de julio", hora:"16:00", grupo:null },
+        { id:"c04", local:"Inglaterra",   visitante:"Noruega",       fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
 
@@ -185,7 +183,7 @@ const MUNDIAL_DATA = {
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
         { id:"s01", local:"México",       visitante:"Países Bajos",  fecha:"14 de julio", hora:"14:00", grupo:null },
-        { id:"s02", local:"Senegal",      visitante:"Inglaterra",    fecha:"15 de julio", hora:"18:00", grupo:null },
+        { id:"s02", local:"Senegal",      visitante:"Inglaterra",    fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
 
@@ -198,64 +196,11 @@ const MUNDIAL_DATA = {
     },
   },
 
-  // ── RANKING
   ranking: [
     { nombre:"Bruno",       apellido:"Arevalo",      aciertos:12, total:72, campeon: " Portugal | España | Brasil | Francia | Cuartos " },
-    { nombre:"Toga",        apellido:"Kevin",        aciertos:12, total:72, campeon: " Francia | España | Argentina | Francia | Cuartos " },
-    { nombre:"JOSE",        apellido:"XAVIER",       aciertos:12, total:72, campeon: " España | Francia | Argentina | Francia | Octavos " },
-    { nombre:"David",       apellido:"Sellan",       aciertos:13, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
-    { nombre:"Elizabeth",   apellido:"Cabeza",       aciertos:11, total:72, campeon: " Francia | España | Portugal | Francia | Fase de grupos " },
-    { nombre:"Victor",      apellido:"Gonzalez",     aciertos:11, total:72, campeon: " España | Portugal | Francia | España | Octavos " },
-    { nombre:"Fabian",      apellido:"Cevallos",     aciertos:14, total:72, campeon: " España | Argentina | Francia | España | Octavos " },
-    { nombre:"JEFFERSON",   apellido:"ARÉVALO",      aciertos:9, total:72, campeon: " Portugal| Brasil| Ecuador| Francia| Semifinales " },
-    { nombre:"Carlos",      apellido:"Delgado",      aciertos:10, total:72, campeon: " Ecuador| Países Bajos| España| Francia| Final " },
-    { nombre:"Paul",        apellido:"Garcia",       aciertos:15, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
-
-    { nombre:"Paul",        apellido:"Rodríguez",    aciertos:12, total:72, campeon: " Portugal | España | Argentina | Brasil | Octavos " },
-    { nombre:"Juan",        apellido:"Navarrete",    aciertos:10, total:72, campeon: " Francia| Portugal| Ecuador| Francia| Semifinales " },
-    { nombre:"Dussan",      apellido:"Maruri",       aciertos:10, total:72, campeon: " Argentina | Francia | Brasil | Francia | Octavos " },
-    { nombre:"Francisco",   apellido:"Camacho",      aciertos:13, total:72, campeon: " Portugal | Francia | Argentina | Francia | Octavos " },
-    { nombre:"Gary",        apellido:"Laborde",      aciertos:12, total:72, campeon: " Francia | Portugal | Ecuador | Francia | Semifinales " },
-    { nombre:"Julio",       apellido:"Mazacon",      aciertos:13, total:72, campeon: " Francia | España | Argentina | Francia | Octavos " },
-    { nombre:"Kelvin",      apellido:"Cornejo",      aciertos:11, total:72, campeon: " España | Francia | Francia | España | Octavos " },
-    { nombre:"Julio",       apellido:"Sanchez",      aciertos:13, total:72, campeon: " Portugal | Alemania | Brasil | Portugal | Octavos " },
-    { nombre:"Oscar",       apellido:"Ortega",       aciertos:12, total:72, campeon: " Argentina | Francia | España | Francia | Octavos " },
-    { nombre:"Andrés",      apellido:"Soto",         aciertos:12, total:72, campeon: " España | Argentina | Portugal | Francia | Octavos " },
-
-    { nombre:"Jonathan",    apellido:"Di Luca",      aciertos:12, total:72, campeon: " Países Bajos | Portugal | España | Francia | Octavos " },
-    { nombre:"JEAN",        apellido:"Arévalo",      aciertos:11, total:72, campeon: " Portugal | Francia | Ecuador | Marruecos | Cuartos " },
-    { nombre:"Andrea",      apellido:"Soto",         aciertos:15, total:72, campeon: " España | Francia | Argentina | España | Octavos " },
-    { nombre:"Jose",        apellido:"Garcia",       aciertos:13, total:72, campeon: " Portugal | España | Argentina | Portugal | Cuartos " },
-    { nombre:"Jose",        apellido:"Bailon",       aciertos:12, total:72, campeon: " Francia | España | Países Bajos | Francia | Cuartos " },
-    { nombre:"Joselyn",     apellido:"Salcedo",      aciertos:10, total:72, campeon: " Argentina | Portugal | Ecuador | Ecuador | Semifinales " },
-    { nombre:"Jose",        apellido:"Crespo",       aciertos:10, total:72, campeon: " Francia | Argentina | España | Francia | Octavos " },
-    { nombre:"Victor",      apellido:"Camacho",      aciertos:12, total:72, campeon: " Portugal | Francia | Brasil | Francia | Cuartos " },
-    { nombre:"Marcos",      apellido:"Ramírez",      aciertos:12, total:72, campeon: " Portugal | Francia | Ecuador | Portugal | Semifinales " },
-    { nombre:"Mayra",       apellido:"Huerts",       aciertos:13, total:72, campeon: " Portugal | Francia | España | Portugal | Dieciseisavos " },
-
-    { nombre:"Ronny",       apellido:"Moreira",      aciertos:8, total:72, campeon: " Francia | Argentina | Ecuador | Francia | Cuartos " },
-    { nombre:"Aldo",        apellido:"Arevalo",      aciertos:8, total:72, campeon: " Portugal | Inglaterra | Argentina | Argentina | Semifinales " },
-    { nombre:"Sandy",       apellido:"Carpio",       aciertos:11, total:72, campeon: " Francia | Argentina | Inglaterra | Francia | Fase de grupos " },
-    { nombre:"Cristopher",  apellido:"Crespo",       aciertos:10, total:72, campeon: " Argentina | Brasil | Paraguay | Portugal | Octavos " },
-    { nombre:"Bolívar",     apellido:"Pérez",        aciertos:10, total:72, campeon: " España | Brasil | Inglaterra | Sudáfrica | Octavos " },
-    { nombre:"Steven",      apellido:"Ley",          aciertos:12, total:72, campeon: " Francia | Portugal | Brasil | Francia | Octavos " },
-    { nombre:"Freddy",      apellido:"Pincay",       aciertos:11, total:72, campeon: " España | Argentina | Países Bajos | España | Octavos " },
-    { nombre:"CARLOS",      apellido:"LOPEZ",        aciertos:16, total:72, campeon: " Francia | Portugal | Ecuador | España | Semifinales " },
-    { nombre:"Lissette",    apellido:"Banchon",      aciertos:10, total:72, campeon: " España | Francia | Argentina | Argentina | Octavos " },
-    { nombre:"Carlos",      apellido:"Ochoa",        aciertos:14, total:72, campeon: " Francia | Brasil | Ecuador | Francia | Semifinales " },
-
-    { nombre:"Rufo",        apellido:"Castro",       aciertos:11, total:72, campeon: " Portugal | Ecuador | Francia | España | Final " },
-    { nombre:"Jorge",       apellido:"Rodriguez",    aciertos:11, total:72, campeon: " España | Portugal | Francia | España | Octavos " },    
-    { nombre:"JUAN",        apellido:"PARRAGA",      aciertos:13, total:70, campeon: " Portugal | España | Ecuador | Portugal | Semifinales " },
-    { nombre:"Fernando",    apellido:"Parraga",      aciertos:10, total:70, campeon: " Francia | Portugal | España | Francia | Octavos " },
-    { nombre:"Gabriel",     apellido:"Parraga",      aciertos:11, total:70, campeon: " Países Bajos | Portugal | España | Países Bajos | Octavos " },
-    { nombre:"Bryan",       apellido:"Parrales",     aciertos:9, total:70, campeon: " Francia | Alemania | Ecuador | España | Cuartos " },
-    { nombre:"Livia",       apellido:"Arévalo",      aciertos:8, total:70, campeon: " España | Alemania | Brasil | Argentina | Octavos " },
-    { nombre:"Pablo",       apellido:"Zambrano",     aciertos:11, total:70, campeon: " España | Francia | Portugal | España | Octavos " },
-    { nombre:"Josue",       apellido:"Villacis",     aciertos:9, total:70, campeon: " Brasil | Francia | Ecuador | Brasil | Cuartos " },
     { nombre:"Junior",      apellido:"Castro",       aciertos:9, total:70, campeon: " Francia | Alemania | Argentina | Francia | Octavos " }
     
-  ],  // ── RESULTADOS REALES — llenar cuando terminen los partidos
+  ],
   resultados: {
     // "a_j1_1": "local" | "empate" | "visitante"
   }
