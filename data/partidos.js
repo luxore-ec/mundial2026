@@ -6,8 +6,8 @@ const MUNDIAL_DATA = {
     emailDestino: "TU_EMAIL@gmail.com",
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
-    faseActiva: "grupos_j1",
-    fechaLimiteFase: "2026-06-11T14:30:00-05:00",
+    faseActiva: "dieciseisavos",
+    fechaLimiteFase: "2026-06-28T14:30:00-05:00",
   },
 
   equipos: [
