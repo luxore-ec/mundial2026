@@ -444,10 +444,14 @@ function renderForm() {
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
       
+      
+      <!--
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      
+      -->
+
+
     </div>
   `;
 }
@@ -528,7 +532,9 @@ function renderPartido(p) {
       </div>
       <div class="pred-buttons">
         <button class="pred-btn" onclick="selectPred('${p.id}','local',this)">${escapeHtml(p.local)}</button>
+        <!--
         <button class="pred-btn" onclick="selectPred('${p.id}','empate',this)">🤝 Empate</button>
+        -->
         <button class="pred-btn" onclick="selectPred('${p.id}','visitante',this)">${escapeHtml(p.visitante)}</button>
       </div>
       <span class="match-required">⚠ Selecciona un resultado</span>

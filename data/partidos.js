@@ -6,8 +6,8 @@ const MUNDIAL_DATA = {
     emailDestino: "TU_EMAIL@gmail.com",
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
-    faseActiva: "dieciseisavos",
-    fechaLimiteFase: "2026-06-28T14:30:00-05:00",
+    faseActiva: "octavos",
+    fechaLimiteFase: "2026-07-03T12:30:00-05:00",
   },
 
   equipos: [
@@ -133,8 +133,7 @@ const MUNDIAL_DATA = {
       descripcion: "Ronda de 32 — partidos eliminatorios (28 Jun – 3 Jul)",
       fasePenales: true, // <-- Atributo clave indispensable para habilitar el flujo de penales
       partidos: [
-        { id:"d01", local:"Sudáfrica",       visitante:"Canadá",               fecha:"28 de junio", hora:"14:00", grupo:null },
-
+        //!{ id:"d01", local:"Sudáfrica",       visitante:"Canadá",               fecha:"28 de junio", hora:"14:00", grupo:null },
         { id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
         { id:"d03", local:"Alemania",        visitante:"Paraguay",             fecha:"29 de junio", hora:"15:30", grupo:null },
         { id:"d04", local:"Países Bajos",    visitante:"Marruecos",            fecha:"29 de junio", hora:"20:00", grupo:null },
@@ -161,14 +160,14 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"México",         visitante:"Argentina",     fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"Brasil",         visitante:"España",        fecha:"4 de julio",  hora:"16:00", grupo:null },
-        { id:"o03", local:"Países Bajos",   visitante:"Suecia",        fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"Uruguay",        visitante:"Canadá",        fecha:"5 de julio",  hora:"19:00", grupo:null },
-        { id:"o05", local:"Senegal",        visitante:"Marruecos",     fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"Estados Unidos", visitante:"Bélgica",       fecha:"6 de julio",  hora:"19:00", grupo:null },
-        { id:"o07", local:"Inglaterra",     visitante:"Corea del Sur", fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"Noruega",        visitante:"Japón",         fecha:"7 de julio",  hora:"15:00", grupo:null },
+        { id:"o01", local:"Canadá",         visitante:"Null",     fecha:"4 de julio",  hora:"12:00", grupo:null },
+        { id:"o02", local:"Null",         visitante:"Null",        fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o03", local:"Null",   visitante:"Null",        fecha:"5 de julio",  hora:"15:00", grupo:null },
+        { id:"o04", local:"Nully",        visitante:"Null",        fecha:"5 de julio",  hora:"19:00", grupo:null },
+        { id:"o05", local:"Null",        visitante:"Null",     fecha:"6 de julio",  hora:"14:00", grupo:null },
+        { id:"o06", local:"Null", visitante:"Null",       fecha:"6 de julio",  hora:"19:00", grupo:null },
+        { id:"o07", local:"Null",     visitante:"Null", fecha:"7 de julio",  hora:"11:00", grupo:null },
+        { id:"o08", local:"Null",        visitante:"Null",         fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
@@ -206,10 +205,6 @@ const MUNDIAL_DATA = {
     { nombre:"Junior",      apellido:"Castro",       aciertos:9, total:70, campeon: " Francia | Alemania | Argentina | Francia | Octavos " }
     
   ],
-  resultados: {
-    // "a_j1_1": "local" | "empate" | "visitante"
-  }
-
 };
 
   const CODIGOS = {
