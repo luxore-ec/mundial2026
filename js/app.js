@@ -443,11 +443,11 @@ function renderForm() {
         Al enviar confirmas que los datos son correctos.<br>
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
-      <!--
+      
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      -->
+      
     </div>
   `;
 }
