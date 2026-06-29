@@ -137,7 +137,7 @@ async function renderRanking() {
         const pos = i + 1;
         const posClass = pos <= 3 ? `top${pos}` : "";
         const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
-        const pct = Math.round((p.aciertos / 72) * 100);
+        const pct = Math.round((p.aciertos / 104) * 100);
 
         const hiddenClass = pos > 10 ? "ranking-hidden" : "";
         const hiddenStyle = pos > 10 ? "display:none;" : "";
@@ -169,13 +169,32 @@ async function renderRanking() {
 
         return `
         <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle} height:45px;">
-          <td style="${tdBaseStyle} width:10%;"><span class="rank-pos ${posClass}">${medal}</span></td>
-          <td style="${tdBaseStyle} width:35%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><span class="rank-name" style="display:inline-block; max-width:100%;">${escapeHtml(nombreCorto)}</span></td>
-          <td style="${tdBaseStyle} width:20%;">${selectHTML}</td>
-          <td style="${tdBaseStyle} width:15%;"><span class="rank-aciertos">${p.aciertos}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
-          <td style="${tdBaseStyle} width:10%; color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-size:0.9rem;">${pct}%</td>
-          <td style="${tdBaseStyle} width:10%; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
-            ${p.total_pts}<span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;">PTS</span>
+          <td style="${tdBaseStyle} width:10%; text-align:center;">
+            <span class="rank-pos ${posClass}">${medal}</span>
+          </td>
+
+          <td style="${tdBaseStyle} width:35%; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            <span class="rank-name" style="display:inline-block; max-width:100%;">
+              ${escapeHtml(nombreCorto)}
+            </span>
+          </td>
+
+          <td style="${tdBaseStyle} width:20%; text-align:center;">
+            ${selectHTML}
+          </td>
+
+          <td style="${tdBaseStyle} width:15%; text-align:center;">
+            <span class="rank-aciertos">${p.aciertos}</span>
+            <span style="color:var(--gray);font-size:0.8rem"> </span>
+          </td>
+
+          <td style="${tdBaseStyle} width:10%; text-align:center; color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-size:0.9rem;">
+            ${pct}%
+          </td>
+
+          <td style="${tdBaseStyle} width:10%; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
+            ${p.total_pts}
+            <span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;">PTS</span>
           </td>
         </tr>`;
       })
@@ -1221,11 +1240,22 @@ async function showRankingPopup() {
 
         return `
         <tr class="ranking-row">
-          <td><span class="rank-pos ${posClass}">${medal}</span></td>
-          <td><span class="rank-name">${escapeHtml(primerNombre)} ${escapeHtml(primerApellido)}</span></td>
-          <td><span class="rank-aciertos">${p.aciertos || 0}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
-          <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
-            ${p.total_pts} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
+          <td style="text-align:center;">
+            <span class="rank-pos ${posClass}">${medal}</span>
+          </td>
+
+          <td>
+            <span class="rank-name">${escapeHtml(primerNombre)} ${escapeHtml(primerApellido)}</span>
+          </td>
+
+          <td style="text-align:center;">
+            <span class="rank-aciertos">${p.aciertos || 0}</span>
+            <span style="color:var(--gray);font-size:0.8rem"> </span>
+          </td>
+
+          <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center;">
+            ${p.total_pts}
+            <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
           </td>
         </tr>`;
       })
