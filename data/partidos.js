@@ -175,10 +175,10 @@ const MUNDIAL_DATA = {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
       partidos: [
-        { id:"c01", local:"México",       visitante:"Brasil",        fecha:"9 de julio",  hora:"15:00", grupo:null },
-        { id:"c02", local:"Países Bajos", visitante:"Uruguay",       fecha:"10 de julio",  hora:"14:00", grupo:null },
-        { id:"c03", local:"Senegal",      visitante:"Estados Unidos", fecha:"11 de julio", hora:"16:00", grupo:null },
-        { id:"c04", local:"Inglaterra",   visitante:"Noruega",       fecha:"11 de julio", hora:"20:00", grupo:null },
+        { id:"c01", local:"Null",       visitante:"Null",        fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c02", local:"Null", visitante:"Null",       fecha:"10 de julio",  hora:"14:00", grupo:null },
+        { id:"c03", local:"Null",      visitante:"Null", fecha:"11 de julio", hora:"16:00", grupo:null },
+        { id:"c04", local:"Null",   visitante:"Null",       fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
 
@@ -186,8 +186,8 @@ const MUNDIAL_DATA = {
       label: "Semifinales",
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        { id:"s01", local:"México",       visitante:"Países Bajos",  fecha:"14 de julio", hora:"14:00", grupo:null },
-        { id:"s02", local:"Senegal",      visitante:"Inglaterra",    fecha:"15 de julio", hora:"14:00", grupo:null },
+        { id:"s01", local:"Null",       visitante:"Null",  fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s02", local:"Null",      visitante:"Null",    fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
 
@@ -195,7 +195,7 @@ const MUNDIAL_DATA = {
       label: "Final",
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"f01", local:"México",  visitante:"Senegal",    fecha:"19 de julio", hora:"14:00", grupo:null },
+        { id:"f01", local:"Null",  visitante:"Null",    fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },

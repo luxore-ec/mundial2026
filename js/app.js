@@ -1208,7 +1208,7 @@ async function showRankingPopup() {
 
     if (!data || data.length === 0) return;
 
-    const sorted = [...data].sort((a, b) => b.total - a.total).slice(0, 5);
+    const sorted = [...data].sort((a, b) => b.total_pts - a.total_pts).slice(0, 5);
 
     document.getElementById("ranking-popup-body").innerHTML = sorted
       .map((p, i) => {
@@ -1225,7 +1225,7 @@ async function showRankingPopup() {
           <td><span class="rank-name">${escapeHtml(primerNombre)} ${escapeHtml(primerApellido)}</span></td>
           <td><span class="rank-aciertos">${p.aciertos || 0}</span><span style="color:var(--gray);font-size:0.8rem"> / 72</span></td>
           <td style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);text-align:center">
-            ${p.total} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
+            ${p.total_pts} <span style="font-size:0.8rem;color:var(--gold);font-weight:400">PTS</span>
           </td>
         </tr>`;
       })
