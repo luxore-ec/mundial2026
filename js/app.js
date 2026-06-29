@@ -475,11 +475,11 @@ function renderForm() {
       </p>
       
       
-      
+      <!--
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      
+      -->
 
 
     </div>
