@@ -161,7 +161,7 @@ const MUNDIAL_DATA = {
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
         { id:"o01", local:"Canadá",         visitante:"?",     fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"?",         visitante:"?",        fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o02", local:"Paraguay",         visitante:"?",        fecha:"4 de julio",  hora:"16:00", grupo:null },
         { id:"o03", local:"Brasil",   visitante:"?",        fecha:"5 de julio",  hora:"15:00", grupo:null },
         { id:"o04", local:"?",        visitante:"?",        fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"?",        visitante:"?",     fecha:"6 de julio",  hora:"14:00", grupo:null },
