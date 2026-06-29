@@ -12,6 +12,17 @@ const state = {
   grupoActivo: null, // tab activo en el formulario
 };
 
+const PUNTOS_POR_FASE_WEB = {
+  grupos_j1: 3,
+  grupos_j2: 3,
+  grupos_j3: 3,
+  dieciseisavos: 4,
+  octavos: 6,
+  cuartos: 8,
+  semifinales: 12,
+  final: 30,
+};
+
 // ── INIT ───────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
@@ -194,7 +205,7 @@ async function renderRanking() {
 
           <td style="${tdBaseStyle} width:10%; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
             ${p.total_pts}
-            <span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;">PTS</span>
+            <span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;"></span>
           </td>
         </tr>`;
       })
@@ -464,11 +475,11 @@ function renderForm() {
       </p>
       
       
-      <!--
+      
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      -->
+      
 
 
     </div>
@@ -560,7 +571,7 @@ function renderPartido(p) {
     </div>`;
 }
 
-/*/ ── SELECT PRED ────────────────────────────────
+// ── SELECT PRED ────────────────────────────────
 function selectPred(matchId, val, btn) {
   state.predicciones[matchId] = val;
 
@@ -578,7 +589,7 @@ function selectPred(matchId, val, btn) {
   card.classList.remove("has-error");
 
   updateProgress();
-}*/
+}
 
 // ── SELECT GANADOR ─────────────────────────────
 function selectGanador(matchId, val, btn) {
@@ -641,7 +652,7 @@ function updateProgress() {
 
   if (fase.fasePenales) {
     Object.values(state.predicciones).forEach((pred) => {
-      if (pred && typeof pred === 'object') {
+      if (pred && typeof pred === "object") {
         if (pred.ganador) {
           puntosPotenciales += 4; // 4 puntos por elegir ganador
           partidosRespondidos++;
@@ -652,8 +663,10 @@ function updateProgress() {
       }
     });
   } else {
+    const faseKey = MUNDIAL_DATA.config.faseActiva;
+    const ptsPorAcierto = PUNTOS_POR_FASE_WEB[faseKey] || 3;
     const selected = Object.keys(state.predicciones).length;
-    puntosPotenciales = selected * 3;
+    puntosPotenciales = selected * ptsPorAcierto;
     partidosRespondidos = selected;
   }
 

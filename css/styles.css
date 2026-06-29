@@ -72,8 +72,8 @@ nav.scrolled { background: rgba(10,10,15,0.95); border-bottom: 1px solid rgba(21
 .countdown-inner { max-width: 800px; margin: 0 auto; text-align: center; }
 .countdown-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.35em; color: var(--gray); text-transform: uppercase; margin-bottom: 0.5rem; }
 .countdown-fase { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
-.countdown-grid { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-.countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 90px; }
+.countdown-grid { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+.countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 0; }
 .countdown-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .countdown-unit { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; color: var(--gray); text-transform: uppercase; margin-top: 0.25rem; }
 .countdown-sep { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(212,175,55,0.3); line-height: 1; padding-top: 0.2rem; }
@@ -333,6 +333,9 @@ footer p {
   .match-team { font-size: 0.8rem; }
   .pred-btn { font-size: 0.68rem; padding: 0.45rem 0.3rem; }
   .ranking-table th:nth-child(5), .ranking-table td:nth-child(5) { display: none; }
+  .countdown-num { font-size: 2.5rem; }
+  .countdown-sep { font-size: 2rem; }
+  .countdown-item { min-width: 55px; }
 }
 
 
