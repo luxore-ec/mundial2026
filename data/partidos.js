@@ -134,7 +134,7 @@ const MUNDIAL_DATA = {
       fasePenales: true, // <-- Atributo clave indispensable para habilitar el flujo de penales
       partidos: [
         //!{ id:"d01", local:"Sudáfrica",       visitante:"Canadá",               fecha:"28 de junio", hora:"14:00", grupo:null },
-        { id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
+        //!{ id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
         { id:"d03", local:"Alemania",        visitante:"Paraguay",             fecha:"29 de junio", hora:"15:30", grupo:null },
         { id:"d04", local:"Países Bajos",    visitante:"Marruecos",            fecha:"29 de junio", hora:"20:00", grupo:null },
 
@@ -160,14 +160,14 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"Canadá",         visitante:"Null",     fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"Null",         visitante:"Null",        fecha:"4 de julio",  hora:"16:00", grupo:null },
-        { id:"o03", local:"Null",   visitante:"Null",        fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"Nully",        visitante:"Null",        fecha:"5 de julio",  hora:"19:00", grupo:null },
-        { id:"o05", local:"Null",        visitante:"Null",     fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"Null", visitante:"Null",       fecha:"6 de julio",  hora:"19:00", grupo:null },
-        { id:"o07", local:"Null",     visitante:"Null", fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"Null",        visitante:"Null",         fecha:"7 de julio",  hora:"15:00", grupo:null },
+        { id:"o01", local:"Canadá",         visitante:"?",     fecha:"4 de julio",  hora:"12:00", grupo:null },
+        { id:"o02", local:"?",         visitante:"?",        fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o03", local:"Brasil",   visitante:"?",        fecha:"5 de julio",  hora:"15:00", grupo:null },
+        { id:"o04", local:"?",        visitante:"?",        fecha:"5 de julio",  hora:"19:00", grupo:null },
+        { id:"o05", local:"?",        visitante:"?",     fecha:"6 de julio",  hora:"14:00", grupo:null },
+        { id:"o06", local:"?", visitante:"?",       fecha:"6 de julio",  hora:"19:00", grupo:null },
+        { id:"o07", local:"?",     visitante:"?", fecha:"7 de julio",  hora:"11:00", grupo:null },
+        { id:"o08", local:"?",        visitante:"?",         fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
@@ -175,10 +175,10 @@ const MUNDIAL_DATA = {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
       partidos: [
-        { id:"c01", local:"Null",       visitante:"Null",        fecha:"9 de julio",  hora:"15:00", grupo:null },
-        { id:"c02", local:"Null", visitante:"Null",       fecha:"10 de julio",  hora:"14:00", grupo:null },
-        { id:"c03", local:"Null",      visitante:"Null", fecha:"11 de julio", hora:"16:00", grupo:null },
-        { id:"c04", local:"Null",   visitante:"Null",       fecha:"11 de julio", hora:"20:00", grupo:null },
+        { id:"c01", local:"?",       visitante:"?",        fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c02", local:"?", visitante:"?",       fecha:"10 de julio",  hora:"14:00", grupo:null },
+        { id:"c03", local:"?",      visitante:"?", fecha:"11 de julio", hora:"16:00", grupo:null },
+        { id:"c04", local:"?",   visitante:"?",       fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
 
@@ -186,8 +186,8 @@ const MUNDIAL_DATA = {
       label: "Semifinales",
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        { id:"s01", local:"Null",       visitante:"Null",  fecha:"14 de julio", hora:"14:00", grupo:null },
-        { id:"s02", local:"Null",      visitante:"Null",    fecha:"15 de julio", hora:"14:00", grupo:null },
+        { id:"s01", local:"?",       visitante:"?",  fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s02", local:"?",      visitante:"?",    fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
 
@@ -195,7 +195,7 @@ const MUNDIAL_DATA = {
       label: "Final",
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"f01", local:"Null",  visitante:"Null",    fecha:"19 de julio", hora:"14:00", grupo:null },
+        { id:"f01", local:"?",  visitante:"?",    fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },
