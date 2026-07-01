@@ -137,10 +137,9 @@ const MUNDIAL_DATA = {
         //!{ id:"d02", local:"Brasil",          visitante:"Japón",                fecha:"29 de junio", hora:"12:00", grupo:null },
         //!{ id:"d03", local:"Alemania",        visitante:"Paraguay",             fecha:"29 de junio", hora:"15:30", grupo:null },
         //!{ id:"d04", local:"Países Bajos",    visitante:"Marruecos",            fecha:"29 de junio", hora:"20:00", grupo:null },
-
         //!{ id:"d05", local:"Costa de Marfil", visitante:"Noruega",              fecha:"30 de junio", hora:"12:00", grupo:null },
-        { id:"d06", local:"Francia",         visitante:"Suecia",               fecha:"30 de junio", hora:"16:00", grupo:null },
-        { id:"d07", local:"México",          visitante:"Ecuador",              fecha:"30 de junio", hora:"20:00", grupo:null },
+        //!{ id:"d06", local:"Francia",         visitante:"Suecia",               fecha:"30 de junio", hora:"16:00", grupo:null },
+        //!{ id:"d07", local:"México",          visitante:"Ecuador",              fecha:"30 de junio", hora:"20:00", grupo:null },
 
         { id:"d08", local:"Inglaterra",      visitante:"Rep. D. del Congo",    fecha:"1 de julio",  hora:"11:00", grupo:null },
         { id:"d09", local:"Bélgica",         visitante:"Senegal",              fecha:"1 de julio",  hora:"15:00", grupo:null },
@@ -160,14 +159,14 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"Canadá",         visitante:"Marruecos",     fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"Paraguay",         visitante:"?",        fecha:"4 de julio",  hora:"16:00", grupo:null },
-        { id:"o03", local:"Brasil",   visitante:"?",        fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"?",        visitante:"?",        fecha:"5 de julio",  hora:"19:00", grupo:null },
-        { id:"o05", local:"?",        visitante:"?",     fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"?", visitante:"?",       fecha:"6 de julio",  hora:"19:00", grupo:null },
-        { id:"o07", local:"?",     visitante:"?", fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"?",        visitante:"?",         fecha:"7 de julio",  hora:"15:00", grupo:null },
+        { id:"o01", local:"Canadá",   visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
+        { id:"o02", local:"Paraguay", visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o03", local:"Brasil",   visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
+        { id:"o04", local:"?",        visitante:"?",          fecha:"5 de julio",  hora:"19:00", grupo:null },
+        { id:"o05", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"14:00", grupo:null },
+        { id:"o06", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"19:00", grupo:null },
+        { id:"o07", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"11:00", grupo:null },
+        { id:"o08", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
