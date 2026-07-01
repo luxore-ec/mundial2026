@@ -123,10 +123,19 @@ async function renderRanking() {
   const urlAppsScript =
     "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
 
+  // ⚠ Actualiza estos valores cuando se conozcan los resultados reales
+  const RESULTADOS_ESPECIALES = {
+    campeon: "",
+    subcampeon: "",
+    tercero: "",
+    balonoro: "",
+    ecuador: "Dieciseisavos",
+  };
+
   try {
     const response = await fetch(urlAppsScript);
     if (!response.ok) throw new Error("Error de red");
-    
+
     const apiData = await response.json();
     const data = apiData.ranking;
 
@@ -147,7 +156,8 @@ async function renderRanking() {
       .map((p, i) => {
         const pos = i + 1;
         const posClass = pos <= 3 ? `top${pos}` : "";
-        const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
+        const medal =
+          pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos;
         const pct = Math.round((p.aciertos / 104) * 100);
 
         const hiddenClass = pos > 10 ? "ranking-hidden" : "";
@@ -158,56 +168,98 @@ async function renderRanking() {
         const nombreCorto = `${primerNombre} ${primerApellido}`.trim();
 
         const esp = p.especiales || {};
-        
+
+        // ── Badges de especiales acertados ──
+        const badges = [];
+        if (
+          RESULTADOS_ESPECIALES.campeon &&
+          esp.campeon === RESULTADOS_ESPECIALES.campeon
+        )
+          badges.push("🏆");
+        if (
+          RESULTADOS_ESPECIALES.subcampeon &&
+          esp.subcampeon === RESULTADOS_ESPECIALES.subcampeon
+        )
+          badges.push("🥈");
+        if (
+          RESULTADOS_ESPECIALES.tercero &&
+          esp.tercero === RESULTADOS_ESPECIALES.tercero
+        )
+          badges.push("🥉");
+        if (
+          RESULTADOS_ESPECIALES.balonoro &&
+          esp.balonoro === RESULTADOS_ESPECIALES.balonoro
+        )
+          badges.push("⭐");
+        if (
+          RESULTADOS_ESPECIALES.ecuador &&
+          esp.ecuador === RESULTADOS_ESPECIALES.ecuador
+        )
+          badges.push("🇪🇨");
+
+        const badgesHTML =
+          badges.length > 0
+            ? `<span style="
+              background: linear-gradient(135deg, #FFD700, #00C853);
+              color: #000;
+              font-size: 0.65rem;
+              font-family: 'Barlow Condensed', sans-serif;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              padding: 0.15rem 0.5rem;
+              border-radius: 3px;
+              margin-left: 5px;
+              vertical-align: middle;
+              white-space: nowrap;
+            ">${badges.join(" ")}</span>`
+            : "";
+
+        // ── Lista desplegable de especiales ──
         let selectHTML = "";
-        if (esp.campeon || esp.subcampeon || esp.tercero || esp.balonoro || esp.ecuador) {
+        if (
+          esp.campeon ||
+          esp.subcampeon ||
+          esp.tercero ||
+          esp.balonoro ||
+          esp.ecuador
+        ) {
           selectHTML = `
             <select class="ranking-select-especiales" style="max-width:100px; margin:0 auto; display:block;">
               <option value="">Ver</option>
               <option disabled>🥇 Campeón: ${escapeHtml(esp.campeon || "—")}</option>
-              <option disabled>🥈 Subcampeon: ${escapeHtml(esp.subcampeon || "—")}</option>
+              <option disabled>🥈 Subcampeón: ${escapeHtml(esp.subcampeon || "—")}</option>
               <option disabled>🥉 3er Lugar: ${escapeHtml(esp.tercero || "—")}</option>
-              <option disabled>⚽ Balón Oro: ${escapeHtml(esp.balonoro || "—")}</option>
-              <option disabled>La Tri: ${escapeHtml(esp.ecuador || "—")}</option>
-            </select>
-          `;
+              <option disabled>⭐ Balón Oro: ${escapeHtml(esp.balonoro || "—")}</option>
+              <option disabled>🇪🇨 La Tri: ${escapeHtml(esp.ecuador || "—")}</option>
+            </select>`;
         } else {
           selectHTML = `<span class="rank-campeon">—</span>`;
         }
 
-        // Estilos inline compartidos para forzar el centrado absoluto y evitar deformaciones por padding excesivo
-        const tdBaseStyle = "text-align:center; vertical-align:middle; padding:8px 4px; box-sizing:border-box;";
+        const tdBaseStyle =
+          "text-align:center; vertical-align:middle; padding:8px 4px; box-sizing:border-box;";
 
         return `
-        <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle} height:45px;">
-          <td style="${tdBaseStyle} width:10%; text-align:center;">
-            <span class="rank-pos ${posClass}">${medal}</span>
-          </td>
-
-          <td style="${tdBaseStyle} width:35%; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-            <span class="rank-name" style="display:inline-block; max-width:100%;">
-              ${escapeHtml(nombreCorto)}
-            </span>
-          </td>
-
-          <td style="${tdBaseStyle} width:20%; text-align:center;">
-            ${selectHTML}
-          </td>
-
-          <td style="${tdBaseStyle} width:15%; text-align:center;">
-            <span class="rank-aciertos">${p.aciertos}</span>
-            <span style="color:var(--gray);font-size:0.8rem"> </span>
-          </td>
-
-          <td style="${tdBaseStyle} width:10%; text-align:center; color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-size:0.9rem;">
-            ${pct}%
-          </td>
-
-          <td style="${tdBaseStyle} width:10%; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
-            ${p.total_pts}
-            <span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;"></span>
-          </td>
-        </tr>`;
+          <tr class="ranking-row ${hiddenClass}" style="${hiddenStyle} height:45px;">
+            <td style="${tdBaseStyle} width:10%;">
+              <span class="rank-pos ${posClass}">${medal}</span>
+            </td>
+            <td style="${tdBaseStyle} width:35%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              <span class="rank-name" style="display:inline-block; max-width:100%;">${escapeHtml(nombreCorto)}</span>${badgesHTML}
+            </td>
+            <td style="${tdBaseStyle} width:20%;">
+              ${selectHTML}
+            </td>
+            <td style="${tdBaseStyle} width:15%;">
+              <span class="rank-aciertos">${p.aciertos}</span>
+            </td>
+            <td style="${tdBaseStyle} width:10%; color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-size:0.9rem;">
+              ${pct}%
+            </td>
+            <td style="${tdBaseStyle} width:10%; font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:var(--white);">
+              ${p.total_pts}<span style="font-size:0.8rem; color:var(--gold); font-weight:400; margin-left:2px;">PTS</span>
+            </td>
+          </tr>`;
       })
       .join("");
 
@@ -217,19 +269,16 @@ async function renderRanking() {
       toggleContainer.innerHTML = `
         <button id="ranking-toggle" class="btn-secondary">
           Ver restantes (${restantes})
-        </button>
-      `;
+        </button>`;
 
       document
         .getElementById("ranking-toggle")
         .addEventListener("click", function () {
           const hiddenRows = document.querySelectorAll(".ranking-hidden");
           const expanded = this.dataset.expanded === "true";
-
           hiddenRows.forEach((row) => {
             row.style.display = expanded ? "none" : "";
           });
-
           this.dataset.expanded = !expanded;
           this.textContent = expanded
             ? `Ver restantes (${restantes})`
@@ -238,7 +287,6 @@ async function renderRanking() {
     } else {
       toggleContainer.innerHTML = "";
     }
-
   } catch (error) {
     console.error("Error al renderizar el ranking:", error);
     container.innerHTML = `
