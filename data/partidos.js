@@ -162,7 +162,7 @@ const MUNDIAL_DATA = {
         { id:"o01", local:"Canadá",   visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
         { id:"o02", local:"Paraguay", visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
         { id:"o03", local:"Brasil",   visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"?",        visitante:"?",          fecha:"5 de julio",  hora:"19:00", grupo:null },
+        { id:"o04", local:"México",        visitante:"?",          fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"14:00", grupo:null },
         { id:"o06", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"19:00", grupo:null },
         { id:"o07", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"11:00", grupo:null },
