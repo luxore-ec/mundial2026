@@ -140,14 +140,12 @@ const MUNDIAL_DATA = {
         //!{ id:"d05", local:"Costa de Marfil", visitante:"Noruega",              fecha:"30 de junio", hora:"12:00", grupo:null },
         //!{ id:"d06", local:"Francia",         visitante:"Suecia",               fecha:"30 de junio", hora:"16:00", grupo:null },
         //!{ id:"d07", local:"México",          visitante:"Ecuador",              fecha:"30 de junio", hora:"20:00", grupo:null },
-
-        { id:"d08", local:"Inglaterra",      visitante:"Rep. D. del Congo",    fecha:"1 de julio",  hora:"11:00", grupo:null },
-        { id:"d09", local:"Bélgica",         visitante:"Senegal",              fecha:"1 de julio",  hora:"15:00", grupo:null },
-        { id:"d10", local:"Estados Unidos",  visitante:"Bosnia y Herzegovina", fecha:"1 de julio",  hora:"19:00", grupo:null },
-
-        { id:"d11", local:"España",          visitante:"Austria",                 fecha:"2 de julio",  hora:"14:00", grupo:null },
+        //!{ id:"d08", local:"Inglaterra",      visitante:"Rep. D. del Congo",    fecha:"1 de julio",  hora:"11:00", grupo:null },
+        //!{ id:"d09", local:"Bélgica",         visitante:"Senegal",              fecha:"1 de julio",  hora:"15:00", grupo:null },
+        //!{ id:"d10", local:"Estados Unidos",  visitante:"Bosnia y Herzegovina", fecha:"1 de julio",  hora:"19:00", grupo:null },
+        { id:"d11", local:"España",          visitante:"Austria",              fecha:"2 de julio",  hora:"14:00", grupo:null },
         { id:"d12", local:"Portugal",        visitante:"Croacia",              fecha:"2 de julio",  hora:"18:00", grupo:null },
-        { id:"d13", local:"Suiza",           visitante:"Argelia",                 fecha:"2 de julio",  hora:"22:00", grupo:null },
+        { id:"d13", local:"Suiza",           visitante:"Argelia",              fecha:"2 de julio",  hora:"22:00", grupo:null },
         
         { id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
         { id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
@@ -159,12 +157,12 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"Canadá",   visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"Paraguay", visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
-        { id:"o03", local:"Brasil",   visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"México",        visitante:"?",          fecha:"5 de julio",  hora:"19:00", grupo:null },
+        { id:"o01", local:"Canadá",          visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
+        { id:"o02", local:"Paraguay",        visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
+        { id:"o03", local:"Brasil",          visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
+        { id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"19:00", grupo:null },
+        { id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
         { id:"o07", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"11:00", grupo:null },
         { id:"o08", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
@@ -174,10 +172,10 @@ const MUNDIAL_DATA = {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
       partidos: [
-        { id:"c01", local:"?",       visitante:"?",        fecha:"9 de julio",  hora:"15:00", grupo:null },
-        { id:"c02", local:"?", visitante:"?",       fecha:"10 de julio",  hora:"14:00", grupo:null },
-        { id:"c03", local:"?",      visitante:"?", fecha:"11 de julio", hora:"16:00", grupo:null },
-        { id:"c04", local:"?",   visitante:"?",       fecha:"11 de julio", hora:"20:00", grupo:null },
+        { id:"c01", local:"?", visitante:"?", fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c02", local:"?", visitante:"?", fecha:"10 de julio", hora:"14:00", grupo:null },
+        { id:"c03", local:"?", visitante:"?", fecha:"11 de julio", hora:"16:00", grupo:null },
+        { id:"c04", local:"?", visitante:"?", fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
 
@@ -185,8 +183,8 @@ const MUNDIAL_DATA = {
       label: "Semifinales",
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        { id:"s01", local:"?",       visitante:"?",  fecha:"14 de julio", hora:"14:00", grupo:null },
-        { id:"s02", local:"?",      visitante:"?",    fecha:"15 de julio", hora:"14:00", grupo:null },
+        { id:"s01", local:"?", visitante:"?", fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s02", local:"?", visitante:"?", fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
 
@@ -194,7 +192,8 @@ const MUNDIAL_DATA = {
       label: "Final",
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"f01", local:"?",  visitante:"?",    fecha:"19 de julio", hora:"14:00", grupo:null },
+        { id:"f01", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
+        { id:"f02", local:"?",  visitante:"?",   fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },
