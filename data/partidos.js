@@ -7,7 +7,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "octavos",
-    fechaLimiteFase: "2026-07-03T12:30:00-05:00",
+    fechaLimiteFase: "2026-07-04T12:30:00-05:00",
   },
 
   equipos: [
@@ -143,10 +143,9 @@ const MUNDIAL_DATA = {
         //!{ id:"d08", local:"Inglaterra",      visitante:"Rep. D. del Congo",    fecha:"1 de julio",  hora:"11:00", grupo:null },
         //!{ id:"d09", local:"Bélgica",         visitante:"Senegal",              fecha:"1 de julio",  hora:"15:00", grupo:null },
         //!{ id:"d10", local:"Estados Unidos",  visitante:"Bosnia y Herzegovina", fecha:"1 de julio",  hora:"19:00", grupo:null },
-        { id:"d11", local:"España",          visitante:"Austria",              fecha:"2 de julio",  hora:"14:00", grupo:null },
-        { id:"d12", local:"Portugal",        visitante:"Croacia",              fecha:"2 de julio",  hora:"18:00", grupo:null },
-        { id:"d13", local:"Suiza",           visitante:"Argelia",              fecha:"2 de julio",  hora:"22:00", grupo:null },
-        
+        //!{ id:"d11", local:"España",          visitante:"Austria",              fecha:"2 de julio",  hora:"14:00", grupo:null },
+        //!{ id:"d12", local:"Portugal",        visitante:"Croacia",              fecha:"2 de julio",  hora:"18:00", grupo:null },
+        //!{ id:"d13", local:"Suiza",           visitante:"Argelia",              fecha:"2 de julio",  hora:"22:00", grupo:null },
         { id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
         { id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
         { id:"d16", local:"Colombia",        visitante:"Ghana",                fecha:"3 de julio",  hora:"20:30", grupo:null },
@@ -161,10 +160,10 @@ const MUNDIAL_DATA = {
         { id:"o02", local:"Paraguay",        visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
         { id:"o03", local:"Brasil",          visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
         { id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
-        { id:"o05", local:"?",        visitante:"?",          fecha:"6 de julio",  hora:"14:00", grupo:null },
+        { id:"o05", local:"Portugal",        visitante:"España",     fecha:"6 de julio",  hora:"14:00", grupo:null },
         { id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
         { id:"o07", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"15:00", grupo:null },
+        { id:"o08", local:"?",        visitante:"Suiza",          fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
