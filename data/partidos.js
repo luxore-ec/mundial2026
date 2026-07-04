@@ -146,9 +146,9 @@ const MUNDIAL_DATA = {
         //!{ id:"d11", local:"España",          visitante:"Austria",              fecha:"2 de julio",  hora:"14:00", grupo:null },
         //!{ id:"d12", local:"Portugal",        visitante:"Croacia",              fecha:"2 de julio",  hora:"18:00", grupo:null },
         //!{ id:"d13", local:"Suiza",           visitante:"Argelia",              fecha:"2 de julio",  hora:"22:00", grupo:null },
-        { id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
-        { id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
-        { id:"d16", local:"Colombia",        visitante:"Ghana",                fecha:"3 de julio",  hora:"20:30", grupo:null },
+        //!{ id:"d14", local:"Australia",       visitante:"Egipto",               fecha:"3 de julio",  hora:"13:00", grupo:null },
+        //!{ id:"d15", local:"Argentina",       visitante:"Cabo Verde",           fecha:"3 de julio",  hora:"17:00", grupo:null },
+        //!{ id:"d16", local:"Colombia",        visitante:"Ghana",                fecha:"3 de julio",  hora:"20:30", grupo:null },
       ]
     },
 
@@ -162,8 +162,8 @@ const MUNDIAL_DATA = {
         { id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"Portugal",        visitante:"España",     fecha:"6 de julio",  hora:"14:00", grupo:null },
         { id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
-        { id:"o07", local:"?",        visitante:"?",          fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"?",        visitante:"Suiza",          fecha:"7 de julio",  hora:"15:00", grupo:null },
+        { id:"o07", local:"Argentina",       visitante:"Egipto",          fecha:"7 de julio",  hora:"11:00", grupo:null },
+        { id:"o08", local:"Colombia",        visitante:"Suiza",      fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 

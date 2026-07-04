@@ -522,12 +522,10 @@ function renderForm() {
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
       
-      
-      <!--
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      -->
+      
 
 
     </div>
