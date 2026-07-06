@@ -6,8 +6,8 @@ const MUNDIAL_DATA = {
     emailDestino: "TU_EMAIL@gmail.com",
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
-    faseActiva: "octavos",
-    fechaLimiteFase: "2026-07-04T12:30:00-05:00",
+    faseActiva: "cuartos",
+    fechaLimiteFase: "2026-07-09T15:30:00-05:00",
   },
 
   equipos: [
@@ -156,10 +156,10 @@ const MUNDIAL_DATA = {
       label: "Octavos de Final",
       descripcion: "Ronda de 16 (4–7 Jul)",
       partidos: [
-        { id:"o01", local:"Canadá",          visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
-        { id:"o02", local:"Paraguay",        visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
-        { id:"o03", local:"Brasil",          visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
-        { id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
+        //!{ id:"o01", local:"Canadá",          visitante:"Marruecos",  fecha:"4 de julio",  hora:"12:00", grupo:null },
+        //!{ id:"o02", local:"Paraguay",        visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
+        //!{ id:"o03", local:"Brasil",          visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
+        //!{ id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
         { id:"o05", local:"Portugal",        visitante:"España",     fecha:"6 de julio",  hora:"14:00", grupo:null },
         { id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
         { id:"o07", local:"Argentina",       visitante:"Egipto",          fecha:"7 de julio",  hora:"11:00", grupo:null },
@@ -171,9 +171,9 @@ const MUNDIAL_DATA = {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
       partidos: [
-        { id:"c01", local:"?", visitante:"?", fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c01", local:"Francia", visitante:"Marruecos", fecha:"9 de julio",  hora:"15:00", grupo:null },
         { id:"c02", local:"?", visitante:"?", fecha:"10 de julio", hora:"14:00", grupo:null },
-        { id:"c03", local:"?", visitante:"?", fecha:"11 de julio", hora:"16:00", grupo:null },
+        { id:"c03", local:"Noruega", visitante:"Inglaterra", fecha:"11 de julio", hora:"16:00", grupo:null },
         { id:"c04", local:"?", visitante:"?", fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
