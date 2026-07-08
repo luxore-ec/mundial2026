@@ -160,21 +160,22 @@ const MUNDIAL_DATA = {
         //!{ id:"o02", local:"Paraguay",        visitante:"Francia",    fecha:"4 de julio",  hora:"16:00", grupo:null },
         //!{ id:"o03", local:"Brasil",          visitante:"Noruega",    fecha:"5 de julio",  hora:"15:00", grupo:null },
         //!{ id:"o04", local:"México",          visitante:"Inglaterra", fecha:"5 de julio",  hora:"19:00", grupo:null },
-        { id:"o05", local:"Portugal",        visitante:"España",     fecha:"6 de julio",  hora:"14:00", grupo:null },
-        { id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
-        { id:"o07", local:"Argentina",       visitante:"Egipto",          fecha:"7 de julio",  hora:"11:00", grupo:null },
-        { id:"o08", local:"Colombia",        visitante:"Suiza",      fecha:"7 de julio",  hora:"15:00", grupo:null },
+        //!{ id:"o05", local:"Portugal",        visitante:"España",     fecha:"6 de julio",  hora:"14:00", grupo:null },
+        //!{ id:"o06", local:"Estados Unidos",  visitante:"Bélgica",    fecha:"6 de julio",  hora:"19:00", grupo:null },
+        //!{ id:"o07", local:"Argentina",       visitante:"Egipto",          fecha:"7 de julio",  hora:"11:00", grupo:null },
+        //!{ id:"o08", local:"Colombia",        visitante:"Suiza",      fecha:"7 de julio",  hora:"15:00", grupo:null },
       ]
     },
 
     cuartos: {
       label: "Cuartos de Final",
       descripcion: "Ronda de 8 (9–11 Jul)",
+      fasePenales: true,
       partidos: [
         { id:"c01", local:"Francia", visitante:"Marruecos", fecha:"9 de julio",  hora:"15:00", grupo:null },
-        { id:"c02", local:"?", visitante:"?", fecha:"10 de julio", hora:"14:00", grupo:null },
+        { id:"c02", local:"España", visitante:"Bélgica", fecha:"10 de julio", hora:"14:00", grupo:null },
         { id:"c03", local:"Noruega", visitante:"Inglaterra", fecha:"11 de julio", hora:"16:00", grupo:null },
-        { id:"c04", local:"?", visitante:"?", fecha:"11 de julio", hora:"20:00", grupo:null },
+        { id:"c04", local:"Argentina", visitante:"Suiza", fecha:"11 de julio", hora:"20:00", grupo:null },
       ]
     },
 

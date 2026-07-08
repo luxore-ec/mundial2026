@@ -521,11 +521,11 @@ function renderForm() {
         Al enviar confirmas que los datos son correctos.<br>
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
-      <!--
+      
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      -->
+      
 
 
     </div>
@@ -574,14 +574,20 @@ function renderPartido(p) {
           </div>
         </div>
         
-        <div class="pred-buttons" style="width: 100%; margin-top: 1rem;">
-          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','local',this)">🏆 ${escapeHtml(p.local)} (+4 pts)</button>
-          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','visitante',this)">🏆 ${escapeHtml(p.visitante)} (+4 pts)</button>
+        <div class="marcador-container" style="display: flex; gap: 10px; justify-content: center; align-items: center; margin: 15px 0;">
+          <input type="number" id="marcador-l-${p.id}" min="0" placeholder="0" class="input-marcador" style="width: 50px; text-align: center; background: #161622; border: 1px solid var(--gold); color: white; padding: 5px; border-radius: 4px;" oninput="captureMarcador('${p.id}')">
+          <span style="color: var(--white); font-weight: bold;">-</span>
+          <input type="number" id="marcador-v-${p.id}" min="0" placeholder="0" class="input-marcador" style="width: 50px; text-align: center; background: #161622; border: 1px solid var(--gold); color: white; padding: 5px; border-radius: 4px;" oninput="captureMarcador('${p.id}')">
+        </div>
+
+        <div class="pred-buttons" style="width: 100%; margin-top: 0.5rem;">
+          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','local',this)">🏆 ${escapeHtml(p.local)}</button>
+          <button class="pred-btn ganador-btn" onclick="selectGanador('${p.id}','visitante',this)">🏆 ${escapeHtml(p.visitante)}</button>
         </div>
 
         <div id="penales-section-${p.id}" class="penales-container" style="display: none; width: 100% !important; min-width: 100% !important; clear: both !important; margin-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.25rem; box-sizing: border-box;">
           <p style="font-family:'Barlow Condensed',sans-serif; font-size: 1rem; color: var(--gold); margin: 0 0 0.85rem 0; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; width: 100% !important; display: block !important;">
-            ¿La selección que elegiste gana por penales? <span style="color: #fff; font-weight: bold;">(+3 PTS)</span>
+            ¿La selección que elegiste gana por penales? <span style="color: #fff; font-weight: bold;">(+5 PTS)</span>
           </p>
           <div style="display: flex !important; justify-content: center !important; gap: 12px; width: 100% !important; max-width: 280px !important; margin: 0 auto !important;">
             <button class="pred-btn penales-btn" style="flex: 1; min-width: 100px;" onclick="selectPenales('${p.id}','Si',this)">⚽ Sí</button>
@@ -589,7 +595,7 @@ function renderPartido(p) {
           </div>
         </div>
 
-        <span class="match-required" style="margin-top: 0.5rem;">⚠ Selecciona el ganador y la definición del partido</span>
+        <span class="match-required" style="margin-top: 0.5rem;">⚠ Selecciona el ganador, marcador y la definición</span>
       </div>`;
   }
 
@@ -615,6 +621,19 @@ function renderPartido(p) {
       </div>
       <span class="match-required">⚠ Selecciona un resultado</span>
     </div>`;
+}
+
+function captureMarcador(matchId) {
+  if (
+    !state.predicciones[matchId] ||
+    typeof state.predicciones[matchId] === "string"
+  ) {
+    state.predicciones[matchId] = { ganador: "", penales: "", marcador: "0-0" };
+  }
+  const gl = document.getElementById(`marcador-l-${matchId}`).value || "0";
+  const gv = document.getElementById(`marcador-v-${matchId}`).value || "0";
+  state.predicciones[matchId].marcador = `${gl}-${gv}`;
+  updateProgress();
 }
 
 // ── SELECT PRED ────────────────────────────────
@@ -643,24 +662,43 @@ function selectGanador(matchId, val, btn) {
   const card = document.getElementById(`mc-${matchId}`);
 
   if (fase?.fasePenales) {
-    if (!state.predicciones[matchId] || typeof state.predicciones[matchId] === 'string') {
-      state.predicciones[matchId] = { ganador: "", penales: "" };
+    if (
+      !state.predicciones[matchId] ||
+      typeof state.predicciones[matchId] === "string"
+    ) {
+      const gl = document.getElementById(`marcador-l-${matchId}`)?.value || "0";
+      const gv = document.getElementById(`marcador-v-${matchId}`)?.value || "0";
+      state.predicciones[matchId] = {
+        ganador: "",
+        penales: "",
+        marcador: `${gl}-${gv}`,
+      };
     }
     state.predicciones[matchId].ganador = val;
 
-    card.querySelectorAll(".ganador-btn").forEach((b) =>
-      b.classList.remove("selected-local", "selected-visitante")
-    );
+    card
+      .querySelectorAll(".ganador-btn")
+      .forEach((b) =>
+        b.classList.remove("selected-local", "selected-visitante"),
+      );
     btn.classList.add(`selected-${val}`);
-    
-    const penalesSection = document.getElementById(`penales-section-${matchId}`);
+
+    const penalesSection = document.getElementById(
+      `penales-section-${matchId}`,
+    );
     if (penalesSection)
       penalesSection.style.setProperty("display", "block", "important");
   } else {
     state.predicciones[matchId] = val;
-    card.querySelectorAll(".pred-btn").forEach((b) =>
-      b.classList.remove("selected-local", "selected-empate", "selected-visitante")
-    );
+    card
+      .querySelectorAll(".pred-btn")
+      .forEach((b) =>
+        b.classList.remove(
+          "selected-local",
+          "selected-empate",
+          "selected-visitante",
+        ),
+      );
     btn.classList.add(`selected-${val}`);
   }
 
@@ -700,11 +738,14 @@ function updateProgress() {
     Object.values(state.predicciones).forEach((pred) => {
       if (pred && typeof pred === "object") {
         if (pred.ganador) {
-          puntosPotenciales += 4; // 4 puntos por elegir ganador
+          puntosPotenciales += 8; // 8 puntos por elegir ganador
           partidosRespondidos++;
         }
         if (pred.penales) {
-          puntosPotenciales += 3; // 3 puntos por elegir penales (Sí/No)
+          puntosPotenciales += 5; // 5 puntos por elegir penales (Sí/No)
+        }
+        if (pred.marcador) {
+          puntosPotenciales += 5; // 5 puntos por elegir marcador
         }
       }
     });
@@ -839,7 +880,13 @@ function validateForm() {
 
     if (fase.fasePenales) {
       // Es obligatorio que exista el objeto y que posea tanto ganador como penales definidos
-      if (!pred || typeof pred !== "object" || !pred.ganador || !pred.penales) {
+      if (
+        !pred ||
+        typeof pred !== "object" ||
+        !pred.ganador ||
+        !pred.penales ||
+        !pred.marcador
+      ) {
         partidoIncompleto = true;
       }
     } else {
@@ -916,13 +963,15 @@ async function handleSubmit() {
 
   // Aplanamiento dinámico de predicciones para la base de datos
   const prediccionesAplanadas = {};
-  
+
+  // BUSCA ESTA SECCIÓN EXACTA EN LA FUNCIÓN handleSubmit() Y REEMPLÁZALA:
   if (fase?.fasePenales) {
     Object.keys(state.predicciones).forEach((id) => {
       const pred = state.predicciones[id];
-      if (pred && typeof pred === 'object') {
+      if (pred && typeof pred === "object") {
         prediccionesAplanadas[`${id}_G`] = pred.ganador;
         prediccionesAplanadas[`${id}_P`] = pred.penales;
+        prediccionesAplanadas[`${id}_M`] = pred.marcador; // Envía el valor "L-V" a la columna c0X_M
       }
     });
   } else {
@@ -1027,11 +1076,10 @@ function descargarComprobante(faseKey) {
     timeStyle: "short",
   });
 
-  // Build canvas image
   const canvas = document.createElement("canvas");
   const W = 800,
     HEADER = 320,
-    ROW = 36,
+    ROW = 52, // Incrementado para dar espacio a la segunda línea de datos del marcador
     PADDING = 40;
   const partidos = faseData?.partidos || [];
   canvas.width = W;
@@ -1072,30 +1120,26 @@ function descargarComprobante(faseKey) {
   ctx.fillStyle = "#D4AF37";
   ctx.font = "bold 15px Arial";
 
-  let y = 185;
+  let yPos = 185;
 
   if (data.campeon) {
-    ctx.fillText(`🏆 Campeón: ${data.campeon}`, W / 2, y);
-    y += 24;
+    ctx.fillText(`🏆 Campeón: ${data.campeon}`, W / 2, yPos);
+    yPos += 24;
   }
-
   if (data.subcampeon) {
-    ctx.fillText(`🥈 Subcampeón: ${data.subcampeon}`, W / 2, y);
-    y += 24;
+    ctx.fillText(`🥈 Subcampeon: ${data.subcampeon}`, W / 2, yPos);
+    yPos += 24;
   }
-
   if (data.tercero) {
-    ctx.fillText(`🥉 Tercer Lugar: ${data.tercero}`, W / 2, y);
-    y += 24;
+    ctx.fillText(`🥉 Tercer Lugar: ${data.tercero}`, W / 2, yPos);
+    yPos += 24;
   }
-
   if (data.balonoro) {
-    ctx.fillText(`⭐ Balón de Oro: ${data.balonoro}`, W / 2, y);
-    y += 24;
+    ctx.fillText(`⭐ Balón de Oro: ${data.balonoro}`, W / 2, yPos);
+    yPos += 24;
   }
-
   if (data.ecuador) {
-    ctx.fillText(`🇪🇨 Ecuador: ${data.ecuador}`, W / 2, y);
+    ctx.fillText(`🇪🇨 Ecuador: ${data.ecuador}`, W / 2, yPos);
   }
 
   // Divider
@@ -1107,20 +1151,21 @@ function descargarComprobante(faseKey) {
   ctx.stroke();
 
   // Match rows
-  ctx.textAlign = "left";
   partidos.forEach((p, i) => {
     const y = HEADER + i * ROW + 22;
     const pred = data.predicciones[p.id];
 
     let resultado = "—";
+    let marcadorTexto = "";
     let emoji = "❌";
     let esEmpate = false;
 
-    // Verificar si la predicción es un objeto (Fase Penales) o un string (Fase Regular)
     if (pred && typeof pred === "object") {
       const ganadorTexto = pred.ganador === "local" ? p.local : p.visitante;
-      const penalesTexto = pred.penales === "Si" ? " (Penales)" : "";
-      resultado = `${ganadorTexto}${penalesTexto}`;
+      const penalesTexto =
+        pred.penales === "Si" ? " (Penales)" : " (Tiempo Regular)";
+      resultado = `Ganador: ${ganadorTexto}${penalesTexto}`;
+      marcadorTexto = pred.marcador ? `Marcador Exacto: ${pred.marcador}` : "";
       emoji = "🏆";
     } else if (pred && typeof pred === "string") {
       resultado =
@@ -1133,23 +1178,40 @@ function descargarComprobante(faseKey) {
       esEmpate = pred === "empate";
     }
 
-    // Row bg
+    // Row bg (Diseño mejorado con bordes limpios en lugar de bloques toscos)
     ctx.fillStyle = i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent";
     ctx.fillRect(PADDING - 10, y - 18, W - PADDING * 2 + 20, ROW);
 
+    // Separador sutil inferior por fila
+    ctx.strokeStyle = "rgba(255,255,255,0.04)";
+    ctx.beginPath();
+    ctx.moveTo(PADDING - 10, y - 18 + ROW);
+    ctx.lineTo(W - PADDING + 10, y - 18 + ROW);
+    ctx.stroke();
+
+    // Izquierda: Meta-información del partido
+    ctx.textAlign = "left";
     ctx.fillStyle = "#888899";
     ctx.font = "11px Arial";
     ctx.fillText(p.grupo ? `Grupo ${p.grupo}` : "Eliminatoria", PADDING, y - 4);
 
+    // Izquierda: Equipos en contienda
     ctx.fillStyle = "#F5F0E8";
-    ctx.font = "14px Arial";
-    ctx.fillText(`${p.local} vs ${p.visitante}`, PADDING, y + 12);
+    ctx.font = "bold 14px Arial";
+    ctx.fillText(`${p.local} vs ${p.visitante}`, PADDING, y + 14);
 
+    // Derecha: Predicción de Ganador / Clasificado
     ctx.textAlign = "right";
     ctx.fillStyle = esEmpate ? "#D4AF37" : pred ? "#00C853" : "#C8102E";
     ctx.font = "bold 14px Arial";
-    ctx.fillText(`${emoji} ${resultado}`, W - PADDING, y + 12);
-    ctx.textAlign = "left";
+    ctx.fillText(`${emoji} ${resultado}`, W - PADDING, y + 14);
+
+    // Derecha Inferior: Renderizado del Marcador Exacto (Si existe la variable)
+    if (marcadorTexto) {
+      ctx.fillStyle = "#D4AF37";
+      ctx.font = "12px Arial";
+      ctx.fillText(marcadorTexto, W - PADDING, y + 30);
+    }
   });
 
   // Bottom bar
