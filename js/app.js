@@ -41,7 +41,7 @@ function initNav() {
   window.addEventListener("scroll", () =>
     nav.classList.toggle("scrolled", window.scrollY > 60),
   );
-  if (sessionStorage.getItem("notif_cerrada")) {
+  if (sessionStorage.getItem("notif_cerrada_cuartos")) {
     const b = document.getElementById("notif-banner");
     if (b) b.style.display = "none";
   }
@@ -1276,9 +1276,9 @@ function escapeHtml(str) {
 }
 
 function cerrarNotif() {
-  document.getElementById("notif-banner").style.display = "none";
-  document.body.classList.remove("has-notif");
-  sessionStorage.setItem("notif_cerrada", "1");
+  const b = document.getElementById("notif-banner");
+  if (b) b.style.display = "none";
+  sessionStorage.setItem("notif_cerrada_cuartos", "true");
 }
 
 // ── ANIMACIÓN CONTROLADA DEL POZO ACUMULADO ────────────────────
