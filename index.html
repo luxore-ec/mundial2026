@@ -47,6 +47,7 @@
   <body class="has-notif">
 
   <!-- NOTIFICACIÓN -->
+  <!--
   <div class="notif-banner" id="notif-banner">
       <strong>⚠️ COMUNICADO DE SISTEMA:</strong><br>
       Durante estos días verán variaciones en el ranking por refactorización de código y la implementación de un verificador de pronósticos, para más transparencia.<br><br>
@@ -59,6 +60,7 @@
 
       <button class="notif-close" onclick="cerrarNotif()">✕</button>
   </div>
+  -->
 
   <!-- NAV -->
   <nav>
@@ -249,18 +251,23 @@
 
     <div style="max-width:500px; margin: 0 auto 2.5rem auto; padding: 0 1.5rem; text-align: center;">
       <p style="font-family:'Barlow Condensed',sans-serif; color:var(--gray-light); margin-bottom:0.75rem; font-size:1rem; letter-spacing:1px; text-transform:uppercase;">
-        🔍 Consulta la transparencia de tus pronósticos
+        🔍 Selecciona tu perfil y consulta tus pronósticos
       </p>
+      
       <div style="display:flex; gap:0.5rem;">
-        <input type="email" id="inputCorreo" placeholder="Introduce tu correo registrado..." 
-               style="flex:1; padding:0.75rem 1rem; background:var(--dark3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; font-family:'Barlow',sans-serif; font-size:0.95rem;">
-        <button onclick="consultarDashboard()" 
-                style="background:var(--gold-light); color:#000; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:1px; padding:0.75rem 1.5rem; border:none; border-radius:6px; cursor:pointer; transition: opacity 0.2s;">
+        <select id="selector-participantes" 
+                style="flex:1; padding:0.75rem 1rem; background:var(--dark3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; font-family:'Barlow',sans-serif; font-size:0.95rem; cursor:pointer;">
+          <option value="">Selecciona un participante...</option>
+        </select>
+        
+        <button id="btn-consultar"
+                style="background:var(--gold-light); color:#000; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:1px; padding:0.75rem 1.5rem; border:none; border-radius:6px; cursor:pointer;">
           CONSULTAR
         </button>
       </div>
+      
       <div id="loading" style="display:none; color:var(--gold-light); font-size:0.9rem; margin-top:0.5rem; font-family:'Barlow',sans-serif;">
-        🔄 Extrayendo datos relacionales de la API...
+        🔄 Generando dashboard personalizado...
       </div>
     </div>
 

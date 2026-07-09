@@ -33,6 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollAnimations();
   renderPartidosHoy();
   showRankingPopup();
+  const btnConsultar = document.getElementById("btn-consultar");
+  if (btnConsultar) {
+    btnConsultar.addEventListener("click", iniciarDashboard);
+  }
 });
 
 // ── NAV ────────────────────────────────────────
@@ -521,12 +525,11 @@ function renderForm() {
         Al enviar confirmas que los datos son correctos.<br>
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
-      
+      <!--
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      
-
+      -->
 
     </div>
   `;
@@ -1626,378 +1629,493 @@ function renderizarResumen(p) {
   window.currentDashboardData = p;
 }
 
-function renderizarEliminatorias(fases) {
+async function cargarParticipantes() {
   try {
-    if (!fases || typeof fases !== "object") {
-      alert("Error: Datos de fases no válidos.");
+    console.log("Iniciando carga de participantes...");
+
+    // Usamos la misma URL que usas en renderRanking
+    const urlAppsScript =
+      "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
+
+    const response = await fetch(urlAppsScript);
+    const apiData = await response.json();
+    const data = apiData.ranking; // Extraemos el array de la propiedad 'ranking'
+
+    console.log("Datos recibidos:", data);
+
+    if (!data || data.length === 0) {
+      console.warn("La respuesta de Google Sheets está vacía.");
       return;
     }
 
-    // Recuperación de datos con valores de contingencia si el backend no los envía
-    const p = fases.participante || {
-      nombre: "Participante No Identificado",
-      puesto: "---",
-      total: 283, // Valores de respaldo basados en cálculo previo
-      pts_grupos: 168,
-      pts_d16: 65,
-      pts_octavos: 50,
-      pts_cuartos: 0,
-    };
+    // Guardar globalmente para usarlo en otras funciones
+    rankingData = data;
 
-    const gruposData = fases.grupos || {};
-    const d16Data = fases.d16 || {};
-    const octData = fases.octavos || {};
-    const cuartosData = fases.cuartos || {};
+    const select = document.getElementById("selector-participantes");
+    select.innerHTML = ""; // Limpiar antes de llenar
 
-    const nuevaVentana = window.open("", "_blank");
-    if (!nuevaVentana) {
-      alert("Por favor, permite las ventanas emergentes para ver el reporte.");
-      return;
-    }
-
-    const CODIGOS = {
-      México: "mx",
-      Sudáfrica: "za",
-      "Corea del Sur": "kr",
-      Chequia: "cz",
-      Canadá: "ca",
-      "Bosnia y Herzegovina": "ba",
-      Qatar: "qa",
-      Suiza: "ch",
-      Brasil: "br",
-      Marruecos: "ma",
-      Haití: "ht",
-      Escocia: "gb-sct",
-      "Estados Unidos": "us",
-      Paraguay: "py",
-      Australia: "au",
-      Turquía: "tr",
-      Alemania: "de",
-      Curazao: "cw",
-      "Costa de Marfil": "ci",
-      Ecuador: "ec",
-      "Países Bajos": "nl",
-      Japón: "jp",
-      Suecia: "se",
-      Túnez: "tn",
-      Bélgica: "be",
-      Egipto: "eg",
-      Irán: "ir",
-      "Nueva Zelanda": "nz",
-      España: "es",
-      "Cabo Verde": "cv",
-      "Arabia Saudita": "sa",
-      "Arabia Saudí": "sa",
-      Uruguay: "uy",
-      Francia: "fr",
-      Senegal: "sn",
-      Irak: "iq",
-      Noruega: "no",
-      Argentina: "ar",
-      Argelia: "dz",
-      Austria: "at",
-      Jordania: "jo",
-      Portugal: "pt",
-      "Rep. D. del Congo": "cd",
-      Uzbekistan: "uz",
-      Uzbekistán: "uz",
-      Colombia: "co",
-      Inglaterra: "gb-eng",
-      Croacia: "hr",
-      Ghana: "gh",
-      Panamá: "pa",
-    };
-
-    // Mapeo estático de grupos para renderizar nombres de países faltantes
-    const MAPA_PARTIDOS = {
-      a_j1_1: { local: "México", visitante: "Sudáfrica", grupo: "A" },
-      a_j1_2: { local: "Corea del Sur", visitante: "Chequia", grupo: "A" },
-      b_j1_1: {
-        local: "Canadá",
-        visitante: "Bosnia y Herzegovina",
-        grupo: "B",
-      },
-      b_j1_2: { local: "Qatar", visitante: "Suiza", grupo: "B" },
-      c_j1_1: { local: "Brasil", visitante: "Marruecos", grupo: "C" },
-      c_j1_2: { local: "Haití", visitante: "Escocia", grupo: "C" },
-      d_j1_1: { local: "Estados Unidos", visitante: "Paraguay", grupo: "D" },
-      d_j1_2: { local: "Australia", visitante: "Turquía", grupo: "D" },
-      e_j1_1: { local: "Alemania", visitante: "Curazao", grupo: "E" },
-      e_j1_2: { local: "Costa de Marfil", visitante: "Ecuador", grupo: "E" },
-      f_j1_1: { local: "Países Bajos", visitante: "Japón", grupo: "F" },
-      f_j1_2: { local: "Suecia", visitante: "Túnez", grupo: "F" },
-      g_j1_1: { local: "Bélgica", visitante: "Egipto", grupo: "G" },
-      g_j1_2: { local: "Irán", visitante: "Nueva Zelanda", grupo: "G" },
-      h_j1_1: { local: "España", visitante: "Cabo Verde", grupo: "H" },
-      h_j1_2: { local: "Arabia Saudita", visitante: "Uruguay", grupo: "H" },
-      i_j1_1: { local: "Francia", visitante: "Senegal", grupo: "I" },
-      i_j1_2: { local: "Irak", visitante: "Noruega", grupo: "I" },
-      j_j1_1: { local: "Argentina", visitante: "Argelia", grupo: "J" },
-      j_j1_2: { local: "Austria", visitante: "Jordania", grupo: "J" },
-      k_j1_1: { local: "Portugal", visitante: "Rep. D. del Congo", grupo: "K" },
-      k_j1_2: { local: "Uzbekistan", visitante: "Colombia", grupo: "K" },
-      l_j1_1: { local: "Inglaterra", visitante: "Croacia", grupo: "L" },
-      l_j1_2: { local: "Ghana", visitante: "Panamá", grupo: "L" },
-      a_j2_1: { local: "Chequia", visitante: "Sudáfrica", grupo: "A" },
-      a_j2_2: { local: "México", visitante: "Corea del Sur", grupo: "A" },
-      b_j2_1: { local: "Suiza", visitante: "Bosnia y Herzegovina", grupo: "B" },
-      b_j2_2: { local: "Canadá", visitante: "Qatar", grupo: "B" },
-      c_j2_1: { local: "Escocia", visitante: "Marruecos", grupo: "C" },
-      c_j2_2: { local: "Brasil", visitante: "Haití", grupo: "C" },
-      d_j2_1: { local: "Estados Unidos", visitante: "Australia", grupo: "D" },
-      d_j2_2: { local: "Turquía", visitante: "Paraguay", grupo: "D" },
-      e_j2_1: { local: "Alemania", visitante: "Costa de Marfil", grupo: "E" },
-      e_j2_2: { local: "Ecuador", visitante: "Curazao", grupo: "E" },
-      f_j2_1: { local: "Países Bajos", visitante: "Suecia", grupo: "F" },
-      f_j2_2: { local: "Túnez", visitante: "Japón", grupo: "F" },
-      g_j2_1: { local: "Bélgica", visitante: "Irán", grupo: "G" },
-      g_j2_2: { local: "Nueva Zelanda", visitante: "Egipto", grupo: "G" },
-      h_j2_1: { local: "España", visitante: "Arabia Saudí", grupo: "H" },
-      h_j2_2: { local: "Uruguay", visitante: "Cabo Verde", grupo: "H" },
-      i_j2_1: { local: "Francia", visitante: "Irak", grupo: "I" },
-      i_j2_2: { local: "Noruega", visitante: "Senegal", grupo: "I" },
-      j_j2_1: { local: "Argentina", visitante: "Austria", grupo: "J" },
-      j_j2_2: { local: "Jordania", visitante: "Argelia", grupo: "J" },
-      k_j2_1: { local: "Portugal", visitante: "Uzbekistán", grupo: "K" },
-      k_j2_2: { local: "Colombia", visitante: "Rep. D. del Congo", grupo: "K" },
-      l_j2_1: { local: "Inglaterra", visitante: "Ghana", grupo: "L" },
-      l_j2_2: { local: "Panamá", visitante: "Croacia", grupo: "L" },
-      a_j3_1: { local: "Sudáfrica", visitante: "Corea del Sur", grupo: "A" },
-      a_j3_2: { local: "Chequia", visitante: "México", grupo: "A" },
-      b_j3_1: { local: "Bosnia y Herzegovina", visitante: "Qatar", grupo: "B" },
-      b_j3_2: { local: "Suiza", visitante: "Canadá", grupo: "B" },
-      c_j3_1: { local: "Escocia", visitante: "Brasil", grupo: "C" },
-      c_j3_2: { local: "Marruecos", visitante: "Haití", grupo: "C" },
-      d_j3_1: { local: "Turquía", visitante: "Estados Unidos", grupo: "D" },
-      d_j3_2: { local: "Paraguay", visitante: "Australia", grupo: "D" },
-      e_j3_1: { local: "Ecuador", visitante: "Alemania", grupo: "E" },
-      e_j3_2: { local: "Curazao", visitante: "Costa de Marfil", grupo: "E" },
-      f_j3_1: { local: "Japón", visitante: "Suecia", grupo: "F" },
-      f_j3_2: { local: "Túnez", visitante: "Países Bajos", grupo: "F" },
-      g_j3_1: { local: "Nueva Zelanda", visitante: "Bélgica", grupo: "G" },
-      g_j3_2: { local: "Egipto", visitante: "Irán", grupo: "G" },
-      h_j3_1: { local: "Uruguay", visitante: "España", grupo: "H" },
-      h_j3_2: { local: "Cabo Verde", visitante: "Arabia Saudí", grupo: "H" },
-      i_j3_1: { local: "Senegal", visitante: "Irak", grupo: "I" },
-      i_j3_2: { local: "Noruega", visitante: "Francia", grupo: "I" },
-      j_j3_1: { local: "Jordania", visitante: "Argentina", grupo: "J" },
-      j_j3_2: { local: "Argelia", visitante: "Austria", grupo: "J" },
-      k_j3_1: { local: "Colombia", visitante: "Portugal", grupo: "K" },
-      k_j3_2: {
-        local: "Rep. D. del Congo",
-        visitante: "Uzbekistán",
-        grupo: "K",
-      },
-      l_j3_1: { local: "Croacia", visitante: "Ghana", grupo: "L" },
-      l_j3_2: { local: "Panamá", visitante: "Inglaterra", grupo: "L" },
-    };
-
-    let htmlContenido = `
-      <!DOCTYPE html>
-      <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <title>Reporte - ${p.nombre}</title>
-        <style>
-          @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Bebas+Neue&display=swap');
-          :root {
-            --dark-blue: #0a1931;
-            --fifa-green: #00a651;
-            --gray-bg: #f8f9fa;
-            --border-color: #e0e0e0;
-          }
-          body { margin: 0; padding: 20px; font-family: sans-serif; background-color: var(--gray-bg); color: #333; }
-          .no-print-zone { background: #fff; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-          .btn-descargar { background: var(--fifa-green); color: white; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; }
-          .header-reporte { background: var(--dark-blue); color: white; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-          .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; text-transform: uppercase; }
-          .grid-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
-          .card-pts { background: white; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; text-align: center; }
-          .card-pts-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: #777; font-weight: 600; }
-          .card-pts-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; margin-top: 4px; }
-          .seccion-titulo { background: var(--dark-blue); color: white; padding: 6px 12px; border-radius: 4px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; }
-          .jornada-container { margin-bottom: 25px; }
-          .jornada-titulo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 10px; border-bottom: 2px solid var(--dark-blue); padding-bottom: 4px; }
-          .grid-partidos-fase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-          .card-partido-item { border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px; background: #fff; font-size: 0.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-          .id-row { font-weight: bold; color: #888; font-size: 0.65rem; margin-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; }
-          .vs-row { display: flex; justify-content: space-between; align-items: center; gap: 4px; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; }
-          .team-block { display: flex; align-items: center; gap: 6px; width: 42%; }
-          .team-block.left { justify-content: flex-start; }
-          .team-block.right { justify-content: flex-end; }
-          .flag-icon { width: 22px; height: 14px; object-fit: cover; border: 1px solid #ccc; border-radius: 2px; }
-          .pred-row { display: flex; justify-content: center; align-items: center; gap: 6px; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; color: white; text-transform: uppercase; }
-          .sub-info { font-size: 0.65rem; color: #555; text-align: left; margin-top: 6px; border-top: 1px dashed #eee; padding-top: 5px; display: flex; flex-direction: column; gap: 2px; }
-          @media print { .no-print-zone { display: none; } body { padding: 0; background: white; } }
-        </style>
-      </head>
-      <body>
-        <div class="no-print-zone">
-          <span>Vista Unificada del Reporte.</span>
-          <button class="btn-descargar" onclick="window.print()">Guardar PDF / Imagen</button>
-        </div>
-
-        <div class="header-reporte">
-          <div>
-            <div style="font-size: 0.8rem; opacity: 0.8; font-weight: bold;">POLLA MUNDIALISTA 2026</div>
-            <div class="header-title">${p.nombre}</div>
-          </div>
-          <div style="font-family: 'Bebas Neue'; font-size: 1.6rem;">PUESTO #${p.puesto}</div>
-        </div>
-
-        <div class="grid-cards">
-          <div class="card-pts"><div class="card-pts-title">RANKING</div><div class="card-pts-val">#${p.puesto}</div></div>
-          <div class="card-pts"><div class="card-pts-title">TOTAL ACUMULADO</div><div class="card-pts-val" style="color:var(--fifa-green);">${p.total} PTS</div></div>
-          <div class="card-pts"><div class="card-pts-title">FASE GRUPOS</div><div class="card-pts-val">${p.pts_grupos} PTS</div></div>
-          <div class="card-pts"><div class="card-pts-title">16AVOS</div><div class="card-pts-val">${p.pts_d16} PTS</div></div>
-          <div class="card-pts"><div class="card-pts-title">OCTAVOS</div><div class="card-pts-val">${p.pts_octavos} PTS</div></div>
-        </div>
-    `;
-
-    // --- RENDICIÓN FASE DE GRUPOS ---
-    htmlContenido += `<div class="seccion-titulo">Fase de Grupos</div>`;
-    const jornadas = [
-      { titulo: "Jornada 1", filtro: "_j1_" },
-      { titulo: "Jornada 2", filtro: "_j2_" },
-      { titulo: "Jornada 3", filtro: "_j3_" },
-    ];
-
-    jornadas.forEach((jornada) => {
-      htmlContenido += `<div class="jornada-container"><div class="jornada-titulo">${jornada.titulo}</div><div class="grid-partidos-fase">`;
-
-      Object.keys(MAPA_PARTIDOS).forEach((api_key) => {
-        if (!api_key.includes(jornada.filtro)) return;
-
-        const partido = MAPA_PARTIDOS[api_key];
-        const nodoApi = gruposData[api_key];
-        const prediccion = nodoApi?.prediccion || "---";
-        const esAcierto = nodoApi?.acierto === true;
-
-        const codeLocal = CODIGOS[partido.local] || "un";
-        const codeVisitante = CODIGOS[partido.visitante] || "un";
-
-        let textoPrediccion = prediccion.toUpperCase();
-        let bgPred =
-          prediccion !== "---"
-            ? esAcierto
-              ? "var(--fifa-green)"
-              : "#999"
-            : "#eee";
-
-        htmlContenido += `
-          <div class="card-partido-item">
-            <div class="id-row"><span>${api_key.toUpperCase()}</span><span>GRP ${partido.grupo}</span></div>
-            <div class="vs-row">
-              <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${partido.local.substring(0, 3)}</span></div>
-              <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
-              <div class="team-block right"><span>${partido.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
-            </div>
-            <div class="pred-row" style="background:${bgPred};">
-              <span>PRED: ${textoPrediccion}</span>
-            </div>
-            <div class="sub-info">
-              <span>Resultado Real: <strong>${esAcierto ? "Acertado" : "No Acertado / Pendiente"}</strong></span>
-            </div>
-          </div>
-        `;
-      });
-      htmlContenido += `</div></div>`;
+    data.forEach((p) => {
+      let opt = document.createElement("option");
+      opt.value = p.correo;
+      opt.textContent = `${p.nombre} ${p.apellido}`;
+      select.appendChild(opt);
     });
-
-    // --- RENDICIÓN 16AVOS DE FINAL ---
-    htmlContenido += `<div class="seccion-titulo">16Avos de Final</div><div class="grid-partidos-fase">`;
-    Object.keys(d16Data).forEach((id) => {
-      const pData = d16Data[id];
-      const ganador = pData.prediccion_ganador || "---";
-      const codeLocal = CODIGOS[pData.local] || "un";
-      const codeVisitante = CODIGOS[pData.visitante] || "un";
-      const bg = pData.acierto_ganador ? "var(--fifa-green)" : "#999";
-
-      htmlContenido += `
-        <div class="card-partido-item">
-          <div class="id-row"><span>${id.toUpperCase()}</span><span>16AVOS</span></div>
-          <div class="vs-row">
-            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
-            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
-            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
-          </div>
-          <div class="pred-row" style="background:${bg};">
-            <span>Ganador Predicho: ${ganador.toUpperCase()}</span>
-          </div>
-          <div class="sub-info">
-            <span>Marcador Real: <strong>${pData.marcador_real || "---"}</strong></span>
-            <span>Predijo Penales: <strong>${pData.prediccion_penales || "No"}</strong></span>
-            <span>Penales Reales: <strong>${pData.penales_reales || "no"}</strong></span>
-          </div>
-        </div>`;
-    });
-
-    // --- RENDICIÓN OCTAVOS DE FINAL ---
-    htmlContenido += `</div><div class="seccion-titulo">Octavos de Final</div><div class="grid-partidos-fase">`;
-    Object.keys(octData).forEach((id) => {
-      const pData = octData[id];
-      const ganador = pData.prediccion_ganador || "---";
-      const codeLocal = CODIGOS[pData.local] || "un";
-      const codeVisitante = CODIGOS[pData.visitante] || "un";
-      const bg = pData.acierto_ganador ? "var(--fifa-green)" : "#999";
-
-      htmlContenido += `
-        <div class="card-partido-item">
-          <div class="id-row"><span>${id.toUpperCase()}</span><span>OCTAVOS</span></div>
-          <div class="vs-row">
-            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
-            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
-            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
-          </div>
-          <div class="pred-row" style="background:${bg};">
-            <span>Ganador Predicho: ${ganador.toUpperCase()}</span>
-          </div>
-          <div class="sub-info">
-            <span>Ganador Real: <strong>${pData.ganador_real || "---"}</strong></span>
-          </div>
-        </div>`;
-    });
-
-    // --- RENDICIÓN CUARTOS DE FINAL (FASES FUTURAS) ---
-    htmlContenido += `</div><div class="seccion-titulo">Cuartos de Final (Fases No Jugadas / Pronósticos Guardados)</div><div class="grid-partidos-fase">`;
-    Object.keys(cuartosData).forEach((id) => {
-      const pData = cuartosData[id];
-      const codeLocal = CODIGOS[pData.local] || "un";
-      const codeVisitante = CODIGOS[pData.visitante] || "un";
-
-      htmlContenido += `
-        <div class="card-partido-item" style="border: 1px solid var(--dark-blue);">
-          <div class="id-row" style="color:var(--dark-blue);"><span>${id.toUpperCase()}</span><span>CUARTOS</span></div>
-          <div class="vs-row">
-            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
-            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
-            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
-          </div>
-          <div class="pred-row" style="background:var(--dark-blue);">
-            <span>M. PREDICHO: ${pData.prediccion_marcador || "---"}</span>
-          </div>
-          <div class="sub-info">
-            <span>Ganador Seleccionado: <strong>${pData.prediccion_ganador || "---"}</strong></span>
-            <span>Estado: <strong style="color:orange;">Pendiente por Jugar</strong></span>
-          </div>
-        </div>`;
-    });
-
-    htmlContenido += `</div></body></html>`;
-
-    nuevaVentana.document.open();
-    nuevaVentana.document.write(htmlContenido);
-    nuevaVentana.document.close();
-  } catch (errorEx) {
-    alert("Error crítico de renderizado frontend: " + errorEx.message);
+  } catch (err) {
+    console.error("Error al cargar participantes:", err);
   }
 }
 
-function crearCardPuntos(titulo, valor, colorValor) {
-  return `
-    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:0.75rem; font-family:sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align:center;">
-      <div style="font-size:0.7rem; color:#888; font-weight:700; letter-spacing:0.5px; text-transform:uppercase;">${titulo}</div>
-      <div style="font-size:1.3rem; font-weight:bold; color:${colorValor}; margin-top:0.25rem;">${valor}</div>
-    </div>
-  `;
+function evaluarEstado(pronostico, valorReal) {
+  if (valorReal === undefined || valorReal === "")
+    return { estado: "pendiente", icono: "⏳", clase: "bg-gray" };
+  return pronostico === valorReal
+    ? { estado: "acierto", icono: "✅", clase: "bg-green" }
+    : { estado: "error", icono: "❌", clase: "bg-red" };
 }
+
+function renderizarDashboard(p) {
+  // ── Mapa de IDs a partidos legibles ──
+  const MAPA_PARTIDOS = {
+    // Grupos J1
+    a_j1_1: "México vs Sudáfrica",
+    a_j1_2: "Corea del Sur vs Rep. Checa",
+    b_j1_1: "Canadá vs Bosnia y Herz.",
+    b_j1_2: "Qatar vs Suiza",
+    c_j1_1: "Brasil vs Marruecos",
+    c_j1_2: "Haití vs Escocia",
+    d_j1_1: "Estados Unidos vs Paraguay",
+    d_j1_2: "Australia vs Turquía",
+    e_j1_1: "Alemania vs Curazao",
+    e_j1_2: "Costa de Marfil vs Ecuador",
+    f_j1_1: "Países Bajos vs Japón",
+    f_j1_2: "Suecia vs Túnez",
+    g_j1_1: "Bélgica vs Egipto",
+    g_j1_2: "Irán vs Nueva Zelanda",
+    h_j1_1: "España vs Cabo Verde",
+    h_j1_2: "Arabia Saudita vs Uruguay",
+    i_j1_1: "Francia vs Senegal",
+    i_j1_2: "Irak vs Noruega",
+    j_j1_1: "Argentina vs Argelia",
+    j_j1_2: "Austria vs Jordania",
+    k_j1_1: "Portugal vs Rep. D. Congo",
+    k_j1_2: "Uzbekistán vs Colombia",
+    l_j1_1: "Inglaterra vs Croacia",
+    l_j1_2: "Ghana vs Panamá",
+    // Grupos J2
+    a_j2_1: "Rep. Checa vs Sudáfrica",
+    a_j2_2: "México vs Corea del Sur",
+    b_j2_1: "Suiza vs Bosnia y Herz.",
+    b_j2_2: "Canadá vs Qatar",
+    c_j2_1: "Escocia vs Marruecos",
+    c_j2_2: "Brasil vs Haití",
+    d_j2_1: "Estados Unidos vs Australia",
+    d_j2_2: "Turquía vs Paraguay",
+    e_j2_1: "Alemania vs Costa de Marfil",
+    e_j2_2: "Ecuador vs Curazao",
+    f_j2_1: "Países Bajos vs Suecia",
+    f_j2_2: "Túnez vs Japón",
+    g_j2_1: "Bélgica vs Irán",
+    g_j2_2: "Nueva Zelanda vs Egipto",
+    h_j2_1: "España vs Arabia Saudita",
+    h_j2_2: "Uruguay vs Cabo Verde",
+    i_j2_1: "Francia vs Irak",
+    i_j2_2: "Noruega vs Senegal",
+    j_j2_1: "Argentina vs Austria",
+    j_j2_2: "Jordania vs Argelia",
+    k_j2_1: "Portugal vs Uzbekistán",
+    k_j2_2: "Colombia vs Rep. D. Congo",
+    l_j2_1: "Inglaterra vs Ghana",
+    l_j2_2: "Panamá vs Croacia",
+    // Grupos J3
+    a_j3_1: "Sudáfrica vs Corea del Sur",
+    a_j3_2: "Rep. Checa vs México",
+    b_j3_1: "Bosnia y Herz. vs Qatar",
+    b_j3_2: "Suiza vs Canadá",
+    c_j3_1: "Escocia vs Brasil",
+    c_j3_2: "Marruecos vs Haití",
+    d_j3_1: "Turquía vs Estados Unidos",
+    d_j3_2: "Paraguay vs Australia",
+    e_j3_1: "Ecuador vs Alemania",
+    e_j3_2: "Curazao vs Costa de Marfil",
+    f_j3_1: "Japón vs Suecia",
+    f_j3_2: "Túnez vs Países Bajos",
+    g_j3_1: "Nueva Zelanda vs Bélgica",
+    g_j3_2: "Egipto vs Irán",
+    h_j3_1: "Uruguay vs España",
+    h_j3_2: "Cabo Verde vs Arabia Saudita",
+    i_j3_1: "Senegal vs Irak",
+    i_j3_2: "Noruega vs Francia",
+    j_j3_1: "Jordania vs Argentina",
+    j_j3_2: "Argelia vs Austria",
+    k_j3_1: "Colombia vs Portugal",
+    k_j3_2: "Rep. D. Congo vs Uzbekistán",
+    l_j3_1: "Croacia vs Ghana",
+    l_j3_2: "Panamá vs Inglaterra",
+    // 16avos
+    d01: "Sudáfrica vs Canadá",
+    d02: "Brasil vs Japón",
+    d03: "Alemania vs Paraguay",
+    d04: "Países Bajos vs Marruecos",
+    d05: "Costa de Marfil vs Noruega",
+    d06: "Francia vs Suecia",
+    d07: "México vs Ecuador",
+    d08: "Inglaterra vs Rep. D. Congo",
+    d09: "Bélgica vs Senegal",
+    d10: "Estados Unidos vs Bosnia y Herz.",
+    d11: "España vs Austria",
+    d12: "Portugal vs Croacia",
+    d13: "Suiza vs Argelia",
+    d14: "Australia vs Egipto",
+    d15: "Argentina vs Cabo Verde",
+    d16: "Colombia vs Ghana",
+    // Octavos
+    o01: "Canadá vs Marruecos",
+    o02: "Paraguay vs Francia",
+    o03: "Brasil vs Noruega",
+    o04: "México vs Inglaterra",
+    o05: "Portugal vs España",
+    o06: "Estados Unidos vs Bélgica",
+    o07: "Argentina vs Egipto",
+    o08: "Colombia vs Suiza",
+    // Cuartos
+    c01: "Francia vs Marruecos",
+    c02: "Por definir",
+    c03: "Noruega vs Inglaterra",
+    c04: "Por definir",
+    // Semis
+    s01: "Por definir",
+    s02: "Por definir",
+    // Final
+    f01: "Final",
+    f02: "Tercer lugar",
+  };
+
+  const CODIGOS_BANDERAS = {
+    México: "mx",
+    Sudáfrica: "za",
+    "Corea del Sur": "kr",
+    "Rep. Checa": "cz",
+    Canadá: "ca",
+    "Bosnia y Herz.": "ba",
+    Qatar: "qa",
+    Suiza: "ch",
+    Brasil: "br",
+    Marruecos: "ma",
+    Haití: "ht",
+    Escocia: "gb-sct",
+    "Estados Unidos": "us",
+    Paraguay: "py",
+    Australia: "au",
+    Turquía: "tr",
+    Alemania: "de",
+    Curazao: "cw",
+    "Costa de Marfil": "ci",
+    Ecuador: "ec",
+    "Países Bajos": "nl",
+    Japón: "jp",
+    Suecia: "se",
+    Túnez: "tn",
+    Bélgica: "be",
+    Egipto: "eg",
+    Irán: "ir",
+    "Nueva Zelanda": "nz",
+    España: "es",
+    Uruguay: "uy",
+    "Arabia Saudita": "sa",
+    "Cabo Verde": "cv",
+    Francia: "fr",
+    Senegal: "sn",
+    Noruega: "no",
+    Irak: "iq",
+    Argentina: "ar",
+    Argelia: "dz",
+    Austria: "at",
+    Jordania: "jo",
+    Portugal: "pt",
+    Colombia: "co",
+    Uzbekistán: "uz",
+    "Rep. D. Congo": "cd",
+    Inglaterra: "gb-eng",
+    Croacia: "hr",
+    Panamá: "pa",
+    Ghana: "gh",
+  };
+
+  function bandera(equipo) {
+    const code = CODIGOS_BANDERAS[equipo];
+    if (!code) return "";
+    return `<img src="https://flagcdn.com/20x15/${code}.png" style="width:20px;height:15px;vertical-align:middle;border-radius:2px;margin-right:4px">`;
+  }
+
+  // Leer resultados reales desde MUNDIAL_DATA si existen
+  const reales = MUNDIAL_DATA.resultados || {};
+
+  function valorLegible(val) {
+    if (!val || val === "-") return "—";
+    if (val === "local") return "Local";
+    if (val === "visitante") return "Visitante";
+    if (val === "empate") return "🤝 Empate";
+    return val;
+  }
+
+  function esAcierto(id, pronPrincipal) {
+    const real = reales[id];
+    if (!real || !pronPrincipal) return null;
+    return pronPrincipal.toLowerCase() === real.toLowerCase();
+  }
+
+  function tarjetaPartido(id, pronostico, esElim, tienePenales, tieneM) {
+    const nombre = MAPA_PARTIDOS[id] || id;
+    const [local, visitante] = nombre.split(" vs ");
+    const ganKey = esElim ? `${id}_G` : id;
+    const penKey = `${id}_P`;
+    const mKey = `${id}_M`;
+
+    const datos = esElim ? p[obtenerFasePorId(id)] : p.grupos;
+    if (!datos) return "";
+
+    const pronGan = datos[ganKey] || datos[id] || "";
+    const pronPen = datos[penKey] || "";
+    const pronM = datos[mKey] || "";
+
+    const acierto = esAcierto(ganKey, pronGan) ?? esAcierto(id, pronGan);
+
+    let ganadorTexto = "—";
+    if (pronGan === "local") ganadorTexto = `${bandera(local)}${local}`;
+    else if (pronGan === "visitante")
+      ganadorTexto = `${bandera(visitante)}${visitante}`;
+    else if (pronGan === "empate") ganadorTexto = "🤝 Empate";
+    else if (pronGan) ganadorTexto = pronGan;
+
+    const colorBorde =
+      acierto === true
+        ? "#00C853"
+        : acierto === false
+          ? "#C8102E"
+          : "rgba(255,255,255,0.08)";
+    const colorFondo =
+      acierto === true
+        ? "rgba(0,200,83,0.07)"
+        : acierto === false
+          ? "rgba(200,16,46,0.07)"
+          : "rgba(255,255,255,0.02)";
+    const icono = acierto === true ? "✅" : acierto === false ? "❌" : "⏳";
+
+    return `
+      <div style="border:1px solid ${colorBorde}; background:${colorFondo}; border-radius:6px; padding:0.6rem 0.75rem; font-family:'Barlow Condensed',sans-serif;">
+        <div style="font-size:0.7rem; color:#888; letter-spacing:0.08em; margin-bottom:0.25rem;">${escapeHtml(nombre)}</div>
+        <div style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#F5F0E8; font-weight:600;">
+          <span>${icono}</span>
+          <span>${ganadorTexto}</span>
+        </div>
+        ${pronPen ? `<div style="font-size:0.75rem; color:#888; margin-top:0.2rem;">Penales: <span style="color:#D4AF37">${escapeHtml(pronPen)}</span></div>` : ""}
+        ${pronM ? `<div style="font-size:0.75rem; color:#888; margin-top:0.2rem;">Marcador: <span style="color:#D4AF37">${escapeHtml(pronM)}</span></div>` : ""}
+      </div>`;
+  }
+
+  function obtenerFasePorId(id) {
+    if (id.startsWith("d")) return "dieciseisavos";
+    if (id.startsWith("o")) return "octavos";
+    if (id.startsWith("c")) return "cuartos";
+    if (id.startsWith("s")) return "semifinal";
+    if (id.startsWith("f")) return "final";
+    return "grupos";
+  }
+
+  function seccionFase(titulo, ids, esElim) {
+    const tarjetas = ids.map((id) => tarjetaPartido(id, null, esElim)).join("");
+    if (!tarjetas.trim()) return "";
+    return `
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:#D4AF37; letter-spacing:0.1em; margin-bottom:0.6rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(212,175,55,0.2);">
+          ${titulo}
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.5rem;">
+          ${tarjetas}
+        </div>
+      </div>`;
+  }
+
+  const nombre = `${p.grupos?.nombre || ""} ${p.grupos?.apellido || ""}`.trim();
+
+  const especiales = `
+    <div style="background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.2); border-radius:6px; padding:1rem; margin-bottom:1.5rem; display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; color:#F5F0E8;">
+      <span>🏆 Campeón: <strong style="color:#D4AF37">${escapeHtml(p.grupos?.campeon || "—")}</strong></span>
+      <span>🥈 Subcampeón: <strong style="color:#D4AF37">${escapeHtml(p.grupos?.subcampeon || "—")}</strong></span>
+      <span>🥉 Tercer lugar: <strong style="color:#D4AF37">${escapeHtml(p.grupos?.tercero || "—")}</strong></span>
+      <span>⭐ Balón de Oro: <strong style="color:#D4AF37">${escapeHtml(p.grupos?.balonoro || "—")}</strong></span>
+      <span style="grid-column:1/-1">🇪🇨 Ecuador llegará a: <strong style="color:#D4AF37">${escapeHtml(p.grupos?.ecuador || "—")}</strong></span>
+    </div>`;
+
+  const j1ids = [
+    "a_j1_1",
+    "a_j1_2",
+    "b_j1_1",
+    "b_j1_2",
+    "c_j1_1",
+    "c_j1_2",
+    "d_j1_1",
+    "d_j1_2",
+    "e_j1_1",
+    "e_j1_2",
+    "f_j1_1",
+    "f_j1_2",
+    "g_j1_1",
+    "g_j1_2",
+    "h_j1_1",
+    "h_j1_2",
+    "i_j1_1",
+    "i_j1_2",
+    "j_j1_1",
+    "j_j1_2",
+    "k_j1_1",
+    "k_j1_2",
+    "l_j1_1",
+    "l_j1_2",
+  ];
+  const j2ids = [
+    "a_j2_1",
+    "a_j2_2",
+    "b_j2_1",
+    "b_j2_2",
+    "c_j2_1",
+    "c_j2_2",
+    "d_j2_1",
+    "d_j2_2",
+    "e_j2_1",
+    "e_j2_2",
+    "f_j2_1",
+    "f_j2_2",
+    "g_j2_1",
+    "g_j2_2",
+    "h_j2_1",
+    "h_j2_2",
+    "i_j2_1",
+    "i_j2_2",
+    "j_j2_1",
+    "j_j2_2",
+    "k_j2_1",
+    "k_j2_2",
+    "l_j2_1",
+    "l_j2_2",
+  ];
+  const j3ids = [
+    "a_j3_1",
+    "a_j3_2",
+    "b_j3_1",
+    "b_j3_2",
+    "c_j3_1",
+    "c_j3_2",
+    "d_j3_1",
+    "d_j3_2",
+    "e_j3_1",
+    "e_j3_2",
+    "f_j3_1",
+    "f_j3_2",
+    "g_j3_1",
+    "g_j3_2",
+    "h_j3_1",
+    "h_j3_2",
+    "i_j3_1",
+    "i_j3_2",
+    "j_j3_1",
+    "j_j3_2",
+    "k_j3_1",
+    "k_j3_2",
+    "l_j3_1",
+    "l_j3_2",
+  ];
+  const d16ids = [
+    "d01",
+    "d02",
+    "d03",
+    "d04",
+    "d05",
+    "d06",
+    "d07",
+    "d08",
+    "d09",
+    "d10",
+    "d11",
+    "d12",
+    "d13",
+    "d14",
+    "d15",
+    "d16",
+  ];
+  const o8ids = ["o01", "o02", "o03", "o04", "o05", "o06", "o07", "o08"];
+  const c4ids = ["c01", "c02", "c03", "c04"];
+  const s2ids = ["s01", "s02"];
+  const fids = ["f01", "f02"];
+
+  const contenido = `
+    <div style="background:#0A0A0F; min-height:100vh; padding:1.5rem; color:#F5F0E8;">
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#D4AF37; letter-spacing:0.1em;">${escapeHtml(nombre)}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; color:#888; letter-spacing:0.1em;">PRONÓSTICOS MUNDIALISTAS 2026</div>
+        </div>
+        <button onclick="closeModal()" style="background:transparent; border:1px solid rgba(212,175,55,0.3); color:#D4AF37; font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.15em; padding:0.5rem 1rem; cursor:pointer;">✕ CERRAR</button>
+      </div>
+
+      ${especiales}
+      ${seccionFase("JORNADA 1", j1ids, false)}
+      ${seccionFase("JORNADA 2", j2ids, false)}
+      ${seccionFase("JORNADA 3", j3ids, false)}
+      ${p.dieciseisavos ? seccionFase("DIECISEISAVOS", d16ids, true) : ""}
+      ${p.octavos ? seccionFase("OCTAVOS", o8ids, true) : ""}
+      ${p.cuartos ? seccionFase("CUARTOS", c4ids, true) : ""}
+      ${p.semifinal ? seccionFase("SEMIFINALES", s2ids, true) : ""}
+      ${p.final ? seccionFase("FINAL", fids, true) : ""}
+
+      <div style="text-align:center; margin-top:2rem; font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; color:#444; letter-spacing:0.15em;">
+        ✅ ACIERTO &nbsp;·&nbsp; ❌ FALLO &nbsp;·&nbsp; ⏳ PENDIENTE
+      </div>
+    </div>`;
+
+  const modal = document.getElementById("success-modal");
+  const box = modal?.querySelector(".modal-box");
+  if (box) {
+    box.style.cssText =
+      "max-width:95vw; width:95vw; max-height:90vh; overflow-y:auto; padding:0; background:#0A0A0F; border:1px solid rgba(212,175,55,0.25);";
+    box.innerHTML = contenido;
+    modal.classList.add("show");
+  }
+}
+
+
+
+async function consultarDashboard(correo) {
+  const URL =
+    "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
+
+  try {
+    const response = await fetch(
+      `${URL}?accion=obtenerDetalle&correo=${encodeURIComponent(correo)}`,
+    );
+    const data = await response.json();
+    console.log("Respuesta del servidor:", data);
+
+    if (data && data.participante) {
+      renderizarDashboard(data.participante);
+    } else {
+      console.error("Formato inesperado:", data);
+    }
+  } catch (err) {
+    console.error("Error crítico:", err);
+  }
+}
+
+async function iniciarDashboard() {
+  const correo = document.getElementById("selector-participantes").value;
+  if (!correo) {
+    showToast("⚠ Selecciona un participante", "error");
+    return;
+  }
+  await consultarDashboard(correo);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarParticipantes();
+});

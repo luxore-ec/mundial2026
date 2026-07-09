@@ -6,8 +6,8 @@ const MUNDIAL_DATA = {
     emailDestino: "TU_EMAIL@gmail.com",
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
-    faseActiva: "cuartos",
-    fechaLimiteFase: "2026-07-09T15:30:00-05:00",
+    faseActiva: "semifinales",
+    fechaLimiteFase: "2026-07-14T14:15:00-05:00",
   },
 
   equipos: [
@@ -183,7 +183,7 @@ const MUNDIAL_DATA = {
       label: "Semifinales",
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        { id:"s01", local:"?", visitante:"?", fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s01", local:"Francia", visitante:"?", fecha:"14 de julio", hora:"14:00", grupo:null },
         { id:"s02", local:"?", visitante:"?", fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
@@ -193,7 +193,6 @@ const MUNDIAL_DATA = {
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
         { id:"f01", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
-        { id:"f02", local:"?",  visitante:"?",   fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },
