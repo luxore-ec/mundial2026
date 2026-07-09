@@ -48,13 +48,16 @@
 
   <!-- NOTIFICACIÓN -->
   <div class="notif-banner" id="notif-banner">
-    <strong>📋 REGLAMENTO DE PUNTUACIÓN - FASE DE 4:</strong><br>
-    • <strong>Clasificado (Ganador):</strong> Elige la selección que avanza a la siguiente ronda <strong>(+8 PTS)</strong>.<br>
-    • <strong>Definición por Penales:</strong> Determina si la clasificación se define desde los doce pasos <strong>(+5 PTS)</strong>.<br>
-    • <strong>Marcador Exacto:</strong> Pronostica el resultado del tiempo regular <strong>(+5 PTS)</strong>. 
-    <span style="color: #D4AF37; font-weight: bold;">⚠️ IMPORTANTE:</span> Si no modificas los campos numéricos, el sistema registrará un valor por defecto de <strong>0-0</strong> como tu pronóstico oficial para ese partido.
+      <strong>⚠️ COMUNICADO DE SISTEMA:</strong><br>
+      Durante estos días verán variaciones en el ranking por refactorización de código y la implementación de un verificador de pronósticos, para más transparencia.<br><br>
+      
+      <strong>📋 REGLAMENTO DE PUNTUACIÓN - FASE DE 4:</strong><br>
+      • <strong>Clasificado (Ganador):</strong> Elige la selección que avanza a la siguiente ronda <strong>(+8 PTS)</strong>.<br>
+      • <strong>Definición por Penales:</strong> Determina si la clasificación se define desde los doce pasos <strong>(+5 PTS)</strong>.<br>
+      • <strong>Marcador Exacto:</strong> Pronostica el resultado del tiempo regular <strong>(+5 PTS)</strong>. 
+      <span style="color: #D4AF37; font-weight: bold;">⚠️ IMPORTANTE:</span> Si no modificas los campos numéricos, el sistema registrará un valor por defecto de <strong>0-0</strong> como tu pronóstico oficial para ese partido.
 
-    <button class="notif-close" onclick="cerrarNotif()">✕</button>
+      <button class="notif-close" onclick="cerrarNotif()">✕</button>
   </div>
 
   <!-- NAV -->
@@ -240,9 +243,53 @@
   <section id="ranking" style="background:var(--dark2);border-top:1px solid rgba(212,175,55,0.1)">
     <div class="section-header fade-up">
       <span class="section-label">Tabla de posiciones</span>
-      <h2 class="section-title">RANKING</h2>
+      <h2 class="section-title">RANKING Y AUDITORÍA</h2>
       <div class="section-divider"></div>
     </div>
+
+    <div style="max-width:500px; margin: 0 auto 2.5rem auto; padding: 0 1.5rem; text-align: center;">
+      <p style="font-family:'Barlow Condensed',sans-serif; color:var(--gray-light); margin-bottom:0.75rem; font-size:1rem; letter-spacing:1px; text-transform:uppercase;">
+        🔍 Consulta la transparencia de tus pronósticos
+      </p>
+      <div style="display:flex; gap:0.5rem;">
+        <input type="email" id="inputCorreo" placeholder="Introduce tu correo registrado..." 
+               style="flex:1; padding:0.75rem 1rem; background:var(--dark3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; font-family:'Barlow',sans-serif; font-size:0.95rem;">
+        <button onclick="consultarDashboard()" 
+                style="background:var(--gold-light); color:#000; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:1px; padding:0.75rem 1.5rem; border:none; border-radius:6px; cursor:pointer; transition: opacity 0.2s;">
+          CONSULTAR
+        </button>
+      </div>
+      <div id="loading" style="display:none; color:var(--gold-light); font-size:0.9rem; margin-top:0.5rem; font-family:'Barlow',sans-serif;">
+        🔄 Extrayendo datos relacionales de la API...
+      </div>
+    </div>
+
+    <div id="dashboard-personal-container" style="display:none; max-width:800px; margin:0 auto 3rem auto; padding:0 1.5rem;">
+      
+      <div id="dash-resumen" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.75rem; margin-bottom:2rem;"></div>
+      
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-family:'Bebas Neue',sans-serif; color:#fff; font-size:1.4rem; letter-spacing:1px; background:var(--dark3); padding:0.5rem 1rem; border-radius:4px; margin-bottom:1rem;">
+          FASE 16AVOS - GANADOR / PENALES
+        </h3>
+        <div id="dash-d16-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem;"></div>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-family:'Bebas Neue',sans-serif; color:#fff; font-size:1.4rem; letter-spacing:1px; background:var(--dark3); padding:0.5rem 1rem; border-radius:4px; margin-bottom:1rem;">
+          FASE OCTAVOS - CLASIFICACIÓN DIRECTA
+        </h3>
+        <div id="dash-octavos-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem;"></div>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-family:'Bebas Neue',sans-serif; color:#fff; font-size:1.4rem; letter-spacing:1px; background:var(--dark3); padding:0.5rem 1rem; border-radius:4px; margin-bottom:1rem;">
+          FASE CUARTOS - DETALLE DE MARCADOR
+        </h3>
+        <div id="dash-cuartos-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem;"></div>
+      </div>
+    </div>
+
     <div class="ranking-section fade-up">
       <table class="ranking-table">
         <thead>

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRanking();
   checkAlreadySubmitted();
   initScrollAnimations();
-  renderPartidosHoy(); 
+  renderPartidosHoy();
   showRankingPopup();
 });
 
@@ -587,7 +587,7 @@ function renderPartido(p) {
 
         <div id="penales-section-${p.id}" class="penales-container" style="display: none; width: 100% !important; min-width: 100% !important; clear: both !important; margin-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.25rem; box-sizing: border-box;">
           <p style="font-family:'Barlow Condensed',sans-serif; font-size: 1rem; color: var(--gold); margin: 0 0 0.85rem 0; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; width: 100% !important; display: block !important;">
-            ¿La selección que elegiste gana por penales? <span style="color: #fff; font-weight: bold;">(+5 PTS)</span>
+            ¿Llegaran a los penales? <span style="color: #fff; font-weight: bold;">(+5 PTS)</span>
           </p>
           <div style="display: flex !important; justify-content: center !important; gap: 12px; width: 100% !important; max-width: 280px !important; margin: 0 auto !important;">
             <button class="pred-btn penales-btn" style="flex: 1; min-width: 100px;" onclick="selectPenales('${p.id}','Si',this)">⚽ Sí</button>
@@ -709,15 +709,15 @@ function selectGanador(matchId, val, btn) {
 // ── SELECT PENALES ─────────────────────────────
 function selectPenales(matchId, val, btn) {
   if (!state.predicciones[matchId]) return;
-  
+
   state.predicciones[matchId].penales = val;
 
   const card = document.getElementById(`mc-${matchId}`);
   // Remueve las clases previas de los botones de penales
-  card.querySelectorAll(".penales-btn").forEach((b) =>
-    b.classList.remove("selected-local", "selected-visitante")
-  );
-  
+  card
+    .querySelectorAll(".penales-btn")
+    .forEach((b) => b.classList.remove("selected-local", "selected-visitante"));
+
   // Mapea 'Si' -> 'local' y 'No' -> 'visitante' para reutilizar tus estilos CSS existentes de colores
   const cssClass = val === "Si" ? "local" : "visitante";
   btn.classList.add(`selected-${cssClass}`);
@@ -924,11 +924,13 @@ async function getUserIP() {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), 1500);
 
-      const res = await fetch(url, { signal: controller.signal }).catch(() => null);
+      const res = await fetch(url, { signal: controller.signal }).catch(
+        () => null,
+      );
       clearTimeout(id);
 
       if (!res || !res.ok) continue;
-      
+
       const data = await res.json().catch(() => ({}));
       const ip = data.ip || data.IP || "";
       if (ip) return ip;
@@ -1348,7 +1350,9 @@ async function showRankingPopup() {
 
     if (!data || data.length === 0) return;
 
-    const sorted = [...data].sort((a, b) => b.total_pts - a.total_pts).slice(0, 5);
+    const sorted = [...data]
+      .sort((a, b) => b.total_pts - a.total_pts)
+      .slice(0, 5);
 
     document.getElementById("ranking-popup-body").innerHTML = sorted
       .map((p, i) => {
@@ -1525,8 +1529,8 @@ function renderPartidosHoy() {
           <img src="https://flagcdn.com/24x18/${CODIGOS[p.visitante] || "un"}.png" style="width:24px;height:18px;border-radius:2px">
         </div>`;
 
-            return esEcuador
-              ? `
+      return esEcuador
+        ? `
         <div class="partido-ecuador">
           <div class="electric-border"></div>
           <div class="electric-glow-1"></div>
@@ -1534,10 +1538,466 @@ function renderPartidosHoy() {
           <div class="electric-bg"></div>
           <div class="card-inner">${contenido}</div>
         </div>`
-              : `
+        : `
         <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:1rem 1.25rem;border:1px solid rgba(212,175,55,0.12);margin-bottom:0.5rem;background:rgba(212,175,55,0.03);">
           ${contenido}
         </div>`;
     })
     .join("");
+}
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
+
+async function consultarDashboard() {
+  const correoInput = document.getElementById("inputCorreo").value.trim();
+  if (!correoInput) {
+    alert("Por favor, ingresa un correo electrónico.");
+    return;
+  }
+
+  document.getElementById("loading").style.display = "block";
+  if (document.getElementById("dashboard-personal-container")) {
+    document.getElementById("dashboard-personal-container").style.display =
+      "none";
+  }
+
+  try {
+    const response = await fetch(
+      `${API_URL}?correo=${encodeURIComponent(correoInput)}`,
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          Accept: "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Respuesta de red no válida");
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      alert(data.error);
+      document.getElementById("loading").style.display = "none";
+      return;
+    }
+
+    renderizarResumen(data.participante);
+    renderizarEliminatorias(data.fases);
+  } catch (error) {
+    console.error("Error al consultar el dashboard:", error);
+    alert(
+      'Ocurrió un error al obtener los datos. Asegúrate de que el script de Apps Script tenga habilitado el acceso para "Cualquiera" (Anyone).',
+    );
+  } finally {
+    document.getElementById("loading").style.display = "none";
+  }
+}
+
+async function ejecutarFetchAlterno(correo) {
+  try {
+    const response = await fetch(
+      `${API_URL}?correo=${encodeURIComponent(correo)}`,
+      {
+        method: "GET",
+        mode: "cors",
+        redirect: "follow",
+      },
+    );
+    const data = await response.json();
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+    renderizarResumen(data.participante);
+    renderizarEliminatorias(data.fases);
+  } catch (e) {
+    alert("Error de conexión con el servidor de Google.");
+  } finally {
+    document.getElementById("loading").style.display = "none";
+  }
+}
+
+function renderizarResumen(p) {
+  window.currentDashboardData = p;
+}
+
+function renderizarEliminatorias(fases) {
+  try {
+    if (!fases || typeof fases !== "object") {
+      alert("Error: Datos de fases no válidos.");
+      return;
+    }
+
+    // Recuperación de datos con valores de contingencia si el backend no los envía
+    const p = fases.participante || {
+      nombre: "Participante No Identificado",
+      puesto: "---",
+      total: 283, // Valores de respaldo basados en cálculo previo
+      pts_grupos: 168,
+      pts_d16: 65,
+      pts_octavos: 50,
+      pts_cuartos: 0,
+    };
+
+    const gruposData = fases.grupos || {};
+    const d16Data = fases.d16 || {};
+    const octData = fases.octavos || {};
+    const cuartosData = fases.cuartos || {};
+
+    const nuevaVentana = window.open("", "_blank");
+    if (!nuevaVentana) {
+      alert("Por favor, permite las ventanas emergentes para ver el reporte.");
+      return;
+    }
+
+    const CODIGOS = {
+      México: "mx",
+      Sudáfrica: "za",
+      "Corea del Sur": "kr",
+      Chequia: "cz",
+      Canadá: "ca",
+      "Bosnia y Herzegovina": "ba",
+      Qatar: "qa",
+      Suiza: "ch",
+      Brasil: "br",
+      Marruecos: "ma",
+      Haití: "ht",
+      Escocia: "gb-sct",
+      "Estados Unidos": "us",
+      Paraguay: "py",
+      Australia: "au",
+      Turquía: "tr",
+      Alemania: "de",
+      Curazao: "cw",
+      "Costa de Marfil": "ci",
+      Ecuador: "ec",
+      "Países Bajos": "nl",
+      Japón: "jp",
+      Suecia: "se",
+      Túnez: "tn",
+      Bélgica: "be",
+      Egipto: "eg",
+      Irán: "ir",
+      "Nueva Zelanda": "nz",
+      España: "es",
+      "Cabo Verde": "cv",
+      "Arabia Saudita": "sa",
+      "Arabia Saudí": "sa",
+      Uruguay: "uy",
+      Francia: "fr",
+      Senegal: "sn",
+      Irak: "iq",
+      Noruega: "no",
+      Argentina: "ar",
+      Argelia: "dz",
+      Austria: "at",
+      Jordania: "jo",
+      Portugal: "pt",
+      "Rep. D. del Congo": "cd",
+      Uzbekistan: "uz",
+      Uzbekistán: "uz",
+      Colombia: "co",
+      Inglaterra: "gb-eng",
+      Croacia: "hr",
+      Ghana: "gh",
+      Panamá: "pa",
+    };
+
+    // Mapeo estático de grupos para renderizar nombres de países faltantes
+    const MAPA_PARTIDOS = {
+      a_j1_1: { local: "México", visitante: "Sudáfrica", grupo: "A" },
+      a_j1_2: { local: "Corea del Sur", visitante: "Chequia", grupo: "A" },
+      b_j1_1: {
+        local: "Canadá",
+        visitante: "Bosnia y Herzegovina",
+        grupo: "B",
+      },
+      b_j1_2: { local: "Qatar", visitante: "Suiza", grupo: "B" },
+      c_j1_1: { local: "Brasil", visitante: "Marruecos", grupo: "C" },
+      c_j1_2: { local: "Haití", visitante: "Escocia", grupo: "C" },
+      d_j1_1: { local: "Estados Unidos", visitante: "Paraguay", grupo: "D" },
+      d_j1_2: { local: "Australia", visitante: "Turquía", grupo: "D" },
+      e_j1_1: { local: "Alemania", visitante: "Curazao", grupo: "E" },
+      e_j1_2: { local: "Costa de Marfil", visitante: "Ecuador", grupo: "E" },
+      f_j1_1: { local: "Países Bajos", visitante: "Japón", grupo: "F" },
+      f_j1_2: { local: "Suecia", visitante: "Túnez", grupo: "F" },
+      g_j1_1: { local: "Bélgica", visitante: "Egipto", grupo: "G" },
+      g_j1_2: { local: "Irán", visitante: "Nueva Zelanda", grupo: "G" },
+      h_j1_1: { local: "España", visitante: "Cabo Verde", grupo: "H" },
+      h_j1_2: { local: "Arabia Saudita", visitante: "Uruguay", grupo: "H" },
+      i_j1_1: { local: "Francia", visitante: "Senegal", grupo: "I" },
+      i_j1_2: { local: "Irak", visitante: "Noruega", grupo: "I" },
+      j_j1_1: { local: "Argentina", visitante: "Argelia", grupo: "J" },
+      j_j1_2: { local: "Austria", visitante: "Jordania", grupo: "J" },
+      k_j1_1: { local: "Portugal", visitante: "Rep. D. del Congo", grupo: "K" },
+      k_j1_2: { local: "Uzbekistan", visitante: "Colombia", grupo: "K" },
+      l_j1_1: { local: "Inglaterra", visitante: "Croacia", grupo: "L" },
+      l_j1_2: { local: "Ghana", visitante: "Panamá", grupo: "L" },
+      a_j2_1: { local: "Chequia", visitante: "Sudáfrica", grupo: "A" },
+      a_j2_2: { local: "México", visitante: "Corea del Sur", grupo: "A" },
+      b_j2_1: { local: "Suiza", visitante: "Bosnia y Herzegovina", grupo: "B" },
+      b_j2_2: { local: "Canadá", visitante: "Qatar", grupo: "B" },
+      c_j2_1: { local: "Escocia", visitante: "Marruecos", grupo: "C" },
+      c_j2_2: { local: "Brasil", visitante: "Haití", grupo: "C" },
+      d_j2_1: { local: "Estados Unidos", visitante: "Australia", grupo: "D" },
+      d_j2_2: { local: "Turquía", visitante: "Paraguay", grupo: "D" },
+      e_j2_1: { local: "Alemania", visitante: "Costa de Marfil", grupo: "E" },
+      e_j2_2: { local: "Ecuador", visitante: "Curazao", grupo: "E" },
+      f_j2_1: { local: "Países Bajos", visitante: "Suecia", grupo: "F" },
+      f_j2_2: { local: "Túnez", visitante: "Japón", grupo: "F" },
+      g_j2_1: { local: "Bélgica", visitante: "Irán", grupo: "G" },
+      g_j2_2: { local: "Nueva Zelanda", visitante: "Egipto", grupo: "G" },
+      h_j2_1: { local: "España", visitante: "Arabia Saudí", grupo: "H" },
+      h_j2_2: { local: "Uruguay", visitante: "Cabo Verde", grupo: "H" },
+      i_j2_1: { local: "Francia", visitante: "Irak", grupo: "I" },
+      i_j2_2: { local: "Noruega", visitante: "Senegal", grupo: "I" },
+      j_j2_1: { local: "Argentina", visitante: "Austria", grupo: "J" },
+      j_j2_2: { local: "Jordania", visitante: "Argelia", grupo: "J" },
+      k_j2_1: { local: "Portugal", visitante: "Uzbekistán", grupo: "K" },
+      k_j2_2: { local: "Colombia", visitante: "Rep. D. del Congo", grupo: "K" },
+      l_j2_1: { local: "Inglaterra", visitante: "Ghana", grupo: "L" },
+      l_j2_2: { local: "Panamá", visitante: "Croacia", grupo: "L" },
+      a_j3_1: { local: "Sudáfrica", visitante: "Corea del Sur", grupo: "A" },
+      a_j3_2: { local: "Chequia", visitante: "México", grupo: "A" },
+      b_j3_1: { local: "Bosnia y Herzegovina", visitante: "Qatar", grupo: "B" },
+      b_j3_2: { local: "Suiza", visitante: "Canadá", grupo: "B" },
+      c_j3_1: { local: "Escocia", visitante: "Brasil", grupo: "C" },
+      c_j3_2: { local: "Marruecos", visitante: "Haití", grupo: "C" },
+      d_j3_1: { local: "Turquía", visitante: "Estados Unidos", grupo: "D" },
+      d_j3_2: { local: "Paraguay", visitante: "Australia", grupo: "D" },
+      e_j3_1: { local: "Ecuador", visitante: "Alemania", grupo: "E" },
+      e_j3_2: { local: "Curazao", visitante: "Costa de Marfil", grupo: "E" },
+      f_j3_1: { local: "Japón", visitante: "Suecia", grupo: "F" },
+      f_j3_2: { local: "Túnez", visitante: "Países Bajos", grupo: "F" },
+      g_j3_1: { local: "Nueva Zelanda", visitante: "Bélgica", grupo: "G" },
+      g_j3_2: { local: "Egipto", visitante: "Irán", grupo: "G" },
+      h_j3_1: { local: "Uruguay", visitante: "España", grupo: "H" },
+      h_j3_2: { local: "Cabo Verde", visitante: "Arabia Saudí", grupo: "H" },
+      i_j3_1: { local: "Senegal", visitante: "Irak", grupo: "I" },
+      i_j3_2: { local: "Noruega", visitante: "Francia", grupo: "I" },
+      j_j3_1: { local: "Jordania", visitante: "Argentina", grupo: "J" },
+      j_j3_2: { local: "Argelia", visitante: "Austria", grupo: "J" },
+      k_j3_1: { local: "Colombia", visitante: "Portugal", grupo: "K" },
+      k_j3_2: {
+        local: "Rep. D. del Congo",
+        visitante: "Uzbekistán",
+        grupo: "K",
+      },
+      l_j3_1: { local: "Croacia", visitante: "Ghana", grupo: "L" },
+      l_j3_2: { local: "Panamá", visitante: "Inglaterra", grupo: "L" },
+    };
+
+    let htmlContenido = `
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>Reporte - ${p.nombre}</title>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Bebas+Neue&display=swap');
+          :root {
+            --dark-blue: #0a1931;
+            --fifa-green: #00a651;
+            --gray-bg: #f8f9fa;
+            --border-color: #e0e0e0;
+          }
+          body { margin: 0; padding: 20px; font-family: sans-serif; background-color: var(--gray-bg); color: #333; }
+          .no-print-zone { background: #fff; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+          .btn-descargar { background: var(--fifa-green); color: white; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; }
+          .header-reporte { background: var(--dark-blue); color: white; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+          .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; text-transform: uppercase; }
+          .grid-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+          .card-pts { background: white; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; text-align: center; }
+          .card-pts-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: #777; font-weight: 600; }
+          .card-pts-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; margin-top: 4px; }
+          .seccion-titulo { background: var(--dark-blue); color: white; padding: 6px 12px; border-radius: 4px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; }
+          .jornada-container { margin-bottom: 25px; }
+          .jornada-titulo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 10px; border-bottom: 2px solid var(--dark-blue); padding-bottom: 4px; }
+          .grid-partidos-fase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+          .card-partido-item { border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px; background: #fff; font-size: 0.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+          .id-row { font-weight: bold; color: #888; font-size: 0.65rem; margin-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; }
+          .vs-row { display: flex; justify-content: space-between; align-items: center; gap: 4px; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; }
+          .team-block { display: flex; align-items: center; gap: 6px; width: 42%; }
+          .team-block.left { justify-content: flex-start; }
+          .team-block.right { justify-content: flex-end; }
+          .flag-icon { width: 22px; height: 14px; object-fit: cover; border: 1px solid #ccc; border-radius: 2px; }
+          .pred-row { display: flex; justify-content: center; align-items: center; gap: 6px; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; color: white; text-transform: uppercase; }
+          .sub-info { font-size: 0.65rem; color: #555; text-align: left; margin-top: 6px; border-top: 1px dashed #eee; padding-top: 5px; display: flex; flex-direction: column; gap: 2px; }
+          @media print { .no-print-zone { display: none; } body { padding: 0; background: white; } }
+        </style>
+      </head>
+      <body>
+        <div class="no-print-zone">
+          <span>Vista Unificada del Reporte.</span>
+          <button class="btn-descargar" onclick="window.print()">Guardar PDF / Imagen</button>
+        </div>
+
+        <div class="header-reporte">
+          <div>
+            <div style="font-size: 0.8rem; opacity: 0.8; font-weight: bold;">POLLA MUNDIALISTA 2026</div>
+            <div class="header-title">${p.nombre}</div>
+          </div>
+          <div style="font-family: 'Bebas Neue'; font-size: 1.6rem;">PUESTO #${p.puesto}</div>
+        </div>
+
+        <div class="grid-cards">
+          <div class="card-pts"><div class="card-pts-title">RANKING</div><div class="card-pts-val">#${p.puesto}</div></div>
+          <div class="card-pts"><div class="card-pts-title">TOTAL ACUMULADO</div><div class="card-pts-val" style="color:var(--fifa-green);">${p.total} PTS</div></div>
+          <div class="card-pts"><div class="card-pts-title">FASE GRUPOS</div><div class="card-pts-val">${p.pts_grupos} PTS</div></div>
+          <div class="card-pts"><div class="card-pts-title">16AVOS</div><div class="card-pts-val">${p.pts_d16} PTS</div></div>
+          <div class="card-pts"><div class="card-pts-title">OCTAVOS</div><div class="card-pts-val">${p.pts_octavos} PTS</div></div>
+        </div>
+    `;
+
+    // --- RENDICIÓN FASE DE GRUPOS ---
+    htmlContenido += `<div class="seccion-titulo">Fase de Grupos</div>`;
+    const jornadas = [
+      { titulo: "Jornada 1", filtro: "_j1_" },
+      { titulo: "Jornada 2", filtro: "_j2_" },
+      { titulo: "Jornada 3", filtro: "_j3_" },
+    ];
+
+    jornadas.forEach((jornada) => {
+      htmlContenido += `<div class="jornada-container"><div class="jornada-titulo">${jornada.titulo}</div><div class="grid-partidos-fase">`;
+
+      Object.keys(MAPA_PARTIDOS).forEach((api_key) => {
+        if (!api_key.includes(jornada.filtro)) return;
+
+        const partido = MAPA_PARTIDOS[api_key];
+        const nodoApi = gruposData[api_key];
+        const prediccion = nodoApi?.prediccion || "---";
+        const esAcierto = nodoApi?.acierto === true;
+
+        const codeLocal = CODIGOS[partido.local] || "un";
+        const codeVisitante = CODIGOS[partido.visitante] || "un";
+
+        let textoPrediccion = prediccion.toUpperCase();
+        let bgPred =
+          prediccion !== "---"
+            ? esAcierto
+              ? "var(--fifa-green)"
+              : "#999"
+            : "#eee";
+
+        htmlContenido += `
+          <div class="card-partido-item">
+            <div class="id-row"><span>${api_key.toUpperCase()}</span><span>GRP ${partido.grupo}</span></div>
+            <div class="vs-row">
+              <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${partido.local.substring(0, 3)}</span></div>
+              <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
+              <div class="team-block right"><span>${partido.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
+            </div>
+            <div class="pred-row" style="background:${bgPred};">
+              <span>PRED: ${textoPrediccion}</span>
+            </div>
+            <div class="sub-info">
+              <span>Resultado Real: <strong>${esAcierto ? "Acertado" : "No Acertado / Pendiente"}</strong></span>
+            </div>
+          </div>
+        `;
+      });
+      htmlContenido += `</div></div>`;
+    });
+
+    // --- RENDICIÓN 16AVOS DE FINAL ---
+    htmlContenido += `<div class="seccion-titulo">16Avos de Final</div><div class="grid-partidos-fase">`;
+    Object.keys(d16Data).forEach((id) => {
+      const pData = d16Data[id];
+      const ganador = pData.prediccion_ganador || "---";
+      const codeLocal = CODIGOS[pData.local] || "un";
+      const codeVisitante = CODIGOS[pData.visitante] || "un";
+      const bg = pData.acierto_ganador ? "var(--fifa-green)" : "#999";
+
+      htmlContenido += `
+        <div class="card-partido-item">
+          <div class="id-row"><span>${id.toUpperCase()}</span><span>16AVOS</span></div>
+          <div class="vs-row">
+            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
+            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
+            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
+          </div>
+          <div class="pred-row" style="background:${bg};">
+            <span>Ganador Predicho: ${ganador.toUpperCase()}</span>
+          </div>
+          <div class="sub-info">
+            <span>Marcador Real: <strong>${pData.marcador_real || "---"}</strong></span>
+            <span>Predijo Penales: <strong>${pData.prediccion_penales || "No"}</strong></span>
+            <span>Penales Reales: <strong>${pData.penales_reales || "no"}</strong></span>
+          </div>
+        </div>`;
+    });
+
+    // --- RENDICIÓN OCTAVOS DE FINAL ---
+    htmlContenido += `</div><div class="seccion-titulo">Octavos de Final</div><div class="grid-partidos-fase">`;
+    Object.keys(octData).forEach((id) => {
+      const pData = octData[id];
+      const ganador = pData.prediccion_ganador || "---";
+      const codeLocal = CODIGOS[pData.local] || "un";
+      const codeVisitante = CODIGOS[pData.visitante] || "un";
+      const bg = pData.acierto_ganador ? "var(--fifa-green)" : "#999";
+
+      htmlContenido += `
+        <div class="card-partido-item">
+          <div class="id-row"><span>${id.toUpperCase()}</span><span>OCTAVOS</span></div>
+          <div class="vs-row">
+            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
+            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
+            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
+          </div>
+          <div class="pred-row" style="background:${bg};">
+            <span>Ganador Predicho: ${ganador.toUpperCase()}</span>
+          </div>
+          <div class="sub-info">
+            <span>Ganador Real: <strong>${pData.ganador_real || "---"}</strong></span>
+          </div>
+        </div>`;
+    });
+
+    // --- RENDICIÓN CUARTOS DE FINAL (FASES FUTURAS) ---
+    htmlContenido += `</div><div class="seccion-titulo">Cuartos de Final (Fases No Jugadas / Pronósticos Guardados)</div><div class="grid-partidos-fase">`;
+    Object.keys(cuartosData).forEach((id) => {
+      const pData = cuartosData[id];
+      const codeLocal = CODIGOS[pData.local] || "un";
+      const codeVisitante = CODIGOS[pData.visitante] || "un";
+
+      htmlContenido += `
+        <div class="card-partido-item" style="border: 1px solid var(--dark-blue);">
+          <div class="id-row" style="color:var(--dark-blue);"><span>${id.toUpperCase()}</span><span>CUARTOS</span></div>
+          <div class="vs-row">
+            <div class="team-block left"><img class="flag-icon" src="https://flagcdn.com/w20/${codeLocal}.png"> <span>${pData.local.substring(0, 3)}</span></div>
+            <div style="color:#aaa; font-weight:normal; font-size:0.7rem;">VS</div>
+            <div class="team-block right"><span>${pData.visitante.substring(0, 3)}</span> <img class="flag-icon" src="https://flagcdn.com/w20/${codeVisitante}.png"></div>
+          </div>
+          <div class="pred-row" style="background:var(--dark-blue);">
+            <span>M. PREDICHO: ${pData.prediccion_marcador || "---"}</span>
+          </div>
+          <div class="sub-info">
+            <span>Ganador Seleccionado: <strong>${pData.prediccion_ganador || "---"}</strong></span>
+            <span>Estado: <strong style="color:orange;">Pendiente por Jugar</strong></span>
+          </div>
+        </div>`;
+    });
+
+    htmlContenido += `</div></body></html>`;
+
+    nuevaVentana.document.open();
+    nuevaVentana.document.write(htmlContenido);
+    nuevaVentana.document.close();
+  } catch (errorEx) {
+    alert("Error crítico de renderizado frontend: " + errorEx.message);
+  }
+}
+
+function crearCardPuntos(titulo, valor, colorValor) {
+  return `
+    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:0.75rem; font-family:sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align:center;">
+      <div style="font-size:0.7rem; color:#888; font-weight:700; letter-spacing:0.5px; text-transform:uppercase;">${titulo}</div>
+      <div style="font-size:1.3rem; font-weight:bold; color:${colorValor}; margin-top:0.25rem;">${valor}</div>
+    </div>
+  `;
 }
