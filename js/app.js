@@ -1779,9 +1779,9 @@ function renderizarDashboard(p) {
     o08: "Colombia vs Suiza",
     // Cuartos
     c01: "Francia vs Marruecos",
-    c02: "Por definir",
+    c02: "España vs Bélgica",
     c03: "Noruega vs Inglaterra",
-    c04: "Por definir",
+    c04: "Argentina vs Suiza",
     // Semis
     s01: "Por definir",
     s02: "Por definir",
@@ -1856,12 +1856,6 @@ function renderizarDashboard(p) {
     if (val === "visitante") return "Visitante";
     if (val === "empate") return "🤝 Empate";
     return val;
-  }
-
-  function esAcierto(id, pronPrincipal) {
-    const real = reales[id];
-    if (!real || !pronPrincipal) return null;
-    return pronPrincipal.toLowerCase() === real.toLowerCase();
   }
 
   function tarjetaPartido(id, pronostico, esElim, tienePenales, tieneM) {
@@ -2048,19 +2042,29 @@ function renderizarDashboard(p) {
   const s2ids = ["s01", "s02"];
   const fids = ["f01", "f02"];
 
-  const contenido = `
-    <div style="background:#0A0A0F; min-height:100vh; padding:1.5rem; color:#F5F0E8;">
+  const { totalAciertos, totalPuntos } = calcularTotales(p);
 
+  const contenido = `
+    <di style="background:#0A0A0F; min-height:100vh; padding:1.5rem; color:#F5F0E8;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem;">
         <div>
           <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#D4AF37; letter-spacing:0.1em;">${escapeHtml(nombre)}</div>
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; color:#888; letter-spacing:0.1em;">PRONÓSTICOS MUNDIALISTAS 2026</div>
         </div>
-        <button onclick="closeModal()" style="background:transparent; border:1px solid rgba(212,175,55,0.3); color:#D4AF37; font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.15em; padding:0.5rem 1rem; cursor:pointer;">✕ CERRAR</button>
+        <button onclick="closeModal()" style="background:transparent; border:1px solid rgba(212,175,55,0.3); color:#D4AF37; padding:0.5rem 1rem; cursor:pointer;">✕ CERRAR</button>
       </div>
 
       ${especiales}
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px; margin-bottom:1.5rem;">
+        ${generarTarjetaStat("Aciertos Totales", totalAciertos, "✅")}
+        ${generarTarjetaStat("Puntaje Total sin especiales", totalPuntos, "🏆")}
+      </div>
+
       ${seccionFase("JORNADA 1", j1ids, false)}
+
+      
+
       ${seccionFase("JORNADA 2", j2ids, false)}
       ${seccionFase("JORNADA 3", j3ids, false)}
       ${p.dieciseisavos ? seccionFase("DIECISEISAVOS", d16ids, true) : ""}
@@ -2084,8 +2088,6 @@ function renderizarDashboard(p) {
   }
 }
 
-
-
 async function consultarDashboard(correo) {
   const URL =
     "https://script.google.com/macros/s/AKfycbw2A0MVxVfmsdp35HyqhN4FeMup0jWPLaJXFaizi5FGaiR_vbJjQ4EDRm48rMTd3mmLWw/exec";
@@ -2095,12 +2097,13 @@ async function consultarDashboard(correo) {
       `${URL}?accion=obtenerDetalle&correo=${encodeURIComponent(correo)}`,
     );
     const data = await response.json();
-    console.log("Respuesta del servidor:", data);
 
     if (data && data.participante) {
-      renderizarDashboard(data.participante);
-    } else {
-      console.error("Formato inesperado:", data);
+      // 1. Guardar resultados reales globalmente para que esAcierto los use
+      window.MUNDIAL_REALES = data.resultados || {};
+
+      // 2. Renderizar usando los pronósticos
+      renderizarDashboard(data.participante.pronosticos);
     }
   } catch (err) {
     console.error("Error crítico:", err);
@@ -2108,14 +2111,89 @@ async function consultarDashboard(correo) {
 }
 
 async function iniciarDashboard() {
-  const correo = document.getElementById("selector-participantes").value;
+  const select = document.getElementById("selector-participantes");
+  const correo = select
+    ? select.value
+    : document.getElementById("inputCorreo")?.value;
+
   if (!correo) {
-    showToast("⚠ Selecciona un participante", "error");
+    alert("Correo no encontrado");
     return;
   }
-  await consultarDashboard(correo);
+
+  try {
+    // Definición correcta de la variable response
+    const response = await fetch(
+      `${API_URL}?accion=obtenerDetalle&correo=${encodeURIComponent(correo)}`,
+    );
+
+    if (!response.ok) throw new Error("Error en la conexión");
+
+    const data = await response.json();
+
+    if (data && data.participante) {
+      window.RESULTADOS_REALES = data.resultados || {};
+      renderizarDashboard(data.participante.pronosticos);
+    }
+  } catch (err) {
+    console.error("Error en iniciarDashboard:", err);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarParticipantes();
 });
+
+// 1. VARIABLE GLOBAL ÚNICA
+window.RESULTADOS_REALES = {};
+
+function esAcierto(id, pronPrincipal) {
+  const reales = window.RESULTADOS_REALES || {};
+
+  // 1. Intentamos obtener el resultado real buscando tanto con sufijo como sin él
+  // Si id es "d01_G", busca "d01_G" y luego "d01"
+  const rawReal = reales[id] || reales[id.replace("_G", "")];
+
+  // 2. Si no hay dato real, es PENDIENTE
+  // Importante: verificamos que 'ganador' exista dentro del objeto real
+  if (!rawReal || typeof rawReal !== "object" || !rawReal.ganador) {
+    return null; // Esto disparará el icono ⏳ (Pendiente)
+  }
+
+  const realGanador = rawReal.ganador.toLowerCase().trim();
+  const pron = String(pronPrincipal).toLowerCase().trim();
+
+  // 3. Comparación
+  return pron === realGanador;
+}
+
+function calcularTotales(p) {
+  const fases = [
+    "grupos",
+    "dieciseisavos",
+    "octavos",
+    "cuartos",
+    "semifinal",
+    "final",
+  ];
+  let totalAciertos = 0;
+  let totalPuntos = 0;
+
+  fases.forEach((fase) => {
+    if (p[fase]) {
+      Object.keys(p[fase]).forEach((k) => {
+        if (k.startsWith("aciertos_")) totalAciertos += p[fase][k];
+        if (k.startsWith("puntaje_")) totalPuntos += p[fase][k];
+      });
+    }
+  });
+  return { totalAciertos, totalPuntos };
+}
+
+function generarTarjetaStat(titulo, valor, icono) {
+  return `
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.1); border-radius:6px; padding:0.8rem; text-align:center;">
+      <div style="font-size:0.65rem; color:#888; text-transform:uppercase; letter-spacing:0.1em;">${titulo}</div>
+      <div style="font-size:1.1rem; color:#F5F0E8; font-weight:bold; margin-top:0.3rem;">${icono} ${valor || 0}</div>
+    </div>`;
+}
