@@ -184,7 +184,7 @@ const MUNDIAL_DATA = {
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
         { id:"s01", local:"Francia", visitante:"España", fecha:"14 de julio", hora:"14:00", grupo:null },
-        { id:"s02", local:"?", visitante:"?", fecha:"15 de julio", hora:"14:00", grupo:null },
+        { id:"s02", local:"Inglaterra", visitante:"Argentina", fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
 
