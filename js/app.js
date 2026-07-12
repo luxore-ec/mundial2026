@@ -308,6 +308,7 @@ function checkAlreadySubmitted() {
   const now = new Date();
   const deadline = new Date(MUNDIAL_DATA.config.fechaLimiteFase);
   const faseKey = MUNDIAL_DATA.config.faseActiva;
+  const version = MUNDIAL_DATA.config.versionFormulario || 1;
 
   if (now > deadline) {
     container.innerHTML = `
@@ -329,6 +330,35 @@ function checkAlreadySubmitted() {
     doneData = stored ? JSON.parse(stored) : null;
   } catch (e) {}
 
+  // Si existe pero es versión anterior → resetear silenciosamente
+  if (doneData && (doneData.version || 1) < version) {
+    localStorage.removeItem(`mundial2026_done_${faseKey}`);
+    doneData = null;
+
+    // Mostrar aviso antes del formulario
+    container.innerHTML = `
+      <div style="
+        border: 1px solid rgba(212,175,55,0.3);
+        background: rgba(212,175,55,0.06);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.95rem;
+        color: var(--white);
+        letter-spacing: 0.05em;
+        line-height: 1.6;
+      ">
+        ⚠️ <strong style="color:var(--gold)">Actualizamos el formulario de Cuartos.</strong><br>
+        Ahora debes incluir penales y marcador en cada partido.<br>
+        Por favor vuelve a completar tu pronóstico.
+      </div>
+      <div id="form-render-target"></div>`;
+
+    // Renderizar el form dentro del target
+    renderForm(document.getElementById("form-render-target"));
+    return;
+  }
+
   if (doneData) {
     container.innerHTML = `
       <div class="already-done">
@@ -345,7 +375,7 @@ function checkAlreadySubmitted() {
 }
 
 // ── RENDER FORM ────────────────────────────────
-function renderForm() {
+function renderForm(targetEl) {
   const fase = getCurrentFase();
   if (!fase) return;
 
@@ -526,11 +556,9 @@ function renderForm() {
         <strong style="color:var(--gold)">Un pronóstico por participante por fase.</strong>
       </p>
       
-      <!--
       <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
         ⚽ Enviar Pronóstico
       </button>
-      -->
 
     </div>
   `;
@@ -1030,7 +1058,10 @@ async function handleSubmit() {
 
     localStorage.setItem(
       `mundial2026_done_${faseActual}`,
-      JSON.stringify(localData),
+      JSON.stringify({
+        ...localData,
+        version: MUNDIAL_DATA.config.versionFormulario || 1,
+      }),
     );
     localStorage.setItem(
       `mundial2026_comprobante_${faseActual}`,

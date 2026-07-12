@@ -8,6 +8,7 @@ const MUNDIAL_DATA = {
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "semifinales",
     fechaLimiteFase: "2026-07-14T14:15:00-05:00",
+    versionFormulario: 2,
   },
 
   equipos: [
@@ -195,6 +196,7 @@ const MUNDIAL_DATA = {
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
         { id:"f01", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
+        { id:"f02", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
       ]
     },
   },
