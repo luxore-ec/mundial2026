@@ -741,7 +741,7 @@ function updateProgress() {
     Object.values(state.predicciones).forEach((pred) => {
       if (pred && typeof pred === "object") {
         if (pred.ganador) {
-          puntosPotenciales += 8; // 8 puntos por elegir ganador
+          puntosPotenciales += 12; // 8 puntos por elegir ganador
           partidosRespondidos++;
         }
         if (pred.penales) {
