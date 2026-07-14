@@ -173,7 +173,7 @@ const MUNDIAL_DATA = {
       descripcion: "Ronda de 8 (9–11 Jul)",
       fasePenales: true,
       partidos: [
-        //{ id:"c01", local:"Francia", visitante:"Marruecos", fecha:"9 de julio",  hora:"15:00", grupo:null },
+        { id:"c01", local:"Francia", visitante:"Marruecos", fecha:"9 de julio",  hora:"15:00", grupo:null },
         { id:"c02", local:"España", visitante:"Bélgica", fecha:"10 de julio", hora:"14:00", grupo:null },
         { id:"c03", local:"Noruega", visitante:"Inglaterra", fecha:"11 de julio", hora:"16:00", grupo:null },
         { id:"c04", local:"Argentina", visitante:"Suiza", fecha:"11 de julio", hora:"20:00", grupo:null },
@@ -195,8 +195,8 @@ const MUNDIAL_DATA = {
       fasePenales: true,
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"f01", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
-        { id:"f02", local:"?",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
+        { id:"f01", local:"Francia",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
+        { id:"f02", local:"España",  visitante:"?",   fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },

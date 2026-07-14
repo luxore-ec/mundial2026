@@ -1818,8 +1818,8 @@ function renderizarDashboard(p) {
     s01: "Francia vs España",
     s02: "Inglaterra vs Argentina",
     // Final
-    f01: "Final",
-    f02: "Tercer lugar",
+    f01: "Francia vs ?",
+    f02: "España vs ?",
   };
 
   const CODIGOS_BANDERAS = {
