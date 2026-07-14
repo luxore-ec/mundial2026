@@ -7,7 +7,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "semifinales",
-    fechaLimiteFase: "2026-07-14T17:15:00-05:00",
+    fechaLimiteFase: "2026-07-15T14:15:00-05:00",
     versionFormulario: 2,
   },
 
@@ -185,7 +185,7 @@ const MUNDIAL_DATA = {
       fasePenales: true,
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        { id:"s01", local:"Francia", visitante:"España", fecha:"14 de julio", hora:"14:00", grupo:null },
+        //{ id:"s01", local:"Francia", visitante:"España", fecha:"14 de julio", hora:"14:00", grupo:null },
         { id:"s02", local:"Inglaterra", visitante:"Argentina", fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
