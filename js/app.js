@@ -1815,8 +1815,8 @@ function renderizarDashboard(p) {
     c03: "Noruega vs Inglaterra",
     c04: "Argentina vs Suiza",
     // Semis
-    s01: "Por definir",
-    s02: "Por definir",
+    s01: "Francia vs España",
+    s02: "Inglaterra vs Argentina",
     // Final
     f01: "Final",
     f02: "Tercer lugar",

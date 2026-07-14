@@ -7,7 +7,7 @@ const MUNDIAL_DATA = {
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "semifinales",
-    fechaLimiteFase: "2026-07-14T14:15:00-05:00",
+    fechaLimiteFase: "2026-07-14T17:15:00-05:00",
     versionFormulario: 2,
   },
 
