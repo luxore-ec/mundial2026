@@ -8,7 +8,7 @@ const MUNDIAL_DATA = {
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
     faseActiva: "final",
     fechaLimiteFase: "2026-07-18T16:00:00-05:00",
-    versionFormulario: 1,
+    versionFormulario: 2,
   },
 
   equipos: [
