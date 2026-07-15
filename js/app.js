@@ -770,7 +770,7 @@ function updateProgress() {
     Object.values(state.predicciones).forEach((pred) => {
       if (pred && typeof pred === "object") {
         if (pred.ganador) {
-          puntosPotenciales += 12; // 8 puntos por elegir ganador
+          puntosPotenciales += 18; // 8 puntos por elegir ganador
           partidosRespondidos++;
         }
         if (pred.penales) {
@@ -1818,8 +1818,8 @@ function renderizarDashboard(p) {
     s01: "Francia vs España",
     s02: "Inglaterra vs Argentina",
     // Final
-    f01: "Francia vs ?",
-    f02: "España vs ?",
+    f01: "Francia vs Inglaterra",
+    f02: "España vs Argentina",
   };
 
   const CODIGOS_BANDERAS = {

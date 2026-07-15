@@ -6,9 +6,9 @@ const MUNDIAL_DATA = {
     emailDestino: "TU_EMAIL@gmail.com",
     // faseActiva controla qué fase se muestra para pronosticar.
     // Valores: "grupos_j1" | "grupos_j2" | "grupos_j3" | "dieciseisavos" | "octavos" | "cuartos" | "semifinales" | "final"
-    faseActiva: "semifinales",
-    fechaLimiteFase: "2026-07-15T14:15:00-05:00",
-    versionFormulario: 2,
+    faseActiva: "final",
+    fechaLimiteFase: "2026-07-18T16:00:00-05:00",
+    versionFormulario: 1,
   },
 
   equipos: [
@@ -185,7 +185,7 @@ const MUNDIAL_DATA = {
       fasePenales: true,
       descripcion: "Ronda de 4 (14–15 Jul)",
       partidos: [
-        //{ id:"s01", local:"Francia", visitante:"España", fecha:"14 de julio", hora:"14:00", grupo:null },
+        { id:"s01", local:"Francia", visitante:"España", fecha:"14 de julio", hora:"14:00", grupo:null },
         { id:"s02", local:"Inglaterra", visitante:"Argentina", fecha:"15 de julio", hora:"14:00", grupo:null },
       ]
     },
@@ -195,8 +195,8 @@ const MUNDIAL_DATA = {
       fasePenales: true,
       descripcion: "Gran Final — 19 Jul 2026",
       partidos: [
-        { id:"f01", local:"Francia",  visitante:"?",   fecha:"18 de julio", hora:"16:00", grupo:null },
-        { id:"f02", local:"España",  visitante:"?",   fecha:"19 de julio", hora:"14:00", grupo:null },
+        { id:"f01", local:"Francia",  visitante:"Inglaterra",   fecha:"18 de julio", hora:"16:00", grupo:null },
+        { id:"f02", local:"España",  visitante:"Argentina",   fecha:"19 de julio", hora:"14:00", grupo:null },
       ]
     },
   },
