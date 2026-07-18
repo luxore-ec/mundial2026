@@ -131,7 +131,7 @@ async function renderRanking() {
   const RESULTADOS_ESPECIALES = {
     campeon: "",
     subcampeon: "",
-    tercero: "",
+    tercero: "Inglaterra",
     balonoro: "",
     ecuador: "Dieciseisavos",
   };
