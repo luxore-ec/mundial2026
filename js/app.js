@@ -132,7 +132,7 @@ async function renderRanking() {
     campeon: "España",
     subcampeon: "Argentina",
     tercero: "Inglaterra",
-    balonoro: "",
+    balonoro: "España",
     ecuador: "Dieciseisavos",
   };
 
