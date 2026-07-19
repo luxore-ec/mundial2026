@@ -129,8 +129,8 @@ async function renderRanking() {
 
   // ⚠ Actualiza estos valores cuando se conozcan los resultados reales
   const RESULTADOS_ESPECIALES = {
-    campeon: "",
-    subcampeon: "",
+    campeon: "España",
+    subcampeon: "Argentina",
     tercero: "Inglaterra",
     balonoro: "",
     ecuador: "Dieciseisavos",
